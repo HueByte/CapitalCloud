@@ -1,0 +1,5 @@
+<svg height="500" width="500" xmlns="http://www.w3.org/2000/svg" >
+	<polygon points="250,60 100,400 400,400" class="triangle" fill="#fd0069" 
+    stroke="#fd0069" stroke-width="20" />
+	Sorry, your browser does not support inline SVG.
+</svg>
