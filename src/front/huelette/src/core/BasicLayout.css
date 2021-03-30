@@ -1,0 +1,19 @@
+.interface__wrapper {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.main__container {
+    width: Calc(100vw - 250px);
+    position: absolute;
+    left: 250px;
+    top: 100px;
+    height: 100%;
+    overflow: scroll;
+}

@@ -4,7 +4,13 @@ import BasicLayout from '../../core/BasicLayout';
 const Wheel = () => {
     return (
         <BasicLayout>
-            Wheel
+            <div>Wheel</div>
+            <div>Wheel</div>
+            <div>Wheel</div>
+            <div>Wheel</div>
+            <div style={{height: `100vh`}}>Wheel</div>
+            <div>Wheel</div>
+            <div>Wheel</div>
         </BasicLayout>
     )
 }
