@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 
 const Menu = () => {
+    const variables = {
+        lvl: 10,
+        barProgress: 10
+    }
+
     return (
         <section className="nav-top">
             <div className="nav-desktop">
@@ -14,15 +19,15 @@ const Menu = () => {
                 <div className="nav-desktop__container">
                     <div className="nav-desktop__main__container">
                         <div className="nav-left">
-                            <Link to="" className="nav-desktop__main__button">
+                            <Link to="/wheel" className="nav-desktop__main__button">
                                 <i class="fa fa-circle-o nav-desktop__main__button-icon"></i>
                                 <div>Wheel</div>
                             </Link>
-                            <Link to="" className="nav-desktop__main__button">
+                            <Link to="/roulette" className="nav-desktop__main__button">
                                 <i class="fa fa-superpowers nav-desktop__main__button-icon" aria-hidden="true"></i>
                                 <div>Roulette</div>
                             </Link>
-                            <Link to="" className="nav-desktop__main__button">
+                            <Link to="crash" className="nav-desktop__main__button">
                                 <i class="fa fa-area-chart nav-desktop__main__button-icon" aria-hidden="true"></i>
                                 <div>Crash</div>
                             </Link>
@@ -48,7 +53,7 @@ const Menu = () => {
                         <div className="nav-desktop-sub__left">
                             <Link to="/" className="nav-desktop-sub-item">
                                 <div className="nav-desktop-sub-item__icon">
-                                    <i class="fa fa-user" aria-hidden="true"></i>   
+                                    <i class="fa fa-user" aria-hidden="true"></i>
                                 </div>
                                 <div className="nav-desktop-sub-item__text">My Account</div>
                             </Link>
@@ -66,6 +71,19 @@ const Menu = () => {
                             </Link>
                         </div>
                         <div className="nav-desktop-sub__right">
+                            <div className="nav-progress__container">
+                                <div className="nav-progress-level">
+                                    {variables.lvl}
+                                </div>
+                                <div className="nav-progress-bar">
+                                    <div className="nav-progress-bar-progress"  style={{width: `${variables.barProgress}%`}}>
+                                        
+                                    </div>
+                                    <div className="nav-progress-bar-number">
+                                        {variables.barProgress}%
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

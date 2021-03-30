@@ -1,9 +1,12 @@
 import React from 'react'
+import BasicLayout from '../../core/BasicLayout';
 
 const Wheel = () => {
     return (
-        <div>
+        <BasicLayout>
             Wheel
-        </div>
+        </BasicLayout>
     )
 }
+
+export default Wheel;

@@ -2,8 +2,9 @@
     background: var(--Shark);
     height: 100px;
     width: 100%;
-    margin: 0;
-    position: fixed;
+    /* margin: 0; */
+    position: sticky;
+    position: -webkit-sticky;
     top: 0;
     z-index: 998;
 }
@@ -180,6 +181,50 @@
     color: var(--Rose)
 }
 
+.nav-progress__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    
+}
+
+.nav-progress-level {
+    margin-right: 1em;
+    background-color: var(--Rose);
+    color: white;
+    height: 100%;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+}
+
+.nav-progress-bar {
+    width: 250px;
+    /* border: 2px solid var(--Rose); */
+    border-radius: 12px;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: var(--Shark);
+}
+
+.nav-progress-bar-progress {
+    background-color: var(--Rose);
+    border-radius: 12px;
+    height: 100%;
+}
+
+.nav-progress-bar-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .nav-top a:hover, a:link, a:visited, a:active {
     color: inherit;

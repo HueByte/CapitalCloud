@@ -1,9 +1,12 @@
 import React from 'react';
+import BasicLayout from '../../core/BasicLayout';
 
 const Crash = () => {
     return (
-        <div>
-            Crash
-        </div>
+        <BasicLayout>
+            crash
+        </BasicLayout>
     )
 }
+
+export default Crash;

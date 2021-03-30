@@ -4,13 +4,13 @@ import Menu from '../components/Menu';
 
 const BasicLayout = ({ children }) => {
   return (
-    <div>
+    <>
       <Menu />
       <main>
         {children}
         {/* BODY */}
       </main>
-    </div>
+    </>
   )
 }
 
