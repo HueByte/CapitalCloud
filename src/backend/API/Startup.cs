@@ -27,11 +27,11 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddRazorPages();
             services.AddControllersWithViews();
             ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services, Configuration);
             moduleConfiguration.ConfigureDataBase();
-            // services.AddScoped<IMongoDbRepository<TestEntity>,MongoDbRepository<TestEntity>>(); 
             services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));          
         }
 
@@ -58,6 +58,7 @@ namespace API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
         }
