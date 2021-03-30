@@ -9,36 +9,6 @@ const Menu = () => {
         barProgress: 10
     }
 
-    const active = {
-        wheel: '',
-        roulette: '',
-        crash: ''
-    }
-
-    // const location = useLocation();
-    // switch (location.pathname) {
-    //     case "/wheel":
-    //         active.wheel = ' active';
-    //         active.roulette = '';
-    //         active.crash = '';
-    //     break;
-    //     case "/roulette":
-    //         active.wheel = '';
-    //         active.roulette = ' active';
-    //         active.crash = '';
-    //     break;
-    //     // case "/crash":
-    //     //     active.wheel = '';
-    //     //     active.roulette = '';
-    //     //     active.crash = ' active';
-    //     // break;
-    //     default:
-    //         active.wheel = ' active';
-    //         active.roulette = '';
-    //         active.crash = '';
-    //     break;
-    // }
-
     return (
         <section className="nav-top">
             <div className="nav-desktop">
