@@ -18,15 +18,42 @@ namespace Infrastructure.Repositories
             var collectionName = GetCollectionName();
             collection = Database.GetCollection<TDocument>(collectionName);
         }
-        public async Task InsertOne(TDocument model)
-        {
-            await collection.InsertOneAsync(model);
-        }
-
         private string GetCollectionName()
         {
             return (typeof(TDocument).GetCustomAttributes(typeof(BsonCollectionAttribute), true).FirstOrDefault()
                 as BsonCollectionAttribute).CollectionName;
+        }
+        public async Task InsertOne(TDocument model)
+        {
+            await collection.InsertOneAsync(model);
+        }
+        public async Task InsertMany(List<TDocument> modelList)
+        {
+            await collection.InsertManyAsync(modelList);
+        }
+
+        public async Task DeleteById(string id)
+        {
+            var filter = Builders<TDocument>.Filter.Eq("_id",id);
+            await collection.DeleteOneAsync(filter);
+        }
+
+        public async Task<TDocument> GetById(string id)
+        {
+            var filter = Builders<TDocument>.Filter.Eq("_id",id);
+            return await collection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<TDocument>> GetAll()
+        {
+            var filter = Builders<TDocument>.Filter.Empty;
+            return await collection.Find(filter).ToListAsync();
+        }
+
+        public async Task Update(string id, TDocument model)
+        {
+            var filter = Builders<TDocument>.Filter.Eq("_id",id);
+            await collection.ReplaceOneAsync(filter,model);
         }
     }
 }

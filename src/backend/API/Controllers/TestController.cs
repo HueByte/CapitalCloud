@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.RepositoriesInterfaces;
@@ -10,21 +11,15 @@ namespace API.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        // private readonly IMongoDbRepository<TestEntity> _repository;
-        public TestController()
+        private readonly IMongoDbRepository<TestEntity> _repository;
+        public TestController(IMongoDbRepository<TestEntity> repository)
         {
-            // _repository = repository;
+            _repository = repository;
 
         }
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            // await _repository.InsertOne(new TestEntity(){
-            //     Id= new Guid(),
-            //     Name = "abdul",
-            //     Email = "abdul@abdul",
-            //     Password = "123"
-            // });
             return Ok();
         }
     }
