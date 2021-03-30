@@ -12,11 +12,9 @@ namespace Infrastructure.Repositories
     {
         private IMongoCollection<TDocument> collection;
         public IMongoDatabase Database { get; }
-        private readonly IMongoDbRepository<TDocument> _repository;
-        public MongoDbRepository(IMongoDbRepository<TDocument> repository, IMongoClient client)
+        public MongoDbRepository(MongoClient client)
         {
-            _repository = repository;
-            Database = client.GetDatabase("admin");
+            Database = client.GetDatabase("123");
             var collectionName = GetCollectionName();
             collection = Database.GetCollection<TDocument>(collectionName);
         }

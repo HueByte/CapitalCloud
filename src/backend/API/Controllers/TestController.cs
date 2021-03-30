@@ -17,7 +17,7 @@ namespace API.Controllers
 
         }
         [HttpGet]
-        public async Task<IActionResult> Gettttttttttt()
+        public async Task<IActionResult> Get()
         {
             // await _repository.InsertOne(new TestEntity(){
             //     Id= new Guid(),
