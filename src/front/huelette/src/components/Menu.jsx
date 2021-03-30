@@ -58,18 +58,18 @@ const Menu = () => {
                                 </div>
                                 <div className="nav-desktop-sub-item__text">My Account</div>
                             </NavLink>
-                            <Link to="/" className="nav-desktop-sub-item">
+                            <NavLink activeClassName="active-sub-button" to="/account/rewards" className="nav-desktop-sub-item">
                                 <div className="nav-desktop-sub-item__icon">
                                     <i class="fa fa-gift" aria-hidden="true"></i>
                                 </div>
                                 <div className="nav-desktop-sub-item__text">Rewards</div>
-                            </Link>
-                            <Link to="/" className="nav-desktop-sub-item">
+                            </NavLink>
+                            <NavLink activeClassName="active-sub-button" to="/leaderboards" className="nav-desktop-sub-item">
                                 <div className="nav-desktop-sub-item__icon">
                                     <i class="fa fa-trophy" aria-hidden="true"></i>
                                 </div>
                                 <div className="nav-desktop-sub-item__text">Leaderboards</div>
-                            </Link>
+                            </NavLink>
                         </div>
                         <div className="nav-desktop-sub__right">
                             <div className="nav-progress__container">

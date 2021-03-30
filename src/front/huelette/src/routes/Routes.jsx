@@ -5,6 +5,8 @@ import Wheel from '../pages/wheel/wheel';
 import Roulette from '../pages/roulette/roulette';
 import Crash from '../pages/crash/crash';
 import Account from '../pages/account/account';
+import Rewards from '../pages/rewards/rewards';
+import Leaderboards from '../pages/leaderboards/leaderboards';
 
 export const Routes = () => {
     return (
@@ -18,6 +20,8 @@ export const Routes = () => {
                 <Route path="/roulette" component={Roulette} />
                 <Route path="/crash" component={Crash} />
                 <Route path="/account/profile" component={Account} />
+                <Route path="/account/rewards" component={Rewards} />
+                <Route path="/leaderboards" component={Leaderboards} />
             </Suspense>
         </Switch>
     )

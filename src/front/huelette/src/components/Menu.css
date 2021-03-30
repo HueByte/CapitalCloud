@@ -237,5 +237,5 @@
 }
 
 .active-sub-button {
-    color: var(--Rose);
+    color: var(--Rose) !important;
 }
