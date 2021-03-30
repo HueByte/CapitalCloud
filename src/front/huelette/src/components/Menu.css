@@ -91,6 +91,11 @@
 
 .nav-desktop__main__button:hover {
     color: white !important;
+    background-color: #bb004e;
+}
+
+.active {
+    color: white !important;
     background-color: var(--Rose);
 }
 

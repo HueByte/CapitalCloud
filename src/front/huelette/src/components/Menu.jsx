@@ -1,7 +1,7 @@
 import React from 'react';
 import './Menu.css';
-import { Link } from 'react-router-dom';
-import logo from '../assets/logo.svg';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import logo from '../assets/white-cloud.jpg';
 
 const Menu = () => {
     const variables = {
@@ -9,28 +9,59 @@ const Menu = () => {
         barProgress: 10
     }
 
+    const active = {
+        wheel: '',
+        roulette: '',
+        crash: ''
+    }
+
+    // const location = useLocation();
+    // switch (location.pathname) {
+    //     case "/wheel":
+    //         active.wheel = ' active';
+    //         active.roulette = '';
+    //         active.crash = '';
+    //     break;
+    //     case "/roulette":
+    //         active.wheel = '';
+    //         active.roulette = ' active';
+    //         active.crash = '';
+    //     break;
+    //     // case "/crash":
+    //     //     active.wheel = '';
+    //     //     active.roulette = '';
+    //     //     active.crash = ' active';
+    //     // break;
+    //     default:
+    //         active.wheel = ' active';
+    //         active.roulette = '';
+    //         active.crash = '';
+    //     break;
+    // }
+
     return (
         <section className="nav-top">
             <div className="nav-desktop">
                 <div className="nav-logo">
-                    <img src={logo} className="triangle" />
+                    {/* <img src={logo} className="triangle" /> */}
+                    <img src={logo} className="triangle" style={{borderRadius: 10}}/>
                     {/* <img style={{ width: 250, height: 100 }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ZktLhdaw0NzlvRUYAdJHzRnxv8_y9zFLfg&usqp=CAU" /> */}
                 </div>
                 <div className="nav-desktop__container">
                     <div className="nav-desktop__main__container">
                         <div className="nav-left">
-                            <Link to="/wheel" className="nav-desktop__main__button">
+                            <NavLink activeClassName="active" to="/wheel" className="nav-desktop__main__button">
                                 <i class="fa fa-circle-o nav-desktop__main__button-icon"></i>
                                 <div>Wheel</div>
-                            </Link>
-                            <Link to="/roulette" className="nav-desktop__main__button">
+                            </NavLink>
+                            <NavLink activeClassName="active" to="/roulette" className="nav-desktop__main__button">
                                 <i class="fa fa-superpowers nav-desktop__main__button-icon" aria-hidden="true"></i>
                                 <div>Roulette</div>
-                            </Link>
-                            <Link to="crash" className="nav-desktop__main__button">
+                            </NavLink>
+                            <NavLink activeClassName="active" to="crash" className="nav-desktop__main__button">
                                 <i class="fa fa-area-chart nav-desktop__main__button-icon" aria-hidden="true"></i>
                                 <div>Crash</div>
-                            </Link>
+                            </NavLink>
                         </div>
                         <div className="nav-right">
                             <div className="nav-coins__container">
