@@ -1,10 +1,11 @@
 import React from 'react-router-dom';
+import BasicLayout from '../../core/BasicLayout';
 
 const Account = () => {
     return(
-        <div>
+        <BasicLayout>
             Account
-        </div>
+        </BasicLayout>
     )
 }
 

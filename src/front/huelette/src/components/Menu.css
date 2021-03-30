@@ -94,12 +94,6 @@
     background-color: #bb004e;
 }
 
-.active {
-    color: white !important;
-    background-color: var(--Rose);
-}
-
-
 .nav-desktop-sub {
     height: 36px;
     display: flex;
@@ -235,4 +229,13 @@
 .nav-top a:hover, a:link, a:visited, a:active {
     color: inherit;
     text-decoration: none;
+}
+
+.active-button {
+    color: white !important;
+    background-color: var(--Rose);
+}
+
+.active-sub-button {
+    color: var(--Rose);
 }
