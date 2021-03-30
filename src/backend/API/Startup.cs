@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Configuration;
+using Core.Entities;
 using Core.RepositoriesInterfaces;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,8 +28,11 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services,Configuration);
+            services.AddControllersWithViews();
+            ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services, Configuration);
             moduleConfiguration.ConfigureDataBase();
+            // services.AddScoped<IMongoDbRepository<TestEntity>,MongoDbRepository<TestEntity>>(); 
+            services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

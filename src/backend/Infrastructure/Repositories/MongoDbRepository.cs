@@ -1,28 +1,33 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Data;
 using Core.RepositoriesInterfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Infrastructure.Repositories
 {
-    public class MongoDbRepository<T> : IMongoDbRepository<T>
+    public class MongoDbRepository<TDocument> : IMongoDbRepository<TDocument>
     {
+        private IMongoCollection<TDocument> collection;
         public IMongoDatabase Database { get; }
-        public MongoDbRepository(IMongoClient client)
+        private readonly IMongoDbRepository<TDocument> _repository;
+        public MongoDbRepository(IMongoDbRepository<TDocument> repository, IMongoClient client)
         {
+            _repository = repository;
             Database = client.GetDatabase("admin");
-        }
-        public async Task InsertOne(T model)
-        {
             var collectionName = GetCollectionName();
-            var collection = Database.GetCollection<T>(collectionName);
+            collection = Database.GetCollection<TDocument>(collectionName);
+        }
+        public async Task InsertOne(TDocument model)
+        {
             await collection.InsertOneAsync(model);
         }
 
         private string GetCollectionName()
         {
-            return (typeof(T).GetCustomAttributes(typeof(BsonCollectionAttribute), true).FirstOrDefault()
+            return (typeof(TDocument).GetCustomAttributes(typeof(BsonCollectionAttribute), true).FirstOrDefault()
                 as BsonCollectionAttribute).CollectionName;
         }
     }

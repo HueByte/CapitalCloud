@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 
 namespace Core.RepositoriesInterfaces
 {
-    public interface IMongoDbRepository<T> 
+    public interface IMongoDbRepository<TDocument> 
         {
-        Task InsertOne(T model);
+        Task InsertOne(TDocument model);
     }
 }
