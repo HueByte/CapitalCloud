@@ -85,6 +85,12 @@ const Menu = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="nav-desktop-sub-optional">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                            </div>
+                            <div className="nav-desktop-sub-optional">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </div>
                         </div>
                     </div>
                 </div>

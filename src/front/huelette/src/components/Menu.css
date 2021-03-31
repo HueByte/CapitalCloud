@@ -13,7 +13,7 @@
 .nav-top > * {
     font-weight: bold;
     letter-spacing: .6px;
-    color: #a7a7a7;
+    color: var(--Grey);
 }
 
 .nav-desktop {
@@ -91,7 +91,7 @@
 
 .nav-desktop__main__button:hover {
     color: white !important;
-    background-color: #bb004e;
+    background-color: var(--RoseSub);
 }
 
 .nav-desktop-sub {
@@ -101,7 +101,7 @@
     padding-left: 15px;
     padding-right: 25px;
     justify-content: space-between;
-    background-color: #24242b;
+    background-color: var(--SharkSub);
 }
 
 .nav-desktop-sub__left {
@@ -127,6 +127,7 @@
 
 .nav-desktop-sub__right {
     text-align: right;
+    display: flex;
 }
 
 .nav-desktop-sub-item__icon {
@@ -238,4 +239,21 @@
 
 .active-sub-button {
     color: var(--Rose) !important;
+}
+
+.nav-desktop-sub-optional {
+    margin: 0 0.7rem 0 0.7rem;
+    color: var(--Grey);
+    background-color: var(--MainBg);
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.nav-desktop-sub-optional:hover {
+    color: var(--Rose)
 }
