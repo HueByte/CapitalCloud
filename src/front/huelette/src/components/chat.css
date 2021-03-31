@@ -1,6 +1,4 @@
 .chat__container {
-    /* position: sticky;
-    position: -webkit-sticky; */
     position: absolute;
     top: 100px;
     display: flex;
@@ -12,7 +10,15 @@
 }
 
 .chat-text {
+    margin-top: 1em;
+    height: 75vh;
+    width: 90%;
+    background-color: teal;
+    overflow-y: scroll;
+}
 
+.chat-message {
+    
 }
 
 .chat-input {

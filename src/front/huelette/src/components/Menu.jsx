@@ -4,9 +4,11 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/white-cloud.jpg';
 
 const Menu = () => {
+    //TODO temp variables remove later
     const variables = {
-        lvl: 10,
-        barProgress: 10
+        lvl: 160,
+        barProgress: 57,
+        coins: 1999292
     }
 
     return (
@@ -14,7 +16,7 @@ const Menu = () => {
             <div className="nav-desktop">
                 <div className="nav-logo">
                     {/* <img src={logo} className="triangle" /> */}
-                    <img src={logo} className="triangle" style={{borderRadius: 10}}/>
+                    <img src={logo} className="img-logo" />
                     {/* <img style={{ width: 250, height: 100 }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ZktLhdaw0NzlvRUYAdJHzRnxv8_y9zFLfg&usqp=CAU" /> */}
                 </div>
                 <div className="nav-desktop__container">
@@ -40,7 +42,7 @@ const Menu = () => {
                                     <span style={{ textTransform: "uppercase", marginLeft: 5 }}>coins</span>
                                 </div>
                                 <div className="nav-coins-balance">
-                                    0
+                                    {variables.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                                 </div>
                             </div>
                             <NavLink to="/account/profile"
@@ -77,8 +79,8 @@ const Menu = () => {
                                     {variables.lvl}
                                 </div>
                                 <div className="nav-progress-bar">
-                                    <div className="nav-progress-bar-progress"  style={{width: `${variables.barProgress}%`}}>
-                                        
+                                    <div className="nav-progress-bar-progress" style={{ width: `${variables.barProgress}%` }}>
+
                                     </div>
                                     <div className="nav-progress-bar-number">
                                         {variables.barProgress}%
