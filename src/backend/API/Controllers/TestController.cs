@@ -20,6 +20,12 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            _repository.InsertOne(new TestEntity(){
+                Id = new Guid(),
+                Name = "Testowy",
+                Email = "test@test",
+                Password = "123"
+            });
             return Ok();
         }
     }

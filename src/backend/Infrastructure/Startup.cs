@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 
@@ -10,5 +11,6 @@ namespace Infrastructure
         {
           services.AddSingleton(new MongoClient(connectionString));
         }
+        
     }
 }

@@ -18,5 +18,6 @@ namespace API.Configuration
             var connectionString = _config.GetConnectionString("MongoDbTest");
             _services.AddDbClient(connectionString);
         }
+        
     }
 }
