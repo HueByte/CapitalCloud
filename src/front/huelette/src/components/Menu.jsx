@@ -34,6 +34,7 @@ const Menu = () => {
                                 <i class="fa fa-area-chart nav-desktop__main__button-icon" aria-hidden="true"></i>
                                 <div>Crash</div>
                             </NavLink>
+                            {/* <div className="nav-desktop__main__button"></div> */}
                         </div>
                         <div className="nav-right">
                             <div className="nav-coins__container">
