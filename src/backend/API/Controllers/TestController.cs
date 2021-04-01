@@ -18,7 +18,7 @@ namespace API.Controllers
 
         }
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             return Ok();
         }
