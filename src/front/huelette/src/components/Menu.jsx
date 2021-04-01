@@ -7,7 +7,7 @@ const Menu = () => {
     //TODO temp variables remove later
     const variables = {
         lvl: 160,
-        barProgress: 57,
+        barProgress: 33,
         coins: 1999292
     }
 
