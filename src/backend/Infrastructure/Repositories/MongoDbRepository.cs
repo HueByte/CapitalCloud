@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
         public IMongoDatabase Database { get; }
         public MongoDbRepository(MongoClient client)
         {
-            Database = client.GetDatabase("123");
+            Database = client.GetDatabase("RouletteTest");
             var collectionName = GetCollectionName();
             collection = Database.GetCollection<TDocument>(collectionName);
         }
