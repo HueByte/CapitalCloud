@@ -32,6 +32,7 @@ namespace API
             services.AddControllersWithViews();
             ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services, Configuration);
             moduleConfiguration.ConfigureDataBase();
+            moduleConfiguration.ConfigureIdentity();
             services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
 
@@ -49,10 +50,12 @@ namespace API
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
