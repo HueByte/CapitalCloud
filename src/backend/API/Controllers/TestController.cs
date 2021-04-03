@@ -33,7 +33,7 @@ namespace API.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
            return Ok("Secret Mission!");
         }

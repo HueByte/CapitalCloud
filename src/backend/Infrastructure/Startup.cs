@@ -18,7 +18,7 @@ namespace Infrastructure
 {
     public static class Startup
     {
-        
+
         public static void AddDbClient(this IServiceCollection services, string connectionString)
         {
             services.AddSingleton(new MongoClient(connectionString));
@@ -26,14 +26,14 @@ namespace Infrastructure
 
         public static void AddIdentityProvider(this IServiceCollection services, IConfiguration _config)
         {
-            services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole>(identity =>
+            services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole, string>(identity =>
             {
-                identity.SignIn.RequireConfirmedEmail = true;
+                // identity.SignIn.RequireConfirmedEmail = true;
 
             },
               mongo =>
             {
-             mongo.ConnectionString = "mongodb://127.0.0.1:27017/identity";
+                mongo.ConnectionString = "mongodb://127.0.0.1:27017/identity";
             });
 
 
