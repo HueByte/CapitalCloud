@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories
 {
     public class MongoDbRepository<TDocument> : IMongoDbRepository<TDocument>
     {
-        Logger log;
+        //TODO - MAKE MESSAGE FOR LOGS
         private IMongoCollection<TDocument> collection;
         public IMongoDatabase Database { get; }
         public MongoDbRepository(MongoClient client)
@@ -50,39 +50,97 @@ namespace Infrastructure.Repositories
                 {
                     Data = model,
                     isSuccess = false,
-                    message = "SError occurred during Insert Entity",
+                    message = "Error occurred during Insert Entity",
                     flag = 1
                 };
             }
 
         }
-        public async Task InsertMany(List<TDocument> modelList)
+        public async Task<ServiceResponse<List<TDocument>>> InsertMany(List<TDocument> modelList)
         {
-            await collection.InsertManyAsync(modelList);
+            try
+            {
+                await collection.InsertManyAsync(modelList);
+                Log.Information("Added " + modelList.Count + " Entities type of " + collection.CollectionNamespace + " to database " + Database.DatabaseNamespace);
+                return new ServiceResponse<List<TDocument>>()
+                {
+                    Data = modelList,
+                    isSuccess = true,
+                    message = "Added " + modelList.Count + " Entities to Database",
+                    flag = 0
+                };
+            }
+            catch (Exception x)
+            {
+                Log.Error("Error occured during Insert " + modelList.Count + " Entities type of " + collection.CollectionNamespace + " to database " + Database.DatabaseNamespace);
+                return new ServiceResponse<List<TDocument>>()
+                {
+                    Data = modelList,
+                    isSuccess = false,
+                    message = "Error ocured during add " + modelList.Count + " Entities to Database: " + x.Message,
+                    flag = 1
+                };
+            }
+
         }
 
-        public async Task DeleteById(string id)
+        public async Task<ServiceResponse<DeleteResult>> DeleteById(string id)
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
-            await collection.DeleteOneAsync(filter);
+            var x = await collection.DeleteOneAsync(filter);
+            if (x.IsAcknowledged) Log.Information("Delete Entities type of " + collection.CollectionNamespace + " with id " + id);
+            else Log.Error("Error occured during delete: " + x.DeletedCount);
+            return new ServiceResponse<DeleteResult>()
+            {
+                Data = x,
+                isSuccess = x.IsAcknowledged,
+                message = "Deleted status: " + x.DeletedCount,
+                flag = x.IsAcknowledged ? 0 : 1
+            };
+            //TODO - Make It WORKS
         }
 
-        public async Task<TDocument> GetById(string id)
+        public async Task<ServiceResponse<TDocument>> GetById(string id)
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
-            return await collection.Find(filter).FirstOrDefaultAsync();
+            var x = await collection.Find(filter).FirstOrDefaultAsync();
+            if(x!=null) Log.Information("Get Entity type of " + collection.CollectionNamespace + " with id " + id + " from " + Database.DatabaseNamespace);
+            else Log.Error("Error Message");
+            return new ServiceResponse<TDocument>(){
+                Data = x,
+                isSuccess = x==null ? false : true,
+                message = x==null ? "Didnt find Entity with id" + id : "Get Entity with id" + id,
+                flag = x==null ? 1 : 0
+
+            };
         }
 
-        public async Task<List<TDocument>> GetAll()
+        public async Task<ServiceResponse<List<TDocument>>> GetAll()
         {
             var filter = Builders<TDocument>.Filter.Empty;
-            return await collection.Find(filter).ToListAsync();
+            var x = await collection.Find(filter).ToListAsync();
+            return new ServiceResponse<List<TDocument>>(){
+                Data = x,
+                isSuccess = x==null ? false : true,
+                message = x==null ? "Problem occured during loading":"Entities List Loaded",
+                flag = x==null ? 1 : 0
+
+            };
         }
 
-        public async Task Update(string id, TDocument model)
+        public async Task<ServiceResponse<ReplaceOneResult>> Update(string id, TDocument model)
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
-            await collection.ReplaceOneAsync(filter, model);
+            var x =await collection.ReplaceOneAsync(filter, model);
+            if (x.IsAcknowledged) Log.Information("Positive");
+            else Log.Error("Error Message");
+            return new ServiceResponse<ReplaceOneResult>()
+            {
+                Data = x,
+                isSuccess = x.IsAcknowledged,
+                message = "Update status: " + x.ModifiedCount,
+                flag = x.IsAcknowledged ? 0 : 1
+            };
         }
     }
 }
