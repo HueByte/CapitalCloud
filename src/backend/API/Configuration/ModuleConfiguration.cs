@@ -28,6 +28,10 @@ namespace API.Configuration
         {
             _services.AddSwagger();
         }
+        public void ConfigureServices()
+        {
+            _services.AddServices();
+        }
 
     }
 }

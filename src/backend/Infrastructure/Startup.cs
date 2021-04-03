@@ -6,6 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using AspNetCore.IdentityProvider.Mongo;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Infrastructure.Services;
+using Core.ServiceInterfaces;
 
 namespace Infrastructure
 {
@@ -18,14 +24,40 @@ namespace Infrastructure
 
         public static void AddIdentityProvider(this IServiceCollection services, IConfiguration _config)
         {
-            Console.WriteLine("iok");
             services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole>(options =>
          {
-             options.Password.RequiredLength = 0;
+             options.Password.RequiredLength = 6;
+             options.Password.RequireDigit = true;
+             options.Password.RequireNonAlphanumeric = false;
+             options.Password.RequireUppercase = false;
+             options.SignIn.RequireConfirmedEmail = false;
+             options.User.RequireUniqueEmail = true;
+
          }, mongoOptions =>
          {
              mongoOptions.ConnectionString = _config.GetConnectionString("MongoDbTest");
-         });
+         })
+          .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = _config["JWT:Issuer"],
+                    ValidAudience = _config["JWT:Audience"],
+                    RequireExpirationTime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"])),
+                    ValidateIssuerSigningKey = true
+                };
+
+
+            });
 
         }
 
@@ -51,6 +83,12 @@ namespace Infrastructure
                     }
                 });
             });
+        }
+
+        public static void AddServices(this IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJwtAuthentication, JwtAuthentication>();
         }
 
 
