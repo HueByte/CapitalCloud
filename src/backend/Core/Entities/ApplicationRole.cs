@@ -1,7 +1,7 @@
-using AspNetCore.IdentityProvider.Mongo.Model;
+using AspNetCore.Identity.Mongo.Model;
 namespace Core.Entities
 {
-    public class ApplicationRole : MongoRole
+    public class ApplicationRole : MongoRole<string>
     {
 
     }
