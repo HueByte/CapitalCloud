@@ -20,7 +20,7 @@ namespace API.Configuration
             var connectionString = _config.GetConnectionString("MongoDbTest");
             _services.AddDbClient(connectionString);
         }
-        public void ConfigureIdentity()
+        public void ConfigureSecurity()
         {
             _services.AddIdentityProvider(_config);
         }

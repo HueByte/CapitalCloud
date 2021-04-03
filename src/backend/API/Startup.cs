@@ -32,7 +32,7 @@ namespace API
             services.AddControllersWithViews();
             ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services, Configuration);
             moduleConfiguration.ConfigureDataBase();
-            moduleConfiguration.ConfigureIdentity();
+            moduleConfiguration.ConfigureSecurity();
             moduleConfiguration.ConfigureSwagger();
             services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
