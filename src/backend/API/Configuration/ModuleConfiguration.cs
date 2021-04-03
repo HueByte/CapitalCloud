@@ -24,6 +24,10 @@ namespace API.Configuration
         {
             _services.AddIdentityProvider(_config);
         }
+        public void ConfigureSwagger()
+        {
+            _services.AddSwagger();
+        }
 
     }
 }
