@@ -32,11 +32,10 @@ namespace API
             services.AddControllersWithViews();
             ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services, Configuration);
             moduleConfiguration.ConfigureDataBase();
-            moduleConfiguration.ConfigureIdentity();
+            moduleConfiguration.ConfigureSecurity();
             moduleConfiguration.ConfigureSwagger();
             moduleConfiguration.ConfigureServices();
-            services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
-            
+            // services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

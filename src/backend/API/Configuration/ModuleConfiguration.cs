@@ -1,5 +1,7 @@
 using Core.Entities;
+using Core.RepositoriesInterfaces;
 using Infrastructure;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +22,7 @@ namespace API.Configuration
             var connectionString = _config.GetConnectionString("MongoDbTest");
             _services.AddDbClient(connectionString);
         }
-        public void ConfigureIdentity()
+        public void ConfigureSecurity()
         {
             _services.AddIdentityProvider(_config);
         }
@@ -30,8 +32,11 @@ namespace API.Configuration
         }
         public void ConfigureServices()
         {
+            //Add services here
             _services.AddServices();
+            _services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
+
 
     }
 }
