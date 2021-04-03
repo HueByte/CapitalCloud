@@ -28,7 +28,7 @@ namespace Infrastructure
         {
             services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole, string>(identity =>
             {
-                // identity.SignIn.RequireConfirmedEmail = true;
+                identity.SignIn.RequireConfirmedEmail = false;
 
             },
               mongo =>
@@ -53,10 +53,7 @@ namespace Infrastructure
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"])),
                     ValidateIssuerSigningKey = true
                 };
-
-
             });
-
         }
 
         public static void AddSwagger(this IServiceCollection services)
@@ -88,7 +85,5 @@ namespace Infrastructure
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtAuthentication, JwtAuthentication>();
         }
-
-
     }
 }
