@@ -1,5 +1,7 @@
 using Core.Entities;
+using Core.RepositoriesInterfaces;
 using Infrastructure;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +29,12 @@ namespace API.Configuration
         public void ConfigureSwagger()
         {
             _services.AddSwagger();
+        }
+
+        public void ConfigureServices()
+        {
+            //Add services here
+            _services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
 
     }
