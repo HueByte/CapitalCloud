@@ -3,7 +3,8 @@ import './chat.css';
 
 const Chat = () => {
     var [messages, setMessages] = useState([]);
-    useEffect(() => {
+    useEffect( async () => {
+        await sleep(1000);
         setMessages(generateMessages());
     }, [])
 
@@ -14,20 +15,22 @@ const Chat = () => {
                     {messages.length ? messages.map((mess, index) => (
                         <div key={mess.id} className="chat-message">
                             <div className="chat-message-top">
-                                <img src={mess.avatar} className="chat-message-avatar"/>
+                                <img src={mess.avatar} className="chat-message-avatar" />
                                 <div className="chat-message-level">{mess.level}</div>
                                 <div className="chat-message-username">{mess.username}</div>
                             </div>
                             <div className="chat-message-text">{mess.text}</div>
                         </div>
-                    )) : <p>loading</p>}
+                    )) : <div className="chat-loader"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>}
                 </div>
-                input here
+                <div className="chat-input">
+                    <input type="text" placeholder="Place your text here"/>
+                    <div className="chat-input-submit"><i class="fas fa-arrow-right"></i></div>
+                </div>
             </div>
         </>
     )
 }
-
 
 const generateMessages = () => {
     let messages = [];
@@ -67,5 +70,8 @@ const rnd = (max) => {
     return Math.floor(Math.random() * max);
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export default Chat;

@@ -5,3 +5,4 @@
 - Api connection
 - Modal for settings
 - Bot Jerry
+- Loading screen
