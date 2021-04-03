@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+
+using System;
+using System.Text;
+using AspNetCore.Identity.Mongo;
+using AspNetCore.Identity.Mongo.Model;
 using Core.Entities;
+using Core.ServiceInterfaces;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Driver;
-using AspNetCore.IdentityProvider.Mongo;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Infrastructure.Services;
-using Core.ServiceInterfaces;
+using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 
 namespace Infrastructure
 {
     public static class Startup
     {
+        
         public static void AddDbClient(this IServiceCollection services, string connectionString)
         {
             services.AddSingleton(new MongoClient(connectionString));
@@ -24,20 +26,16 @@ namespace Infrastructure
 
         public static void AddIdentityProvider(this IServiceCollection services, IConfiguration _config)
         {
-            services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole>(options =>
-         {
-             options.Password.RequiredLength = 6;
-             options.Password.RequireDigit = true;
-             options.Password.RequireNonAlphanumeric = false;
-             options.Password.RequireUppercase = false;
-             options.SignIn.RequireConfirmedEmail = false;
-             options.User.RequireUniqueEmail = true;
+            services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole>(identity =>
+            {
+                identity.SignIn.RequireConfirmedEmail = true;
 
-         }, mongoOptions =>
-         {
-             mongoOptions.ConnectionString = _config.GetConnectionString("MongoDbTest");
-         })
-          .AddDefaultTokenProviders();
+            },
+              mongo =>
+            {
+             mongo.ConnectionString = "mongodb://127.0.0.1:27017/identity";
+            });
+
 
             services.AddAuthentication(options =>
             {

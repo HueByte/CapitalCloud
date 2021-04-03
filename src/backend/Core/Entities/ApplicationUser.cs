@@ -1,9 +1,10 @@
 
-using AspNetCore.IdentityProvider.Mongo.Model;
+
+using AspNetCore.Identity.Mongo.Model;
 
 namespace Core.Entities
 {
-    public class ApplicationUser : MongoUser
+    public class ApplicationUser : MongoUser<string>
     {
         
     }
