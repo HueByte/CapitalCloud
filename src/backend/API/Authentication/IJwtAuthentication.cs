@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Core.Entities;
 
-namespace Core.ServiceInterfaces
+namespace API.Authentication
 {
     public interface IJwtAuthentication
     {

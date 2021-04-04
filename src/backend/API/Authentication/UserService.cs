@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using Core.DTOModels;
 using Core.Entities;
 using Core.Models;
-using Core.ServiceInterfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Services
+namespace API.Authentication
 {
     public class UserService : IUserService
     {
@@ -48,13 +47,14 @@ namespace Infrastructure.Services
             
         }
 
-        public async Task<ServiceResponse<RegisterDTO>> RegisterUserAsync(RegisterDTO registermodel)
+        public async Task<ServiceResponse<string>> RegisterUserAsync(RegisterDTO registermodel)
         {
             if (registermodel == null)
-                return StaticResponse<RegisterDTO>.BadResponse(registermodel, "Empty form", 1);
+                return StaticResponse<string>.BadResponse(string.Empty, "Empty form", 1);
 
             var user = new ApplicationUser()
             {
+                Id = Guid.NewGuid().ToString(),
                 UserName = registermodel.Username,
                 Email = registermodel.Email
             };
@@ -62,13 +62,14 @@ namespace Infrastructure.Services
             var result = await _userManager.CreateAsync(user, registermodel.Password);
             if (result.Succeeded)
             {
-                return StaticResponse<RegisterDTO>.GoodResponse(registermodel, "User Created!");
+                return new ServiceResponse<string>(){Data = string.Empty,isSuccess = true,message = " ok", flag = 0};
             }
             else
             {
                 var errorlist = result.Errors.Select(e => e.Description);
                 var error = string.Join(";", errorlist);
-                return StaticResponse<RegisterDTO>.BadResponse(registermodel, error, 1);
+                return StaticResponse<string>.BadResponse(string.Empty, error, 1);
+                //TODO - chagne this shit okay
             }
 
         }

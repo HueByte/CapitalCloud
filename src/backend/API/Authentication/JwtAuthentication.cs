@@ -5,11 +5,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
-using Core.ServiceInterfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Services
+namespace API.Authentication
 {
     public class JwtAuthentication : IJwtAuthentication
     {
@@ -23,7 +22,7 @@ namespace Infrastructure.Services
         {
             var claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, user.UserName));
             foreach (var role in user.Roles)
             {

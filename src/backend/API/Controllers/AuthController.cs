@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Authentication;
 using Core.DTOModels;
 using Core.Entities;
 using Core.Models;
 using Core.RepositoriesInterfaces;
-using Core.ServiceInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +33,7 @@ namespace API.Controllers
         {
             var response = await _userService.RegisterUserAsync(registerModel);
             if (response.isSuccess)
-                return Ok("Account has been Created!");
+                return Ok(response);
             else
                 return BadRequest(response.message);
         }
