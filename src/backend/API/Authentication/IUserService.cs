@@ -6,7 +6,7 @@ namespace API.Authentication
 {
     public interface IUserService
     {
-         Task<ServiceResponse<RegisterDTO>> RegisterUserAsync(RegisterDTO registerModel);
+         Task<ServiceResponse<string>> RegisterUserAsync(RegisterDTO registerModel);
 
          Task<ServiceResponse<LoginResponse>> LoginUserAsync(LoginDTO loginModel);
     }

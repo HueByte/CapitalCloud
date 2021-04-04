@@ -33,7 +33,7 @@ namespace API.Controllers
         {
             var response = await _userService.RegisterUserAsync(registerModel);
             if (response.isSuccess)
-                return Ok("Account has been Created!");
+                return Ok(response);
             else
                 return BadRequest(response.message);
         }

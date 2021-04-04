@@ -29,7 +29,7 @@ namespace API
         {
 
             services.AddRazorPages();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson();
             ModuleConfiguration moduleConfiguration = new ModuleConfiguration(services, Configuration);
             moduleConfiguration.ConfigureDataBase();
             moduleConfiguration.ConfigureSecurity();

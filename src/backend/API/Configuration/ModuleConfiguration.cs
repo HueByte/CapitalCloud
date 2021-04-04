@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using API.Authentication;
 using AspNetCore.Identity.Mongo;
@@ -31,18 +33,20 @@ namespace API.Configuration
         }
         public void ConfigureSecurity()
         {
-           _services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole, string>(identity =>
-            {
-                identity.Password.RequireDigit = true;
-                identity.Password.RequireUppercase = true;
-                identity.Password.RequiredLength = 6;
-                identity.Password.RequireLowercase = true;
-                identity.User.RequireUniqueEmail = true;
-            },
-              mongo =>
-            {
-                mongo.ConnectionString = _config.GetConnectionString("MongoDbTest");
-            });
+            _services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole, string>(identity =>
+             {
+                 identity.Password.RequireDigit = true;
+                 identity.Password.RequireUppercase = true;
+                 identity.Password.RequiredLength = 6;
+                 identity.Password.RequireLowercase = true;
+                 identity.Password.RequireNonAlphanumeric = false;
+                 identity.User.RequireUniqueEmail = true;
+                 identity.SignIn.RequireConfirmedEmail = false;
+             },
+               mongo =>
+             {
+                 mongo.ConnectionString = _config.GetConnectionString("MongoDbTest");
+             });
 
 
             _services.AddAuthentication(options =>
@@ -84,6 +88,9 @@ namespace API.Configuration
                         Url = new Uri("https://en.wikipedia.org/wiki/MIT_License"),
                     }
                 });
+                var xmlFile = $"API.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
         public void ConfigureServices()

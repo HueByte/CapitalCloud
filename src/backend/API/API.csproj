@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.Identity.Mongo" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.4" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.4" />
     <PackageReference Include="MongoDB.Bson" Version="2.12.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.12.1" />
@@ -21,6 +22,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
 </Project>
