@@ -52,9 +52,9 @@ namespace API.Controllers
 
             var response = await _userService.RegisterUserAsync(registerModel);
             if (response.isSuccess)
-                return Ok(response.Data);
+                return Ok(response);
             else
-                return BadRequest(response.Data);
+                return BadRequest(response);
         }
 
         /// <summary>
@@ -79,9 +79,9 @@ namespace API.Controllers
         {
             var response = await _userService.LoginUserAsync(loginModel);
             if (response.isSuccess)
-                return Ok(response.Data);
+                return Ok(response);
             else
-                return BadRequest(response.Data);
+                return BadRequest(response);
         }
     }
 }

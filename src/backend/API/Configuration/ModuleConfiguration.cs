@@ -71,9 +71,9 @@ namespace API.Configuration
         {
             _services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v0.1A", new OpenApiInfo
+                c.SwaggerDoc("v0.2A", new OpenApiInfo
                 {
-                    Version = "v0.1A",
+                    Version = "v0.2A",
                     Title = "Roulette Api",
                     Description = "Api for Roulette Web Applicaton",
                     Contact = new OpenApiContact

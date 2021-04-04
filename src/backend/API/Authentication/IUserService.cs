@@ -8,8 +8,8 @@ namespace API.Authentication
 {
     public interface IUserService
     {
-         Task<ServiceResponse<RegisterResponse>> RegisterUserAsync(RegisterDTO registerModel);
+         Task<RegisterResponse> RegisterUserAsync(RegisterDTO registerModel);
 
-         Task<ServiceResponse<LoginResponse>> LoginUserAsync(LoginDTO loginModel);
+         Task<LoginResponse> LoginUserAsync(LoginDTO loginModel);
     }
 }

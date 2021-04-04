@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Common.ApiResponse
 {
@@ -8,6 +9,14 @@ namespace Common.ApiResponse
         public string tokenType { get; set; }
 
         public DateTime? expiresDate { get; set; }
+
+        public List<string> Errors { get; set; }
+
+        public bool isSuccess { get; set; } = false;
+        
+        
+        
+        
         
 
         

@@ -54,7 +54,7 @@ namespace API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
              {
-                 c.SwaggerEndpoint("/swagger/v0.1A/swagger.json", "Roulette");
+                 c.SwaggerEndpoint("/swagger/v0.2A/swagger.json", "Roulette");
              });
 
 
