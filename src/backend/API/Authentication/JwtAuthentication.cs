@@ -5,11 +5,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
-using Core.ServiceInterfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Services
+namespace API.Authentication
 {
     public class JwtAuthentication : IJwtAuthentication
     {

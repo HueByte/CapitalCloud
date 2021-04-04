@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using Core.DTOModels;
 using Core.Entities;
 using Core.Models;
-using Core.ServiceInterfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Services
+namespace API.Authentication
 {
     public class UserService : IUserService
     {

@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Core.DTOModels;
 using Core.Models;
 
-namespace Core.ServiceInterfaces
+namespace API.Authentication
 {
     public interface IUserService
     {

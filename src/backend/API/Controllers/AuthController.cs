@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Authentication;
 using Core.DTOModels;
 using Core.Entities;
 using Core.Models;
 using Core.RepositoriesInterfaces;
-using Core.ServiceInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
