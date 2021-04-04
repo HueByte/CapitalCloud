@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import './chat.css';
 
-const Chat = () => {
+const Chat = ({ onHideChat }) => {
+    const [isChatVisible, setIsChatVisible] = useState(true);
+
     var [messages, setMessages] = useState([]);
     useEffect( async () => {
-        await sleep(1000);
+        await sleep(1000); //TODO remove later (simulate loading)
         setMessages(generateMessages());
     }, [])
 
+    const hideChat = () => {
+        let test = isChatVisible ? false : true
+        // setIsChatVisible(isChatVisible ? false : true);
+        // onHideChat(isChatVisible ? false : true);
+        setIsChatVisible(test);
+        onHideChat(test);
+    }
+
     return (
         <>
-            <div className="chat__container">
+            <div className={`chat__container${isChatVisible ? "" : " hide"}`} id="chat">
                 <div className="chat-text">
                     {messages.length ? messages.map((mess, index) => (
                         <div key={mess.id} className="chat-message">
@@ -27,6 +37,7 @@ const Chat = () => {
                     <input type="text" placeholder="Place your text here"/>
                     <div className="chat-input-submit"><i class="fas fa-arrow-right"></i></div>
                 </div>
+                <div className="chat-hide-button" onClick={hideChat}><i class={`fas fa-arrow-left${isChatVisible ? "" : " active"}`}></i></div>
             </div>
         </>
     )

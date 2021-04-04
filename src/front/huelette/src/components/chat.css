@@ -7,6 +7,33 @@
     width: 250px;
     height: Calc(100vh - 100px);
     background-color: var(--Shark);
+    transition: 1s ease-in-out;
+    z-index: 10;
+}
+
+.chat-hide-button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(20px);
+    cursor: pointer;
+    z-index: 999;
+    display: grid;
+    place-items: center;
+    font-size: medium;
+    transition: 0.3s linear;
+}
+
+.chat-hide-button:hover {
+    transform: translate(20px) scale(1.2);
+}
+
+.chat-hide-button .active {
+    transform: rotate(180deg);
+}
+
+.hide {
+    transform: translateX(-100%);
 }
 
 .chat-text {
@@ -72,12 +99,12 @@
 }
 
 .chat-input {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 100%;
-    /* height: Calc(100vh - 90vh - 1em); */
     height: Calc(100vh - 90vh - 2em);
     background-color: #18181d;
 }

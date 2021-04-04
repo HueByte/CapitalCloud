@@ -16,4 +16,10 @@
     top: 100px;
     height: 100%;
     overflow: scroll;
+    transition: 1s ease-in-out;
+}
+
+.fullsize {
+    width: 100vw;
+    left: 0;
 }
