@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Authentication;
+using Common.ApiResponse;
+using Common.lib.ApiResponse;
 using Core.DTOModels;
 using Core.Entities;
 using Core.Models;
@@ -24,27 +26,62 @@ namespace API.Controllers
             _userService = userService;
             _userManager = userManager;
         }
+        
         /// <summary>
-        ///pi For Testing A
+        ///Register new User
         /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /register
+        ///     {
+        ///        "username": "joseph",
+        ///        "email": "joseph@spam.com"
+        ///        "password" : "JosephRulez123"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Created new user</response>
+        /// <response code="400">Error Occured during adding user</response>  
         [HttpPost("Register")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(RegisterResponse),400)]
+        [ProducesResponseType(typeof(RegisterResponse),200)]
+  
         public async Task<IActionResult> RegisterUser([FromBody] RegisterDTO registerModel)
         {
+
             var response = await _userService.RegisterUserAsync(registerModel);
             if (response.isSuccess)
-                return Ok(response);
+                return Ok(response.Data);
             else
-                return BadRequest(response.message);
+                return BadRequest(response.Data);
         }
+
+        /// <summary>
+        ///Login User
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /login
+        ///      {
+        ///        "email": "joseph@spam.com"
+        ///        "password" : "JosephRulez123"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">User Loged in</response>
+        /// <response code="400">Error Occured during Loging. Returns Empty Object</response>  
         [HttpPost("Login")]
+        [ProducesResponseType(typeof(LoginResponse),200)]
+        [ProducesResponseType(typeof(LoginResponse),400)]
         public async Task<IActionResult> LoginUser([FromBody] LoginDTO loginModel)
         {
             var response = await _userService.LoginUserAsync(loginModel);
             if (response.isSuccess)
                 return Ok(response.Data);
             else
-                return BadRequest(response);
+                return BadRequest(response.Data);
         }
     }
 }

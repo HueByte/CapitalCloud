@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Models
+namespace Common.ApiResponse
 {
     public class LoginResponse
     {
@@ -8,6 +8,8 @@ namespace Core.Models
         public string tokenType { get; set; }
 
         public DateTime? expiresDate { get; set; }
+        
+
         
         
         
