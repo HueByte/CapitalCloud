@@ -61,6 +61,10 @@
     width: 70%;
 }
 
+.icon-desktop {
+    display: none;
+}
+
 .auth-input {
     width: 100%;
     margin: 0.5em;
@@ -106,16 +110,94 @@
     background-color: var(--Rose);
 }
 
+/* DESKTOP */
+.auth__container-desktop {
+    width: 900px;
+    height: 500px;
+    display: none;
+}
+
+.auth-left-desktop {
+    display: grid;
+    place-items: center;
+    flex: 1;
+    background-color: #f5f5f5;
+}
+
+.auth-left-desktop > img {
+    width: 50%;
+}
+
+.auth-right-desktop {
+    flex: 1;
+    background-color: var(--Shark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.auth-right-text {
+    font-size: large;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.right-input__container {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.right-buttons__container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 80%;
+}
+
+.desktop-button {
+    cursor: pointer;
+    background-color: var(--Rose);
+    padding: 10px;
+    margin: 0.5em;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 300ms ease-in-out;
+}
+
+.desktop-button:hover {
+    transform: scale(1.1);
+}
+
+.input-desktop {
+    margin: 1em;
+    background-color: var(--MainBg);
+    border: 1px solid var(--MainBg);
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    transition: 0.5s;
+    box-sizing: border-box;
+    -webkit-transition: 0.5s;
+    outline: none;
+}
+
+.input-desktop:focus {
+    border: 1px solid var(--Rose);
+}
+
+
 @media screen and (min-width: 600px) {
     .auth__container {
         height: fit-content;
-        width: 500px;
         max-height: 90vh;
+        width: 500px;
         border-radius: 10px;
     }
     .auth-content-wrapper {
-        width: 80%;
-        max-width: 400px;
+        width: 90%;
     }
 
     .auth-buttons__container {
@@ -124,5 +206,16 @@
 
     .auth-button {
         flex: 1;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .auth__container {
+        display: none;
+    }
+
+    .auth__container-desktop {
+        display: flex;
+        flex-direction: row;
     }
 }
