@@ -6,3 +6,4 @@
 - Modal for settings
 - Bot Jerry
 - Loading screen
+- Rewrite hiding chat 

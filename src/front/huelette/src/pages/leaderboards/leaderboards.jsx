@@ -4,9 +4,9 @@ import './leaderboards.css'
 
 const Leaderboards = () => {
     return (
-        <BasicLayout>
+        <>
             Leaderboards
-        </BasicLayout>
+        </>
     )
 }
 

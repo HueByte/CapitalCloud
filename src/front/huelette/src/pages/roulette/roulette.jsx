@@ -3,9 +3,9 @@ import BasicLayout from '../../core/BasicLayout';
 
 const Roulette = () => {
     return (
-        <BasicLayout>
+        <>
             roulette
-        </BasicLayout>
+        </>
     )
 }
 

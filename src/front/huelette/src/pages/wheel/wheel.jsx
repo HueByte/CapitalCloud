@@ -3,7 +3,7 @@ import BasicLayout from '../../core/BasicLayout';
 
 const Wheel = () => {
     return (
-        <BasicLayout>
+        <>
             <div>Wheel</div>
             <div>Wheel</div>
             <div>Wheel</div>
@@ -11,7 +11,7 @@ const Wheel = () => {
             <div style={{height: `100vh`}}>Wheel</div>
             <div>Wheel</div>
             <div>Wheel</div>
-        </BasicLayout>
+        </>
     )
 }
 

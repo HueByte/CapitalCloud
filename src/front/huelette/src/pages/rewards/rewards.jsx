@@ -4,9 +4,9 @@ import './rewards.css'
 
 const Rewards = () => {
     return (
-        <BasicLayout>
+        <>
             rewards
-        </BasicLayout>
+        </>
     )
 }
 

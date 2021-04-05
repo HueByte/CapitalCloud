@@ -3,9 +3,9 @@ import BasicLayout from '../../core/BasicLayout';
 
 const Account = () => {
     return(
-        <BasicLayout>
+        <>
             Account
-        </BasicLayout>
+        </>
     )
 }
 
