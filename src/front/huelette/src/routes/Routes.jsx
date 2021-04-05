@@ -7,8 +7,8 @@ import Crash from '../pages/crash/crash';
 import Account from '../pages/account/account';
 import Rewards from '../pages/rewards/rewards';
 import Leaderboards from '../pages/leaderboards/leaderboards';
-import Login from '../pages/account/login';
-import Register from '../pages/account/register';
+import Login from '../pages/auth/login';
+import Register from '../pages/auth/register';
 import FOUR_ZERO_FOUR from '../pages/404/FOUR_ZERO_FOUR';
 
 export const Routes = () => {

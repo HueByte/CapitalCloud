@@ -15,9 +15,7 @@ const Menu = () => {
         <section className="nav-top">
             <div className="nav-desktop">
                 <div className="nav-logo">
-                    {/* <img src={logo} className="triangle" /> */}
                     <img src={logo} className="img-logo" />
-                    {/* <img style={{ width: 250, height: 100 }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ZktLhdaw0NzlvRUYAdJHzRnxv8_y9zFLfg&usqp=CAU" /> */}
                 </div>
                 <div className="nav-desktop__container">
                     <div className="nav-desktop__main__container">

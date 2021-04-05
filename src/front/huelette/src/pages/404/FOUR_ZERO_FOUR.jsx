@@ -3,7 +3,7 @@ import React from 'react';
 const FOUR_ZERO_FOUR = () => {
     return (
         <>
-            404
+            <h1 style={{display: 'grid', placeItems: 'center', height: '100vh'}}>404</h1>
         </>
     )
 }
