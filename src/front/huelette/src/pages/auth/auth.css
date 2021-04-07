@@ -8,110 +8,6 @@
         place-items: center;
 }
 
-/*
-.auth__container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: hsl(240, 8%, 14%, 0.7);
-    border: 2px solid var(--Rose);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-.auth-content-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: auto;
-    padding: 10px;
-    width: 70%;
-}
-
-.auth-home {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: var(--Rose);
-    border-radius: 100%;
-    height: 25px;
-    width: 25px;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    transition: 300ms ease-in-out;
-}
-
-.auth-home:hover {
-    transform:scale(1.2);
-}
-
-.auth-input__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-}
-
-.icon {
-    width: 70%;
-}
-
-.icon-desktop {
-    display: none;
-}
-
-.auth-input {
-    width: 100%;
-    margin: 0.5em;
-    background-color: var(--MainBg);
-    border: 1px solid var(--MainBg);
-    color: white;
-    border-radius: 5px;
-    padding: 10px;
-    transition: 0.5s;
-    box-sizing: border-box;
-    -webkit-transition: 0.5s;
-    outline: none;
-}
-
-    .auth-input:focus {
-        border: 1px solid var(--Rose) !important;
-        /* transform: scale(1.1); 
-    } 
-
-    
-.auth-buttons__container {
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.auth-button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 0.5em;
-    display: grid;
-    place-items: center;
-    background-color: var(--RoseSub);
-    cursor: pointer;
-    transition: 300ms ease-in-out;
-}
-
-.auth-button:hover {
-    transform: scale(1.1);
-    background-color: var(--Rose);
-} */
-
-/* DESKTOP */
 .auth__container {
     width: 900px;
     height: 500px;
@@ -235,11 +131,38 @@
     }
 
     .auth-left > img{
-        width: 20vw;
+        /* width: 20%; */
+        min-width: 120px;
+        width: 20%;
         /* maybe? */
     }
 
     .auth-right {
         flex: 4;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .right-buttons__container {
+        flex-direction: column;
+    }
+
+    .buttons-left {
+        text-align: center;
+        margin-bottom: 1em;
+        width: 100%;
+    }
+
+    .auth-problem {
+        margin: 0;
+    }
+
+    .buttons-right {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .auth-button {
+        width: 70%;
     }
 }
