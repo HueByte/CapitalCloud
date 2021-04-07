@@ -27,8 +27,7 @@
 }
 
     .img-logo {
-        width: 100px;
-        height: 100px;
+        width: 75px;
         border-radius: 10px;
         text-align: center;
         transition: 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);

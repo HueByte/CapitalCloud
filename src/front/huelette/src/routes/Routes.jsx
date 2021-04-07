@@ -30,7 +30,7 @@ export const Routes = () => {
                 <Route path="/auth/login" component={Login} />
                 <Route path="/auth/Register" component={Register} />
 
-                {/* TODO figure out how to do that other way */}
+                {/* TODO - figure out how to do that other way */}
                 <Route path={["/wheel", "/roulette", "/crash", "/account/profile", "/account/rewards", "/leaderboards"]} component={BasicLayout}>
                     <BasicLayout>
                         <Route path="/wheel" component={Wheel} />

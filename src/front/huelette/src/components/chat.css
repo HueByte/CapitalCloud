@@ -213,4 +213,8 @@
         left: 50px;
         width: Calc(100% - 50px);
     }
+
+    .chat-message-text {
+        font-size: 12px;
+    }
 }

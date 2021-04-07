@@ -9,7 +9,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
 
     var [messages, setMessages] = useState([]);
     useEffect(async () => {
-        await sleep(1000); //TODO remove later (simulate loading)
+        await sleep(1000); // TODO - remove later (simulate loading)
         setMessages(generateMessages());
     }, [])
 

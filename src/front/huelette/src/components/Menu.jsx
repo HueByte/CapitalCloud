@@ -19,7 +19,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
         setIsChatActive(!isChatActive);
     }
 
-    //TODO temp variables remove later
+    //TODO - temp variables remove later
     const variables = {
         lvl: 160,
         barProgress: 33,

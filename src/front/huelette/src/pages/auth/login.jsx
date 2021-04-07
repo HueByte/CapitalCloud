@@ -5,26 +5,26 @@ import logo from '../../assets/white-cloud.jpg';
 import { AuthContext } from '../../auth/AuthContext';
 import { AuthLogin } from '../../auth/Auth';
 
+// TODO - Add modals
 const Login = () => {
     const authContext = useContext(AuthContext);
-    const isAuthenticated = authContext;
     const [redirect, setRedirect] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleEnter = (event) => {
-        if (event.key === "Enter") SendRequest();
+        if (event.key === "Enter") sendRequest();
     }
 
-    const SendRequest = () => {
+    const sendRequest = () => {
         //POST
         AuthLogin(email, password)
-            .then(data => {
+            .then(reponse => {
                 //handle error
-                if (data == null) {
+                if (reponse == null) {
                     PromiseRejectionEvent('');
                 }
-                return data.json();
+                return reponse.json();
             })
             .then(data => {
                 //set to localstorage
@@ -46,7 +46,7 @@ const Login = () => {
         <div className="auth-wrapper">
             <div className="auth__container">
                 <div className="auth-left">
-                    {/* TODO make coin drop from img */}
+                    {/* TODO - make coin drop from img */}
                     <img src={logo} alt="logo" />
                 </div>
                 <div className="auth-right">
@@ -68,7 +68,7 @@ const Login = () => {
                         </div>
                         <div className="buttons-right">
                             <NavLink to="/wheel" className="auth-button">Home</NavLink>
-                            <div className="auth-button" onClick={SendRequest}>Login</div>
+                            <div className="auth-button" onClick={sendRequest}>Login</div>
                         </div>
                     </div>
                     <div className="bottom-wave">
