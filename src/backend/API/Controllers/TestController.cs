@@ -21,8 +21,10 @@ namespace API.Controllers
         private readonly IMongoDbRepository<TestEntity> _repository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
-        public TestController(IMongoDbRepository<TestEntity> repository, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        private readonly IUserManagmentService _userManagerService;
+        public TestController(IMongoDbRepository<TestEntity> repository, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IUserManagmentService userManagerService)
         {
+            _userManagerService = userManagerService;
             _roleManager = roleManager;
             _userManager = userManager;
             _repository = repository;
@@ -33,9 +35,11 @@ namespace API.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-           return Ok("Secret Mission!");
+            var x = await _userManagerService.GetUsersUrlById(new List<string>(){"bfb32a95-eac8-48f2-a049-90f96770420b"});
+
+            return Ok(x);
         }
     }
 }

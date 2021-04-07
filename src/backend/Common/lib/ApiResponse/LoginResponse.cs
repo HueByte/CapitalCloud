@@ -7,23 +7,22 @@ namespace Common.ApiResponse
     {
         public string token { get; set; }
         public string tokenType { get; set; }
-
         public DateTime? expiresDate { get; set; }
-
+        public string UserName { get; set; }
+        public string Email { get; set; }
         public List<string> Errors { get; set; }
-
         public bool isSuccess { get; set; } = false;
-        
-        
-        
-        
-        
 
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
+
     }
 }
