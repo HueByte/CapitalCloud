@@ -100,7 +100,12 @@ namespace API.Configuration
             _services.AddScoped<IUserManagmentService,UserManagmentService>();
             _services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
-
+        
+        public void ConfigureCors() => _services.AddCors(o => o.AddDefaultPolicy(builder => {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        }));
 
     }
 }
