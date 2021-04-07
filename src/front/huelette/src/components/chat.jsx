@@ -45,7 +45,9 @@ const Chat = ({ onHideChat }) => {
                         </>
                     ) :
                         (
-                            <NavLink to="/auth/login">Log in to chat</NavLink>
+                            <>
+                                <NavLink to="/auth/login">Log in to chat</NavLink>
+                            </>
                         )}
                 </div>
                 <div className="chat-hide-button" onClick={hideChat}><i class={`fas fa-arrow-left${isChatVisible ? "" : " active"}`}></i></div>
@@ -86,7 +88,6 @@ function uuidv4() {
         return v.toString(16);
     });
 }
-
 
 const rnd = (max) => {
     return Math.floor(Math.random() * max);

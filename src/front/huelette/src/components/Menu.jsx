@@ -27,22 +27,22 @@ const Menu = () => {
                     <img src={logo} className="img-logo" />
                 </div>
                 <div className="nav-desktop__container">
-                    <div className="nav-desktop__main__container">
-                        <div className="nav-left">
-                            <NavLink activeClassName="active-button" to="/wheel" className="nav-desktop__main__button">
-                                <i class="fa fa-circle-o nav-desktop__main__button-icon"></i>
+                    <div className="nav-desktop-main__container">
+                        <div className="nav-desktop-left">
+                            <NavLink activeClassName="active-button" to="/wheel" className="nav-desktop-left-button">
+                                <i class="fa fa-circle-o nav-desktop-left-button-icon"></i>
                                 <div>Wheel</div>
                             </NavLink>
-                            <NavLink activeClassName="active-button" to="/roulette" className="nav-desktop__main__button">
-                                <i class="fa fa-superpowers nav-desktop__main__button-icon" aria-hidden="true"></i>
+                            <NavLink activeClassName="active-button" to="/roulette" className="nav-desktop-left-button">
+                                <i class="fa fa-superpowers nav-desktop-left-button-icon" aria-hidden="true"></i>
                                 <div>Roulette</div>
                             </NavLink>
-                            <NavLink activeClassName="active-button" to="crash" className="nav-desktop__main__button">
-                                <i class="fa fa-area-chart nav-desktop__main__button-icon" aria-hidden="true"></i>
+                            <NavLink activeClassName="active-button" to="crash" className="nav-desktop-left-button">
+                                <i class="fa fa-area-chart nav-desktop-left-button-icon" aria-hidden="true"></i>
                                 <div>Crash</div>
                             </NavLink>
                         </div>
-                        <div className="nav-right">
+                        <div className="nav-desktop-right">
                             {isLogged
                                 ? (
                                     <>
@@ -74,34 +74,34 @@ const Menu = () => {
                                 )}
                         </div>
                     </div>
-                    <div className="nav-desktop-sub">
-                        <div className="nav-desktop-sub__left">
+                    <div className="nav-desktop-sub__container">
+                        <div className="nav-desktop-sub-left">
                             {isLogged
                                 ? (
                                     <>
-                                        <NavLink activeClassName="active-sub-button" to="/account/profile" className="nav-desktop-sub-item">
-                                            <div className="nav-desktop-sub-item__icon">
+                                        <NavLink activeClassName="active-sub-item" to="/account/profile" className="nav-desktop-sub-item">
+                                            <div className="nav-desktop-sub-item-icon">
                                                 <i class="fa fa-user" aria-hidden="true"></i>
                                             </div>
-                                            <div className="nav-desktop-sub-item__text">My Account</div>
+                                            <div>My Account</div>
                                         </NavLink>
-                                        <NavLink activeClassName="active-sub-button" to="/account/rewards" className="nav-desktop-sub-item">
-                                            <div className="nav-desktop-sub-item__icon">
+                                        <NavLink activeClassName="active-sub-item" to="/account/rewards" className="nav-desktop-sub-item">
+                                            <div className="nav-desktop-sub-item-icon">
                                                 <i class="fa fa-gift" aria-hidden="true"></i>
                                             </div>
-                                            <div className="nav-desktop-sub-item__text">Rewards</div>
+                                            <div>Rewards</div>
                                         </NavLink>
                                     </>
                                 ) :
                                 (<></>)}
-                            <NavLink activeClassName="active-sub-button" to="/leaderboards" className="nav-desktop-sub-item">
-                                <div className="nav-desktop-sub-item__icon">
+                            <NavLink activeClassName="active-sub-item" to="/leaderboards" className="nav-desktop-sub-item">
+                                <div className="nav-desktop-sub-item-icon">
                                     <i class="fa fa-trophy" aria-hidden="true"></i>
                                 </div>
-                                <div className="nav-desktop-sub-item__text">Leaderboards</div>
+                                <div>Leaderboards</div>
                             </NavLink>
                         </div>
-                        <div className="nav-desktop-sub__right">
+                        <div className="nav-desktop-sub-right">
                             {isLogged ? (
                                 <>
                                     <div className="nav-progress__container">

@@ -2,9 +2,6 @@
     background: var(--Shark);
     height: 100px;
     width: 100%;
-    /* margin: 0; */
-    /* position: sticky;
-    position: -webkit-sticky; */
     position: relative;
     top: 0;
     z-index: 998;
@@ -21,18 +18,6 @@
     height: 100%;
 }
 
-.nav-desktop__container {
-    
-    width: calc(100% - 250px);          
-}
-
-.nav-desktop__main__container {
-    display: flex;
-    align-items: center;
-    height: 64px;
-    position: relative;
-}
-
 .nav-logo {
     width: 250px;
     height: 100%;
@@ -41,232 +26,227 @@
     align-items: center;
 }
 
-/* to remove */
-.nav-logo .img-logo {
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
-    cursor: pointer;
+    .img-logo {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
+        cursor: pointer;
+    }
+        .img-logo:hover {
+            transform: rotate(375deg);
+        }
+
+.nav-desktop__container {
+    width: calc(100% - 250px);          
 }
 
-.nav-logo .img-logo:hover {
-    transform: rotate(375deg);
-}
-
-
-.nav-left {
-    height: 100%;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    font-size: large;
-}
-
-.nav-right {
-    flex: 2;
-    display: flex;
-    align-items: center;
-    margin-right: 15px;
-    justify-content: flex-end;
-    margin-right: 50px;
-}
-
-.right-auth-button {
-    margin: 1em;
-    font-weight: bold;
-    font-size: larger;
-    transition: 200ms ease-in;
-}
-
-    .right-auth-button:hover {
-        color: var(--Rose) !important;
+    .nav-desktop-main__container {
+        display: flex;
+        align-items: center;
+        height: 64px;
+        position: relative;
     }
 
-.nav-desktop__main__button {
-    display: flex;
-    flex: 1;
-    height: 100%;
-    align-items: center;
-    cursor: pointer;
-    justify-content: center;
-    transition: all 300ms linear;
-}
+        .nav-desktop-left {
+            height: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            font-size: large;
+        }
 
-.nav-desktop__main__button-icon {
-    display: flex;
-    justify-items: center;
-    align-items: center;
-    margin-right: 0.4rem;
-}
+            .nav-desktop-left-button {
+                display: flex;
+                flex: 1;
+                height: 100%;
+                align-items: center;
+                cursor: pointer;
+                justify-content: center;
+                transition: all 300ms linear;
+            }
+                .nav-desktop-left-button:hover {
+                    color: white !important;
+                    background-color: var(--RoseSub);
+                }
+                .active-button {
+                    color: white !important;
+                    background-color: var(--Rose);
+                }
 
-.nav-desktop__main__button-text {
-    display: flex;
-    justify-items: center;
-    align-items: center;
-}
+            .nav-desktop-left-button-icon {
+                display: flex;
+                justify-items: center;
+                align-items: center;
+                margin-right: 0.4rem;
+            }
 
-.nav-desktop__main__button:hover {
-    color: white !important;
-    background-color: var(--RoseSub);
-}
+        .nav-desktop-right {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+            justify-content: flex-end;
+            margin-right: 50px;
+        }
 
-.nav-desktop-sub {
-    height: 36px;
-    display: flex;
-    align-items: center;
-    padding-left: 15px;
-    padding-right: 25px;
-    justify-content: space-between;
-    background-color: var(--SharkSub);
-}
+            .right-auth-button {
+                margin: 1em;
+                font-weight: bold;
+                font-size: larger;
+                transition: 200ms ease-in;
+            }
+                .right-auth-button:hover {
+                    color: var(--Rose) !important;
+                }
 
-.nav-desktop-sub__left {
-    display: flex;
-    margin-left: 1em;
-}
+            .nav-coins__container {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 300px;
+                height: 40px;
+                margin-right: 2em;
+            }
 
-.nav-desktop-sub-item {
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-    font-weight: normal;
-}
+                .nav-coins-icon {
+                    display: inline-flex;
+                    height: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: var(--Rose); 
+                    border: 2px solid var(--Rose); 
+                    border-radius: 10px 0 0 10px;
+                    color: white;
+                    padding: 0 10px 0 10px;
+                    flex: 2;
+                }
 
-.nav-desktop-sub-item:not(:first-child) {
-    margin-left: 20px;
-}
+                .nav-coins-balance {
+                    display: flex;
+                    height: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    flex: 4;
+                    border: 2px solid var(--Rose); 
+                    border-radius: 0 10px 10px 0;
+                    color: var(--Rose)
+                }
+                
+            .nav-avatar {
+                background-size: cover;
+                background-position: center;
+                width: 40px;
+                height: 40px;
+                border: 2px solid var(--Rose);
+                border-radius: 100%;
+                text-align: center;
+                min-width: auto;
+            }
 
-.nav-desktop-sub-item:hover {
-    color: var(--Rose) !important;
-}
+    .nav-desktop-sub__container {
+        height: 36px;
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+        padding-right: 25px;
+        justify-content: space-between;
+        background-color: var(--SharkSub);
+    }
 
-.nav-desktop-sub__right {
-    text-align: right;
-    display: flex;
-}
+        .nav-desktop-sub-left {
+            display: flex;
+            margin-left: 1em;
+        }
 
-.nav-desktop-sub-item__icon {
-    margin-right: 10px;
-}
+            .nav-desktop-sub-item {
+                display: flex;
+                justify-content: center;
+                cursor: pointer;
+                position: relative;
+                font-weight: normal;
+            }
+                .nav-desktop-sub-item:not(:first-child) {
+                    margin-left: 20px;
+                }
+                .nav-desktop-sub-item:hover {
+                    color: var(--Rose) !important;
+                }
+                .active-sub-item {
+                    color: var(--Rose) !important;
+                }
+                
+                .nav-desktop-sub-item-icon {
+                    margin-right: 10px;
+                }            
 
-.nav-avatar {
-    background-size: cover;
-    background-position: center;
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--Rose);
-    border-radius: 100%;
-    text-align: center;
-    min-width: auto;
-}
+        .nav-desktop-sub-right {
+            text-align: right;
+            display: flex;
+        }
 
-.nav-coins__container {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 300px;
-    height: 40px;
-    margin-right: 2em;
-}
+            .nav-progress__container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 30px;
+            }
 
-.nav-coins-icon {
-    display: inline-flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--Rose); 
-    border: 2px solid var(--Rose); 
-    border-radius: 10px 0 0 10px;
-    color: white;
-    padding: 0 10px 0 10px;
-    flex: 2;
-}
+                .nav-progress-level {
+                    margin-right: 1em;
+                    background-color: var(--Rose);
+                    color: white;
+                    height: 100%;
+                    width: 40px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 12px;
+                }
 
-.nav-coins-balance {
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    flex: 4;
-    border: 2px solid var(--Rose); 
-    border-radius: 0 10px 10px 0;
-    color: var(--Rose)
-}
+                .nav-progress-bar {
+                    width: 250px;
+                    border-radius: 12px;
+                    height: 100%;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    color: white;
+                    background-color: var(--Shark);
+                }
 
-.nav-progress__container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    
-}
+                    .nav-progress-bar-progress {
+                        background-color: var(--Rose);
+                        border-radius: 12px;
+                        height: 100%;
+                    }
 
-.nav-progress-level {
-    margin-right: 1em;
-    background-color: var(--Rose);
-    color: white;
-    height: 100%;
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 12px;
-}
+                    .nav-progress-bar-number {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
 
-.nav-progress-bar {
-    width: 250px;
-    border-radius: 12px;
-    height: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    color: white;
-    background-color: var(--Shark);
-}
-
-.nav-progress-bar-progress {
-    background-color: var(--Rose);
-    border-radius: 12px;
-    height: 100%;
-}
-
-.nav-progress-bar-number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+            .nav-desktop-sub-optional {
+                margin: 0 0.7rem 0 0.7rem;
+                color: var(--Grey);
+                background-color: var(--MainBg);
+                height: 30px;
+                width: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 12px;
+                cursor: pointer;
+            }
+                .nav-desktop-sub-optional:hover {
+                    color: var(--Rose)
+                }
 
 .nav-top a:hover, a:link, a:visited, a:active {
     color: inherit;
     text-decoration: none;
 }
 
-.active-button {
-    color: white !important;
-    background-color: var(--Rose);
-}
-
-.active-sub-button {
-    color: var(--Rose) !important;
-}
-
-.nav-desktop-sub-optional {
-    margin: 0 0.7rem 0 0.7rem;
-    color: var(--Grey);
-    background-color: var(--MainBg);
-    height: 30px;
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 12px;
-    cursor: pointer;
-}
-
-.nav-desktop-sub-optional:hover {
-    color: var(--Rose)
-}
