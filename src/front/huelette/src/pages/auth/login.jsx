@@ -1,28 +1,48 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './auth.css';
 import logo from '../../assets/white-cloud.jpg';
+import { AuthContext } from '../../auth/AuthContext';
+import { AuthLogin } from '../../auth/Auth';
 
 const Login = () => {
+    const authContext = useContext(AuthContext);
+    const isAuthenticated = authContext;
+    const [redirect, setRedirect] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleEnter = (event) => {
+        if (event.key === "Enter") SendRequest();
+    }
+
+    const SendRequest = () => {
+        //POST
+        AuthLogin(email, password)
+            .then(data => {
+                //handle error
+                if( data == null ) {
+                    PromiseRejectionEvent('');
+                }
+                return data.json();
+            })
+            .then(data => {
+                //set to localstorage
+                if(!data.isSuccess) {
+                    console.log(data.errors)
+                }
+                else {
+                    authContext.setAuthState(data);
+                    console.log(data);
+                }
+            })
+            .catch(() => {
+                console.log('Something went wrong with sending request');
+            })
+    }
+
     return (
         <div className="auth-wrapper">
-            {/* <div className="auth__container">
-                <div className="auth-home">
-                    <NavLink to="/"><i class="fa fa-home" aria-hidden="true"></i></NavLink>
-                </div>
-                <div className="auth-content-wrapper">
-                    <img src="https://www.flaticon.com/svg/static/icons/svg/2317/2317407.svg" alt="Security icon" className="icon" />
-                    <div className="auth-input__container">
-                        <input type="text" className="auth-input" placeholder="E-mail" />
-                        <input type="text" className="auth-input" placeholder="Password" />
-                    </div>
-                    <div className="auth-buttons__container">
-                        <NavLink to="/" className="auth-button">Login</NavLink>
-                        <NavLink to="/" className="auth-button">Register</NavLink>
-                    </div>
-                </div>
-            </div> */}
-
             <div className="auth__container">
                 <div className="auth-left">
                     {/* TODO make coin drop from img */}
@@ -34,8 +54,12 @@ const Login = () => {
                         <span>Log in to enjoy your game!</span>
                     </div>
                     <div className="right-input__container">
-                        <input type="text" className="auth-input" placeholder="E-mail" />
-                        <input type="password" className="auth-input" placeholder="Password" />
+                        <input type="text" className="auth-input" placeholder="E-mail"
+                            onChange={event => setEmail(event.target.value)} 
+                            onKeyDown={handleEnter} />
+                        <input type="password" className="auth-input" placeholder="Password"
+                            onChange={event => setPassword(event.target.value)} 
+                            onKeyDown={handleEnter} />
                     </div>
                     <div className="right-buttons__container">
                         <div className="buttons-left">
@@ -43,7 +67,7 @@ const Login = () => {
                         </div>
                         <div className="buttons-right">
                             <NavLink to="/" className="auth-button">Home</NavLink>
-                            <NavLink to="/" className="auth-button">Login</NavLink>
+                            <div className="auth-button" onClick={SendRequest}>Login</div>
                         </div>
                     </div>
                 </div>
