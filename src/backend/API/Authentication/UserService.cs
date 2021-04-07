@@ -36,6 +36,8 @@ namespace API.Authentication
             return new LoginResponse{
                     isSuccess = true,
                     token = userToken,
+                    UserName = user.UserName,
+                    Email = user.Email,
                     tokenType = "Bearer",
                     expiresDate = DateTime.Now.AddDays(30)
                 };
