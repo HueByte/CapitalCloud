@@ -24,6 +24,7 @@
 
 .auth-left > img {
     width: 50%;
+    min-width: 100px;
 }
 
 .auth-right {
@@ -132,7 +133,6 @@
 
     .auth-left > img{
         /* width: 20%; */
-        min-width: 120px;
         width: 20%;
         /* maybe? */
     }
