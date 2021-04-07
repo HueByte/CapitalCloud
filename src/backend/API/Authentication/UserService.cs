@@ -51,6 +51,7 @@ namespace API.Authentication
                 UserName = registermodel.Username,
                 Email = registermodel.Email
             };
+            user.Roles.Add("user");
             var result = await _userManager.CreateAsync(user, registermodel.Password);
             if (result.Succeeded)
             {
