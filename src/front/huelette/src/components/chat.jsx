@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../auth/AuthContext';
 import './chat.css';
 
 const Chat = ({ onHideChat }) => {
+    const authContext = useContext(AuthContext);
     const [isChatVisible, setIsChatVisible] = useState(true);
+    const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
 
     var [messages, setMessages] = useState([]);
-    useEffect( async () => {
+    useEffect(async () => {
         await sleep(1000); //TODO remove later (simulate loading)
         setMessages(generateMessages());
     }, [])
@@ -34,8 +38,15 @@ const Chat = ({ onHideChat }) => {
                     )) : <div className="chat-loader"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>}
                 </div>
                 <div className="chat-input">
-                    <input type="text" placeholder="Place your text here"/>
-                    <div className="chat-input-submit"><i class="fas fa-arrow-right"></i></div>
+                    {isLogged ? (
+                        <>
+                            <input type="text" placeholder="Place your text here" />
+                            <div className="chat-input-submit"><i class="fas fa-arrow-right"></i></div>
+                        </>
+                    ) :
+                        (
+                            <NavLink to="/auth/login">Log in to chat</NavLink>
+                        )}
                 </div>
                 <div className="chat-hide-button" onClick={hideChat}><i class={`fas fa-arrow-left${isChatVisible ? "" : " active"}`}></i></div>
             </div>

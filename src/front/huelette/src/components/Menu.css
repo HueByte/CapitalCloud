@@ -73,6 +73,17 @@
     margin-right: 50px;
 }
 
+.right-auth-button {
+    margin: 1em;
+    font-weight: bold;
+    font-size: larger;
+    transition: 200ms ease-in;
+}
+
+    .right-auth-button:hover {
+        color: var(--Rose) !important;
+    }
+
 .nav-desktop__main__button {
     display: flex;
     flex: 1;
@@ -207,7 +218,6 @@
 
 .nav-progress-bar {
     width: 250px;
-    /* border: 2px solid var(--Rose); */
     border-radius: 12px;
     height: 100%;
     position: relative;
