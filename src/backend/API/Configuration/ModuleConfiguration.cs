@@ -95,10 +95,12 @@ namespace API.Configuration
         }
         public void ConfigureServices()
         {
+            
+            _services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
+            _services.AddScoped<LevelRepository>();
             _services.AddScoped<IUserService, UserService>();
             _services.AddScoped<IJwtAuthentication, JwtAuthentication>();
             _services.AddScoped<IUserManagmentService,UserManagmentService>();
-            _services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
         
         public void ConfigureCors() => _services.AddCors(o => o.AddDefaultPolicy(builder => {
