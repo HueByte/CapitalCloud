@@ -35,6 +35,7 @@ namespace API
             moduleConfiguration.ConfigureSecurity();
             moduleConfiguration.ConfigureSwagger();
             moduleConfiguration.ConfigureServices();
+            moduleConfiguration.ConfigureCors();
             // services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
         }
 
@@ -59,6 +60,7 @@ namespace API
 
 
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

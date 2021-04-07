@@ -139,12 +139,20 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
                 <div className="nav-mobile">
                     {isLogged ? (
                         <>
-                            <div className="nav-balance-mobile">
-                                a
-                </div>
-                            <div className="nav-avatar-mobile">
-
+                            <div className="nav-coins__container">
+                                <div className="nav-coins-icon">
+                                    <i class="fas fa-coins"></i>
+                                    <span style={{ textTransform: "uppercase", marginLeft: 5 }}>coins</span>
+                                </div>
+                                <div className="nav-coins-balance">
+                                    {variables.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                                </div>
                             </div>
+                            <NavLink to="/account/profile"
+                                className="nav-avatar"
+                                style={{ backgroundImage: "url(https://lh3.googleusercontent.com/iFjN0aRv7Olsk3uHMzLQdALoJVA3qRyAgJ75Z5PsTLOrUOSzSYP2kbGMvwveZc4a7P9byIV5rbZXDwwfttbyD_wP=w640-h400-e365-rj-sc0x00ffffff)" }}
+                                title="Profile">
+                            </NavLink>
                         </>
                     ) :
                         (
