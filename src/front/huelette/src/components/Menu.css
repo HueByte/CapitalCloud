@@ -106,7 +106,7 @@
                 justify-content: center;
                 align-items: center;
                 min-width: 300px;
-                height: 40px;
+                height: 30px;
                 margin-right: 2em;
             }
 
@@ -184,13 +184,14 @@
         .nav-desktop-sub-right {
             text-align: right;
             display: flex;
+            align-items: center;
         }
 
             .nav-progress__container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 30px;
+                height: 20px;
             }
 
                 .nav-progress-level {
@@ -245,11 +246,23 @@
                     color: var(--Rose)
                 }
 
-.nav-top a:hover, a:link, a:visited, a:active {
+.nav-top > a:hover, a:link, a:visited, a:active {
     color: inherit;
     text-decoration: none;
 }
 
-@media screen and (max-width: 1220px) {
-    
+@media screen and (max-width: 1250px) {
+    .nav-desktop-right {
+        flex: 1;
+    }
 }
+
+@media screen and (max-width: 1110px) {
+    .nav-top {
+        height: 60px;
+    }
+
+    .nav-desktop {
+        display: none;
+    }
+} 

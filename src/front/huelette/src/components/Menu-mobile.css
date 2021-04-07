@@ -1,0 +1,104 @@
+.nav-mobile {
+    display: none;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0px 5px 6px #1d1d22;
+}
+
+.nav-auth__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 200px; 
+    box-shadow: 4px 5px 5px black;
+}
+
+    .nav-auth-button-mobile {
+        height: 32px;
+        flex: 1;
+        display: grid;
+        place-items: center;
+        background-color: white;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: var(--Shark) !important;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 5% 50%);
+    }
+
+    .nav-auth-button-mobile:nth-child(1) {
+        background-color: var(--Rose);
+        clip-path: polygon(95% 0, 100% 50%, 95% 100%, 0 100%, 0 0);
+        color: white !important;
+        z-index: 10;
+    }
+
+    .nav-auth-button-mobile:hover {
+        transform: scale(1.1);
+    }
+
+.nav-balance-mobile {
+
+}
+
+.nav-mobile-side {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    height: Calc(100% - 60px);
+    width: 90px;
+    z-index: 999;
+    background-color: var(--Shark);
+    font-size: x-small;
+    box-shadow: 8px 5px 7px #1d1d22;
+    overflow: auto;
+    overflow-x: hidden;
+    color: var(--Grey);
+}
+
+    .nav-mobile-side-item {
+        height: 60px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: 200ms ease-in-out;
+    }
+        .active {
+            color: var(--Rose) !important;
+        }
+
+        .item-icon {
+            font-size: x-large;
+        }
+
+.nav-mobile-side > a:hover, a:link, a:visited, a:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 1110px) {
+    .nav-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-mobile-side {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .nav-mobile-side {
+        width: 50px;
+    }
+
+    .item-text {
+        display: none;
+    }
+}

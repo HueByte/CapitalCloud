@@ -40,7 +40,8 @@
     position: relative;
     display: flex;
     flex-direction: column-reverse;
-    margin: 1em 0 1em 0;
+    /* margin: 1em 0 1em 0; */
+    margin-top: 1rem;
     height: 90vh;
     width: 90%;
     /* background-color: teal; */
@@ -70,7 +71,7 @@
     border-radius: 100%;
     width: 24px;
     height: 24px;
-    border: 1px solid var(--Rose);
+    /* border: 1px solid var(--Rose); */
 }
 
 .chat-message-level {
@@ -106,6 +107,7 @@
     justify-content: center;
     width: 100%;
     height: Calc(100vh - 90vh - 2em);
+    min-height: 50px;
     background-color: #18181d;
 }
 
@@ -187,3 +189,28 @@
     }
   }
   
+@media screen and (max-width: 1110px) {
+    .chat-hide-button {
+        display: none;
+    }
+
+    .chat__container {
+        top: 60px;
+        left: 90px;
+        height: Calc(100% - 60px);
+        z-index: 900;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .chat__container {
+        width: Calc(100% - 90px);
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .chat__container {
+        left: 50px;
+        width: Calc(100% - 50px);
+    }
+}

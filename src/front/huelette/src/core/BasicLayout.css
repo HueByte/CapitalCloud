@@ -15,11 +15,27 @@
     left: 250px;
     top: 100px;
     height: 100%;
+    padding: 2em;
     overflow: scroll;
     transition: 1s ease-in-out;
 }
 
 .fullsize {
-    width: 100vw;
+    width: 100%;
     left: 0;
+}
+
+@media screen and (max-width: 1110px) {
+    .main__container {
+        top: 60px;
+        left: 90px;
+        width: Calc(100% - 90px);
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .main__container {
+        left: 50px;
+        width: Calc(100% - 50px);
+    }
 }

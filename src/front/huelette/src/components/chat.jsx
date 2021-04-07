@@ -3,9 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
 import './chat.css';
 
-const Chat = ({ onHideChat }) => {
+const Chat = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
-    const [isChatVisible, setIsChatVisible] = useState(true);
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
 
     var [messages, setMessages] = useState([]);
@@ -15,16 +14,12 @@ const Chat = ({ onHideChat }) => {
     }, [])
 
     const hideChat = () => {
-        let test = isChatVisible ? false : true
-        // setIsChatVisible(isChatVisible ? false : true);
-        // onHideChat(isChatVisible ? false : true);
-        setIsChatVisible(test);
-        onHideChat(test);
+        setIsChatActive(!isChatActive);
     }
 
     return (
         <>
-            <div className={`chat__container${isChatVisible ? "" : " hide"}`} id="chat">
+            <div className={`chat__container${isChatActive ? "" : " hide"}`} id="chat">
                 <div className="chat-text">
                     {messages.length ? messages.map((mess, index) => (
                         <div key={mess.id} className="chat-message">
@@ -50,7 +45,7 @@ const Chat = ({ onHideChat }) => {
                             </>
                         )}
                 </div>
-                <div className="chat-hide-button" onClick={hideChat}><i class={`fas fa-arrow-left${isChatVisible ? "" : " active"}`}></i></div>
+                <div className="chat-hide-button" onClick={hideChat}><i class={`fas fa-arrow-left${isChatActive ? "" : " active"}`}></i></div>
             </div>
         </>
     )
@@ -66,7 +61,7 @@ const generateMessages = () => {
         'level': '29',
         'avatar': 'https://www.creativefabrica.com/wp-content/uploads/2019/02/Cloud-Icon-by-arus-580x386.jpg',
         'username': 'meee',
-        'text': 'whats happening'
+        'text': `${window.innerWidth} - ${window.innerHeight} `
     });
 
     for (let i = 1; i < 50; i++) {
