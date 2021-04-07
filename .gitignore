@@ -16,6 +16,9 @@
 # logs
 logs/
 
+#env
+*.env*
+
 # User-specific files
 *.rsuser
 *.suo

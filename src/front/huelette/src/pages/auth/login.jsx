@@ -35,7 +35,7 @@ const Login = () => {
                     </div>
                     <div className="right-input__container">
                         <input type="text" className="auth-input" placeholder="E-mail" />
-                        <input type="text" className="auth-input" placeholder="Password" />
+                        <input type="password" className="auth-input" placeholder="Password" />
                     </div>
                     <div className="right-buttons__container">
                         <div className="buttons-left">
