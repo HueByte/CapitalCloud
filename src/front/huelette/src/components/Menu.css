@@ -265,4 +265,8 @@
     .nav-desktop {
         display: none;
     }
+
+    .nav-coins__container {
+        min-width: 200px;
+    }
 } 
