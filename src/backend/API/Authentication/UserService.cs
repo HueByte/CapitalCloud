@@ -6,6 +6,7 @@ using Common.ApiResponse;
 using Common.lib.ApiResponse;
 using Core.DTOModels;
 using Core.Entities;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Authentication
@@ -27,26 +28,30 @@ namespace API.Authentication
         {
             // Find user by mail. Return Service Response with empty LoginResponse if don't find
             var user = await _userManager.FindByEmailAsync(loginModel.Email);
-            if (user == null) return new LoginResponse(){Errors = new List<string>(){"User not found"}};
+            if (user == null) return new LoginResponse() { Errors = new List<string>() { "User not found" } };
             // Verify User Password. Return Service Response with empty LoginResponse if password wrong
             var result = await _userManager.CheckPasswordAsync(user, loginModel.Password);
-            if (!result) return new LoginResponse(){Errors = new List<string>(){"User not found"}};;
+            if (!result) return new LoginResponse() { Errors = new List<string>() { "User not found" } }; ;
             //Generate token and return Service Response with Token in LoginResponse
             var userToken = _jwtAuthentication.GenerateJsonWebToken(user);
-            return new LoginResponse{
-                    isSuccess = true,
-                    token = userToken,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    tokenType = "Bearer",
-                    expiresDate = DateTime.Now.AddDays(30)
-                };
+            return new LoginResponse
+            {
+                isSuccess = true,
+                token = userToken,
+                UserName = user.UserName,
+                level = user.lvl,
+                avatar_url = user.Avatar_Url,
+                exp = user.exp,
+                Email = user.Email,
+                tokenType = "Bearer",
+                expiresDate = DateTime.Now.AddDays(30)
+            };
         }
 
         public async Task<RegisterResponse> RegisterUserAsync(RegisterDTO registermodel)
         {
             if (registermodel == null)
-                return new RegisterResponse(){Errors = new List<string>(){"EmptyForm"}};
+                return new RegisterResponse() { Errors = new List<string>() { "EmptyForm" } };
             var user = new ApplicationUser()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -57,12 +62,12 @@ namespace API.Authentication
             var result = await _userManager.CreateAsync(user, registermodel.Password);
             if (result.Succeeded)
             {
-                return new RegisterResponse(){isSuccess = true};
+                return new RegisterResponse() { isSuccess = true };
             }
             else
             {
                 var errorlist = result.Errors.Select(e => e.Description);
-                return new RegisterResponse(){Errors=errorlist.ToList()};
+                return new RegisterResponse() { Errors = errorlist.ToList() };
             }
         }
     }

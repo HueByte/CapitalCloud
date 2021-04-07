@@ -5,6 +5,7 @@ using API.Configuration;
 using Core.Entities;
 using Core.Models;
 using Core.RepositoriesInterfaces;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -18,16 +19,11 @@ namespace API.Controllers
     [Authorize]
     public class TestController : ControllerBase
     {
-        private readonly IMongoDbRepository<TestEntity> _repository;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
-        private readonly IUserManagmentService _userManagerService;
-        public TestController(IMongoDbRepository<TestEntity> repository, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IUserManagmentService userManagerService)
+        private readonly LevelRepository _levelRepository;
+        public TestController(LevelRepository levelRepository)
         {
-            _userManagerService = userManagerService;
-            _roleManager = roleManager;
-            _userManager = userManager;
-            _repository = repository;
+            _levelRepository = levelRepository;
+
 
         }
         /// <summary>
@@ -37,9 +33,8 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Get()
         {
-            var x = await _userManagerService.GetUsersUrlById(new List<string>(){"bfb32a95-eac8-48f2-a049-90f96770420b"});
-
-            return Ok(x);
+            await _levelRepository.InsertOne(new LevelModel(){lvl=2,expToGrant=100});
+            return Ok();
         }
     }
 }
