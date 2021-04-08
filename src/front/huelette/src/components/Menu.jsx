@@ -57,6 +57,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
 
         return { level: level, percent: percent };
     }
+    
     //TODO - temp variables remove later
     const variables = {
         lvl: 160,

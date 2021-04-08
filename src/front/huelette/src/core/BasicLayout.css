@@ -33,7 +33,7 @@
     }
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 410px) {
     .main__container {
         left: 50px;
         width: Calc(100% - 50px);
