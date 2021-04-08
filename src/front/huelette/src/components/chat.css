@@ -9,6 +9,7 @@
     background-color: var(--Shark);
     transition: 1s ease-in-out;
     z-index: 999;
+    box-shadow: 10px 5px 6px #1d1d22;
 }
 
 .chat-hide-button {
@@ -34,6 +35,8 @@
 
 .hide {
     transform: translateX(-100%);
+    box-shadow: none;
+    z-index: 10;
 }
 
 .chat-text {
@@ -198,7 +201,6 @@
         top: 60px;
         left: 90px;
         height: Calc(100% - 60px);
-        z-index: 900;
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Menu.css';
 import './Menu-mobile.css';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -7,8 +7,11 @@ import { AuthContext } from '../auth/AuthContext';
 
 const Menu = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
+    const [level, setLevel] = useState({
+        lvl: 0,
+        percent: 0
+    })
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
-    console.log(isChatActive)
 
     const logout = () => {
         authContext.singout();
@@ -19,6 +22,41 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
         setIsChatActive(!isChatActive);
     }
 
+    useEffect(() => {
+        if (authContext.authState != null)
+            // setLevel(calcLevel(authContext.authState.exp))
+            setLevel(calcLevel(75));
+    }, []);
+
+    const calcLevel = (exp) => {
+        // formula
+        // exp = Math.round(3 * Math.pow(level, 2) / 5)
+        let level = Math.floor((Math.cbrt(5 * exp / 3)));
+        let start = Math.round(3 * Math.pow(level, 3) / 5);
+        let end = Math.round(3 * Math.pow(level + 1, 3) / 5);
+        let section = end - start;
+        let percent = Math.round((exp - start) / section * 1000) / 10;
+
+        //style fixes
+        // if (percent == 100) {
+        //     level += 1;
+        //     percent = 0;
+        // }
+
+        // TODO - remove later?
+        console.log(`${percent}%`)
+        console.log(`start ${start} -> end ${end} section ${section}`);
+        console.log(`currentXp ${exp} level ${Math.cbrt(5 * exp / 3)}`);
+
+        // TODO - remove testing array
+        let testArray = [];
+        for (let index = 1; index <= 999; index++) {
+            testArray.push(Math.round(3 * Math.pow(index, 3) / 5));
+        }
+        console.log(testArray);
+
+        return { level: level, percent: percent };
+    }
     //TODO - temp variables remove later
     const variables = {
         lvl: 160,
@@ -113,14 +151,14 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
                                     <>
                                         <div className="nav-progress__container">
                                             <div className="nav-progress-level">
-                                                {variables.lvl}
+                                                {level.level}
                                             </div>
                                             <div className="nav-progress-bar">
-                                                <div className="nav-progress-bar-progress" style={{ width: `${variables.barProgress}%` }}>
+                                                <div className="nav-progress-bar-progress" style={{ width: `${level.percent}%` }}>
 
                                                 </div>
                                                 <div className="nav-progress-bar-number">
-                                                    {variables.barProgress}%
+                                                    {level.percent}%
                                     </div>
                                             </div>
                                         </div>

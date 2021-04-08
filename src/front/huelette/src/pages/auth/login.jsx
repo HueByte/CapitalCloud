@@ -57,10 +57,12 @@ const Login = () => {
                     <div className="right-input__container">
                         <input type="text" className="auth-input" placeholder="E-mail"
                             onChange={event => setEmail(event.target.value)}
-                            onKeyDown={handleEnter} />
+                            onKeyDown={handleEnter} 
+                            autoComplete='email' />
                         <input type="password" className="auth-input" placeholder="Password"
                             onChange={event => setPassword(event.target.value)}
-                            onKeyDown={handleEnter} />
+                            onKeyDown={handleEnter}
+                            autoComplete='password' />
                     </div>
                     <div className="right-buttons__container">
                         <div className="buttons-left">

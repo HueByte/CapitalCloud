@@ -5,6 +5,7 @@
     position: relative;
     top: 0;
     z-index: 998;
+    box-shadow: 0px 5px 6px #1d1d22;
 }
 
 .nav-top > * {
@@ -152,6 +153,7 @@
         padding-right: 25px;
         justify-content: space-between;
         background-color: var(--SharkSub);
+        /* box-shadow: 0px 5px 6px #1d1d22; */
     }
 
         .nav-desktop-sub-left {
