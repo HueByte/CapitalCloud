@@ -6,8 +6,10 @@ using API.Authentication;
 using AspNetCore.Identity.Mongo;
 using Core.Entities;
 using Core.RepositoriesInterfaces;
+using Core.ServiceInterfaces;
 using Infrastructure;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -43,7 +45,7 @@ namespace API.Configuration
                  identity.Password.RequireLowercase = true;
                  identity.Password.RequireNonAlphanumeric = false;
                  identity.User.RequireUniqueEmail = true;
-                 identity.SignIn.RequireConfirmedEmail = false;
+                 identity.SignIn.RequireConfirmedEmail = true;
              },
                mongo =>
              {
@@ -99,10 +101,10 @@ namespace API.Configuration
         {
 
             _services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
-            _services.AddScoped<LevelRepository>();
+            _services.AddScoped<EmailConfirmationTokenRepository>();
+            _services.AddScoped<IEmailSender, EmailSender>();
             _services.AddScoped<IUserService, UserService>();
             _services.AddScoped<IJwtAuthentication, JwtAuthentication>();
-            _services.AddScoped<IUserManagmentService, UserManagmentService>();
         }
 
         public void ConfigureCors() => _services.AddCors(o => o.AddDefaultPolicy(builder =>

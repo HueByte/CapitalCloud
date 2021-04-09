@@ -18,10 +18,12 @@ namespace API.Controllers
     [Authorize]
     public class TestController : BaseApiController
     {
-        private readonly LevelRepository _levelRepository;
-        public TestController(LevelRepository levelRepository)
+        private readonly IMongoDbRepository<EmailConfirmationToken> _mongoDbRepository;
+
+        public TestController(IMongoDbRepository<EmailConfirmationToken> mongoDbRepository)
         {
-            _levelRepository = levelRepository;
+            _mongoDbRepository = mongoDbRepository;
+
         }
 
         /// <summary>
@@ -31,7 +33,11 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Get()
         {
-            await _levelRepository.InsertOne(new LevelModel() { lvl = 2, expToGrant = 100 });
+            await _mongoDbRepository.InsertOne(new EmailConfirmationToken(){
+                userId = Guid.NewGuid().ToString(),
+                token = "123",
+                expiredAt = DateTime.Now.AddHours(24)
+            });
             return Ok();
         }
 
