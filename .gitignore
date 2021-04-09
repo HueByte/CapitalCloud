@@ -13,6 +13,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Deployment
+build/
+Release/
+Deploy/
+
 # pem
 *.pem
 .well-known/
