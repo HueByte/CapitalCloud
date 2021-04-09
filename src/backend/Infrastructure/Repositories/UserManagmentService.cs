@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Models;
@@ -27,9 +28,13 @@ namespace Infrastructure.Repositories
                     avatarsUrlList.Add(userAvatar);
                 }
                 else
-                avatarsUrlList.Add(string.Empty);
-
+                    avatarsUrlList.Add(string.Empty);
             }
+
+            // TODO - verify?
+            // var users = _userManager.Users.Select(c => c.Avatar_Url == null ? "https://www.viadelvino.com/wp-content/uploads/2016/02/photo.jpg.png" : c.Avatar_Url)
+            //                               .ToList();
+
             if (avatarsUrlList == null) return StaticResponse<List<string>>.BadResponse(null, "No user founded", 1);
             else return StaticResponse<List<string>>.GoodResponse(avatarsUrlList, "Loaded Avatars_Urls");
         }

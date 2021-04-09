@@ -22,9 +22,8 @@ namespace API.Controllers
         public TestController(LevelRepository levelRepository)
         {
             _levelRepository = levelRepository;
-
-
         }
+        
         /// <summary>
         /// Api For Testing
         /// </summary>

@@ -15,18 +15,5 @@ namespace Common.ApiResponse
         public string avatar_url { get; set; }
         public List<string> Errors { get; set; }
         public bool isSuccess { get; set; } = false;
-
-            
-
-
-
-
-
-
-
-
-
-
-
     }
 }

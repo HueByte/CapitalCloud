@@ -104,13 +104,14 @@ namespace Infrastructure.Repositories
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
             var x = await collection.Find(filter).FirstOrDefaultAsync();
-            if(x!=null) Log.Information("Get Entity type of " + collection.CollectionNamespace + " with id " + id + " from " + Database.DatabaseNamespace);
+            if (x != null) Log.Information("Get Entity type of " + collection.CollectionNamespace + " with id " + id + " from " + Database.DatabaseNamespace);
             else Log.Error("Error Message");
-            return new ServiceResponse<TDocument>(){
+            return new ServiceResponse<TDocument>()
+            {
                 Data = x,
-                isSuccess = x==null ? false : true,
-                message = x==null ? "Didnt find Entity with id" + id : "Get Entity with id" + id,
-                flag = x==null ? 1 : 0
+                isSuccess = x == null ? false : true,
+                message = x == null ? "Didnt find Entity with id" + id : "Get Entity with id" + id,
+                flag = x == null ? 1 : 0
 
             };
         }
@@ -119,11 +120,12 @@ namespace Infrastructure.Repositories
         {
             var filter = Builders<TDocument>.Filter.Empty;
             var x = await collection.Find(filter).ToListAsync();
-            return new ServiceResponse<List<TDocument>>(){
+            return new ServiceResponse<List<TDocument>>()
+            {
                 Data = x,
-                isSuccess = x==null ? false : true,
-                message = x==null ? "Problem occured during loading":"Entities List Loaded",
-                flag = x==null ? 1 : 0
+                isSuccess = x == null ? false : true,
+                message = x == null ? "Problem occured during loading" : "Entities List Loaded",
+                flag = x == null ? 1 : 0
 
             };
         }
@@ -131,7 +133,7 @@ namespace Infrastructure.Repositories
         public async Task<ServiceResponse<ReplaceOneResult>> Update(string id, TDocument model)
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
-            var x =await collection.ReplaceOneAsync(filter, model);
+            var x = await collection.ReplaceOneAsync(filter, model);
             if (x.IsAcknowledged) Log.Information("Positive");
             else Log.Error("Error Message");
             return new ServiceResponse<ReplaceOneResult>()

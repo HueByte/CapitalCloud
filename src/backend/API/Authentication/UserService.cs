@@ -56,9 +56,10 @@ namespace API.Authentication
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = registermodel.Username,
-                Email = registermodel.Email
+                Email = registermodel.Email,
+                Roles = new List<string>() { "user" }
             };
-            user.Roles.Add("user");
+            
             var result = await _userManager.CreateAsync(user, registermodel.Password);
             if (result.Succeeded)
             {

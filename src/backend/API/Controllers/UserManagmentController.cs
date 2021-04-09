@@ -17,6 +17,7 @@ namespace API.Controllers
             _userManagment = userManagment;
 
         }
+        
         [HttpGet("avatar")]
         public async Task<IActionResult> GetAvatar([FromBody] List<string> idList)
         {
