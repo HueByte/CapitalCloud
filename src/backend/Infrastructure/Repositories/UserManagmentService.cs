@@ -16,6 +16,8 @@ namespace Infrastructure.Repositories
             _userManager = userManager;
 
         }
+
+        // TODO - remove it kill it destroy it 
         public async Task<ServiceResponse<List<string>>> GetUsersUrlById(List<string> idList)
         {
             var avatarsUrlList = new List<string>();

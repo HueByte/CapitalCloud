@@ -23,7 +23,7 @@ namespace API.Controllers
         {
             _levelRepository = levelRepository;
         }
-        
+
         /// <summary>
         /// Api For Testing
         /// </summary>
@@ -33,6 +33,12 @@ namespace API.Controllers
         {
             await _levelRepository.InsertOne(new LevelModel() { lvl = 2, expToGrant = 100 });
             return Ok();
+        }
+
+        [HttpGet("Tester")]
+        public IActionResult Test()
+        {
+            return Ok("Welcome");
         }
     }
 }

@@ -9,6 +9,8 @@ using Core.RepositoriesInterfaces;
 using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -95,19 +97,23 @@ namespace API.Configuration
         }
         public void ConfigureServices()
         {
-            
+
             _services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
             _services.AddScoped<LevelRepository>();
             _services.AddScoped<IUserService, UserService>();
             _services.AddScoped<IJwtAuthentication, JwtAuthentication>();
-            _services.AddScoped<IUserManagmentService,UserManagmentService>();
+            _services.AddScoped<IUserManagmentService, UserManagmentService>();
         }
-        
-        public void ConfigureCors() => _services.AddCors(o => o.AddDefaultPolicy(builder => {
+
+        public void ConfigureCors() => _services.AddCors(o => o.AddDefaultPolicy(builder =>
+        {
             builder.AllowAnyOrigin()
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         }));
 
+        public void ConfigureForwardedHeaders() => _services.Configure<ForwardedHeadersOptions>(options => {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        });
     }
 }
