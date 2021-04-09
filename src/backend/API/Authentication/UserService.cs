@@ -44,7 +44,6 @@ namespace API.Authentication
             isSuccess = true,
             token = userToken,
             UserName = user.UserName,
-            level = user.lvl,
             avatar_url = user.Avatar_Url,
             exp = user.exp,
             Email = user.Email,
