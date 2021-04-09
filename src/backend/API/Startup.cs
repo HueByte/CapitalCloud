@@ -61,6 +61,7 @@ namespace API
 
 
             app.UseCors();
+            app.UseHsts();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
