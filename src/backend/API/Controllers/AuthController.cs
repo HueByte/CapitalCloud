@@ -27,7 +27,7 @@ namespace API.Controllers
             _userService = userService;
             _userManager = userManager;
         }
-        
+
         /// <summary>
         ///Register new User
         /// </summary>
@@ -45,9 +45,9 @@ namespace API.Controllers
         /// <response code="200">Created new user</response>
         /// <response code="400">Error Occured during adding user</response>  
         [HttpPost("Register")]
-        [ProducesResponseType(typeof(RegisterResponse),400)]
-        [ProducesResponseType(typeof(RegisterResponse),200)]
-  
+        [ProducesResponseType(typeof(RegisterResponse), 400)]
+        [ProducesResponseType(typeof(RegisterResponse), 200)]
+
         public async Task<IActionResult> RegisterUser([FromBody] RegisterDTO registerModel)
         {
 
@@ -74,15 +74,25 @@ namespace API.Controllers
         /// <response code="200">User Loged in</response>
         /// <response code="400">Error Occured during Loging. Returns Empty Object</response>  
         [HttpPost("Login")]
-        [ProducesResponseType(typeof(LoginResponse),200)]
-        [ProducesResponseType(typeof(LoginResponse),400)]
+        [ProducesResponseType(typeof(LoginResponse), 200)]
+        [ProducesResponseType(typeof(LoginResponse), 400)]
         public async Task<IActionResult> LoginUser([FromBody] LoginDTO loginModel)
         {
-            var response = await _userService.LoginUserAsync(loginModel);
-            if (response.isSuccess)
+            // var response = await _userService.LoginUserAsync(loginModel);
+            // if (response.isSuccess)
+            //     return Ok(response);
+            // else
+            //     return BadRequest(response);
+
+            try
+            {
+                var response = await _userService.LoginUserAsync(loginModel);
                 return Ok(response);
-            else
-                return BadRequest(response);
+            }
+            catch (Exception e)
+            {
+                return Ok(e);
+            }
         }
     }
 }
