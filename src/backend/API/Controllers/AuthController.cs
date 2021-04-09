@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Authentication;
+using API.Extensions;
 using Common.ApiResponse;
 using Common.lib.ApiResponse;
 using Core.DTOModels;
@@ -15,9 +16,9 @@ using MongoDB.Driver;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    // [Route("api/[controller]")]
+    // [ApiController]
+    public class AuthController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;

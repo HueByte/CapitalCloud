@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Configuration;
+using API.Extensions;
 using Core.Entities;
 using Core.Models;
 using Core.RepositoriesInterfaces;
@@ -14,10 +15,8 @@ using MongoDB.Driver;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     [Authorize]
-    public class TestController : ControllerBase
+    public class TestController : BaseApiController
     {
         private readonly LevelRepository _levelRepository;
         public TestController(LevelRepository levelRepository)
@@ -33,7 +32,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Get()
         {
-            await _levelRepository.InsertOne(new LevelModel(){lvl=2,expToGrant=100});
+            await _levelRepository.InsertOne(new LevelModel() { lvl = 2, expToGrant = 100 });
             return Ok();
         }
     }
