@@ -54,9 +54,9 @@ namespace API.Authentication
                 // Login via password
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, false);
                 // handle wrong password
-                if (!result.Succeeded) return new LoginResponse() { Errors = new List<string>() { "Either e-mail or password is incorrect"} };
+                if (!result.Succeeded) return new LoginResponse() { Errors = new List<string>() { "Either e-mail or password is incorrect" } };
                 // handle unverified email if user provided correct password and email
-                if (!(await _userManager.IsEmailConfirmedAsync(user))) return new LoginResponse() { Errors = new List<string>() { "Verify your e-mail"} };
+                if (!(await _userManager.IsEmailConfirmedAsync(user))) return new LoginResponse() { Errors = new List<string>() { "Verify your e-mail" } };
 
                 //Generate token and return Service Response with Token in LoginResponse
                 return new LoginResponse
