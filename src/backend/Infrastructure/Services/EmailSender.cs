@@ -13,19 +13,15 @@ namespace Infrastructure.Services
 {
     public class EmailSender : IEmailSender
     {
-        private readonly EmailConfirmationTokenRepository _emailrepo;
         private readonly IConfiguration _config;
         private readonly UserManager<ApplicationUser> _userManager;
-        public EmailSender(IConfiguration config, EmailConfirmationTokenRepository emailrepo, UserManager<ApplicationUser> userManager)
+        public EmailSender(IConfiguration config, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _config = config;
-            _emailrepo = emailrepo;
-
         }
-        public async Task SendActivationEmail(ApplicationUser user)
+        public async Task SendActivationEmail(string email, string url)
         {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             SmtpClient client = new SmtpClient()
             {
                 Host = "smtp.gmail.com",
@@ -41,7 +37,7 @@ namespace Infrastructure.Services
 
             };
             MailAddress basic = new MailAddress("cloudbytesdonotreply@gmail.com", "Do Not Reply");
-            MailAddress reciver = new MailAddress(user.Email, "New Account!");
+            MailAddress reciver = new MailAddress(email, "New Account!");
             MailMessage message = new MailMessage()
             {
                 From = basic,
@@ -53,8 +49,7 @@ namespace Infrastructure.Services
             try
             {
                 await client.SendMailAsync(message);
-                Log.Information("Sended activation mail for: " + user.Id);
-                await _emailrepo.InsertOne(new EmailConfirmationToken() { userId = user.Id, token = token, expiredAt = DateTime.Now.AddHours(24) });
+                Log.Information("Sended activation mail for: " + email);
             }
             catch (Exception ex)
             {

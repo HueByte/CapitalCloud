@@ -33,12 +33,13 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Get()
         {
-            await _mongoDbRepository.InsertOne(new EmailConfirmationToken(){
+            await _mongoDbRepository.InsertOne(new EmailConfirmationToken()
+            {
                 userId = Guid.NewGuid().ToString(),
                 token = "123",
                 expiredAt = DateTime.Now.AddHours(24)
             });
-            return Ok();
+            return Redirect("google.com");
         }
 
         [HttpGet("Tester")]

@@ -15,7 +15,7 @@ namespace Infrastructure.Repositories
     public class MongoDbRepository<TDocument> : IMongoDbRepository<TDocument>
     {
         //TODO - MAKE MESSAGE FOR LOGS
-        private IMongoCollection<TDocument> collection;
+        public IMongoCollection<TDocument> collection;
         public IMongoDatabase Database { get; }
         public MongoDbRepository(MongoClient client)
         {

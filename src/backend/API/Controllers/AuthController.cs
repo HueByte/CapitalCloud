@@ -22,8 +22,10 @@ namespace API.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
-        public AuthController(UserManager<ApplicationUser> userManager, IUserService userService)
+        private readonly IEmailConfirmationTokenRepository _emailConfirmation;
+        public AuthController(UserManager<ApplicationUser> userManager, IUserService userService, IEmailConfirmationTokenRepository emailConfirmation)
         {
+            _emailConfirmation = emailConfirmation;
             _userService = userService;
             _userManager = userManager;
         }
@@ -93,6 +95,20 @@ namespace API.Controllers
             {
                 return Ok(e);
             }
+        }
+        [HttpGet("emailconfirm")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery(Name = "token")] string token)
+        {
+            var x = await _emailConfirmation.GetById(token);
+            if(x.Data==null) return BadRequest("ups");
+            var user = await _userManager.FindByIdAsync(x.Data.userId);
+            var response = await _userManager.ConfirmEmailAsync(user, x.Data.token);
+            if (response.Succeeded)
+            {
+                await _emailConfirmation.DeleteById(token);
+                return Ok("you did it!");
+            }
+            else return BadRequest(response.Errors);
         }
     }
 }

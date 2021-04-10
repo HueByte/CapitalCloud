@@ -5,6 +5,6 @@ namespace Core.ServiceInterfaces
 {
     public interface IEmailSender
     {
-         Task SendActivationEmail(ApplicationUser user);
+        Task SendActivationEmail(string email, string url);
     }
 }

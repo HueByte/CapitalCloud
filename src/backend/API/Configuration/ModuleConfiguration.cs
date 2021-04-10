@@ -101,7 +101,7 @@ namespace API.Configuration
         {
 
             _services.AddTransient(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
-            _services.AddScoped<EmailConfirmationTokenRepository>();
+            _services.AddTransient<IEmailConfirmationTokenRepository, EmailConfirmationTokenRepository>();
             _services.AddScoped<IEmailSender, EmailSender>();
             _services.AddScoped<IUserService, UserService>();
             _services.AddScoped<IJwtAuthentication, JwtAuthentication>();
@@ -114,7 +114,8 @@ namespace API.Configuration
                    .AllowAnyMethod();
         }));
 
-        public void ConfigureForwardedHeaders() => _services.Configure<ForwardedHeadersOptions>(options => {
+        public void ConfigureForwardedHeaders() => _services.Configure<ForwardedHeadersOptions>(options =>
+        {
             options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
         });
     }
