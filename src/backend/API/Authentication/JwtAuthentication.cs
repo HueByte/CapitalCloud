@@ -20,26 +20,24 @@ namespace API.Authentication
         }
         public string GenerateJsonWebToken(ApplicationUser user)
         {
-            var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Email, user.Email));
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-            foreach (var role in user.Roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+            //Create claims
+            var claims = new List<Claim>() {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
+            //add roles to claims
+            user.Roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
             var token = new JwtSecurityToken(
                             issuer: _configuration["JWT:Issuer"],
                             audience: _configuration["JWT:Audience"],
                             claims: claims,
                             expires: DateTime.Now.AddDays(30),
-                            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
-            var tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
-            
-            return tokenAsString;
-            
-         }
+                            signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
 }

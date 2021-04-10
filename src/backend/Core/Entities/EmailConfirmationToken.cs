@@ -14,13 +14,12 @@ namespace Core.Entities
         public Guid Id { get; set; }
 
         [BsonElement("userId")]
-         public string userId { get; set; }
+        public string userId { get; set; }
+
         [BsonElement("token")]
         public string token { get; set; }
+        
         [BsonElement("expiredAt")]
-
-        public DateTime expiredAt {get;set;}
-        
-        
+        public DateTime expiredAt { get; set; }
     }
 }

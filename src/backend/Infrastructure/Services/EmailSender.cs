@@ -47,19 +47,18 @@ namespace Infrastructure.Services
                 From = basic,
                 Subject = "Awful Mail Activation",
                 Body = $"It's just awful mail, don't care",
-                IsBodyHtml=true
+                IsBodyHtml = true
             };
             message.To.Add(reciver);
             try
             {
                 await client.SendMailAsync(message);
                 Log.Information("Sended activation mail for: " + user.Id);
-                await _emailrepo.InsertOne(new EmailConfirmationToken(){userId = user.Id,token = token, expiredAt = DateTime.Now.AddHours(24)});
+                await _emailrepo.InsertOne(new EmailConfirmationToken() { userId = user.Id, token = token, expiredAt = DateTime.Now.AddHours(24) });
             }
             catch (Exception ex)
             {
                 Log.Error("Error occurs during sending mail: ||" + ex.Message);
-
             }
         }
     }

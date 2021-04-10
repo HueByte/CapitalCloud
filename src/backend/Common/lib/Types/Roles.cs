@@ -2,7 +2,7 @@ namespace Common.lib.Types
 {
     public static class Roles
     {
-        public static string Admin { get; set; } = "admin";
-        public static string User { get; set; } = "user";
+        public const string Admin = "admin";
+        public const string User  = "user";
     }
 }

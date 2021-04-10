@@ -30,7 +30,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
 
     const calcLevel = (exp) => {
         // formula
-        // exp = Math.round(3 * Math.pow(level, 2) / 5)
+        // exp = Math.round(3 * Math.pow(level, 3) / 5)
         let level = Math.floor((Math.cbrt(5 * exp / 3)));
         let start = Math.round(3 * Math.pow(level, 3) / 5);
         let end = Math.round(3 * Math.pow(level + 1, 3) / 5);
