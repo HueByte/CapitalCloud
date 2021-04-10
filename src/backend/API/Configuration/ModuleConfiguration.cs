@@ -46,8 +46,7 @@ namespace API.Configuration
                  identity.Password.RequireLowercase = true;
                  identity.Password.RequireNonAlphanumeric = false;
                  identity.User.RequireUniqueEmail = true;
-                 // TODO - Something doesn't work here
-                 identity.SignIn.RequireConfirmedEmail = true;
+                 identity.SignIn.RequireConfirmedEmail = false; // Veryfing manually
              },
                mongo =>
              {

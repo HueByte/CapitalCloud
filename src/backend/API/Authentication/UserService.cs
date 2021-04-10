@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Core.RepositoriesInterfaces;
+using Core.Models;
 
 namespace API.Authentication
 {
@@ -20,13 +21,14 @@ namespace API.Authentication
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IJwtAuthentication _jwtAuthentication;
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
         private readonly IEmailConfirmationTokenRepository _emailRepo;
 
         public UserService(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IJwtAuthentication jwtAuthentication,
-        IEmailSender emailSender, IConfiguration configuration, IEmailConfirmationTokenRepository emailRepo)
+        IEmailSender emailSender, IConfiguration configuration, IEmailConfirmationTokenRepository emailRepo, SignInManager<ApplicationUser> signInManager)
         {
             _emailRepo = emailRepo;
             _configuration = configuration;
@@ -34,6 +36,7 @@ namespace API.Authentication
             _jwtAuthentication = jwtAuthentication;
             _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
 
         }
 
@@ -41,25 +44,37 @@ namespace API.Authentication
 
         public async Task<LoginResponse> LoginUserAsync(LoginDTO loginModel)
         {
-            // Find user by mail. Return Service Response with empty LoginResponse if don't find
-            var user = await _userManager.FindByEmailAsync(loginModel.Email);
-            if (user == null) return new LoginResponse() { Errors = new List<string>() { "User not found" } };
-            // Verify User Password. Return Service Response with empty LoginResponse if password wrong
-            var result = await _userManager.CheckPasswordAsync(user, loginModel.Password);
-            if (!result) return new LoginResponse() { Errors = new List<string>() { "Either e-mail or password is wrong" } }; ;
-            //Generate token and return Service Response with Token in LoginResponse
-            var userToken = _jwtAuthentication.GenerateJsonWebToken(user);
-            return new LoginResponse
+            try
             {
-                isSuccess = true,
-                token = userToken,
-                UserName = user.UserName,
-                avatar_url = user.Avatar_Url,
-                exp = user.exp,
-                Email = user.Email,
-                tokenType = "Bearer",
-                expiresDate = DateTime.Now.AddDays(30)
-            };
+                // Find user by mail
+                var user = await _userManager.FindByEmailAsync(loginModel.Email);
+                // handle user not found 
+                if (user == null) return new LoginResponse() { Errors = new List<string>() { "User not found" } };
+
+                // Login via password
+                var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, false);
+                // handle wrong password
+                if (!result.Succeeded) return new LoginResponse() { Errors = new List<string>() { "Either e-mail or password is incorrect"} };
+                // handle unverified email if user provided correct password and email
+                if (!(await _userManager.IsEmailConfirmedAsync(user))) return new LoginResponse() { Errors = new List<string>() { "Verify your e-mail"} };
+
+                //Generate token and return Service Response with Token in LoginResponse
+                return new LoginResponse
+                {
+                    isSuccess = true,
+                    token = _jwtAuthentication.GenerateJsonWebToken(user),
+                    UserName = user.UserName,
+                    avatar_url = user.Avatar_Url,
+                    exp = user.exp,
+                    Email = user.Email,
+                    tokenType = "Bearer",
+                    expiresDate = DateTime.Now.AddDays(30)
+                };
+            }
+            catch (Exception e)
+            {
+                return new LoginResponse() { Errors = new List<string>() { e.ToString() } };
+            }
         }
 
 
@@ -87,13 +102,39 @@ namespace API.Authentication
                 return new RegisterResponse() { Errors = errorlist.ToList() };
             }
         }
+
+        // TODO - Change parameter for DTO & Change returning value & Add sending mail & check if user's email is verified
+        public async Task<ServiceResponse<ApplicationUser>> ChangePassword(string email, string oldPassword, string newPassword)
+        {
+            // check if user exists
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return new ServiceResponse<ApplicationUser>() { isSuccess = false };
+
+            // check if password is correct and replace with a new one
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (!result.Succeeded)
+            {
+                return new ServiceResponse<ApplicationUser>()
+                {
+                    isSuccess = false,
+                    message = result.Errors.ToString()
+                };
+            }
+
+
+            return new ServiceResponse<ApplicationUser>() { isSuccess = true };
+
+        }
+
         public async Task SendConfirmEmail(ApplicationUser user)
         {
-            var dbResult = await _emailRepo.InsertOne(new EmailConfirmationToken() { 
-                                userId = user.Id, 
-                                token = await _userManager.GenerateEmailConfirmationTokenAsync(user), 
-                                expiredAt = DateTime.Now.AddHours(24) });
-                
+            var dbResult = await _emailRepo.InsertOne(new EmailConfirmationToken()
+            {
+                userId = user.Id,
+                token = await _userManager.GenerateEmailConfirmationTokenAsync(user),
+                expiredAt = DateTime.Now.AddHours(24)
+            });
+
             var url = _configuration.GetValue<string>("Host")
                       + "api/auth/ConfirmEmail?token="
                       + dbResult.Data.Id;
