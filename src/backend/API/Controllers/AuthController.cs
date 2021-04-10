@@ -96,19 +96,23 @@ namespace API.Controllers
                 return Ok(e);
             }
         }
-        [HttpGet("emailconfirm")]
+
+        [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail([FromQuery(Name = "token")] string token)
         {
-            var x = await _emailConfirmation.GetById(token);
-            if(x.Data==null) return BadRequest("ups");
-            var user = await _userManager.FindByIdAsync(x.Data.userId);
-            var response = await _userManager.ConfirmEmailAsync(user, x.Data.token);
-            if (response.Succeeded)
+            //get email confirmation from database
+            var dbResult = await _emailConfirmation.GetById(token);
+            if (dbResult.Data == null) return BadRequest("Token not found");
+            
+            var user = await _userManager.FindByIdAsync(dbResult.Data.userId);
+            var confirmResult = await _userManager.ConfirmEmailAsync(user, dbResult.Data.token);
+            if (confirmResult.Succeeded)
             {
                 await _emailConfirmation.DeleteById(token);
                 return Ok("you did it!");
             }
-            else return BadRequest(response.Errors);
+
+            return base.BadRequest(confirmResult.Errors);
         }
     }
 }

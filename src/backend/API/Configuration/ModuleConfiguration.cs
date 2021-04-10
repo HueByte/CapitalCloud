@@ -37,6 +37,7 @@ namespace API.Configuration
         }
         public void ConfigureSecurity()
         {
+            // TODO - change connection string
             _services.AddIdentityMongoDbProvider<ApplicationUser, ApplicationRole, string>(identity =>
              {
                  identity.Password.RequireDigit = true;

@@ -46,7 +46,7 @@ namespace API.Authentication
             if (user == null) return new LoginResponse() { Errors = new List<string>() { "User not found" } };
             // Verify User Password. Return Service Response with empty LoginResponse if password wrong
             var result = await _userManager.CheckPasswordAsync(user, loginModel.Password);
-            if (!result) return new LoginResponse() { Errors = new List<string>() { "User not found" } }; ;
+            if (!result) return new LoginResponse() { Errors = new List<string>() { "Either e-mail or password is wrong" } }; ;
             //Generate token and return Service Response with Token in LoginResponse
             var userToken = _jwtAuthentication.GenerateJsonWebToken(user);
             return new LoginResponse
@@ -89,10 +89,15 @@ namespace API.Authentication
         }
         public async Task SendConfirmEmail(ApplicationUser user)
         {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var x = await _emailRepo.InsertOne(new EmailConfirmationToken() { userId = user.Id, token = token, expiredAt = DateTime.Now.AddHours(24) });
-            var url = _configuration.GetValue<string>("URL") + "api/auth/emailconfirm?token=" + x.Data.Id;
-            Console.WriteLine(url);
+            var dbResult = await _emailRepo.InsertOne(new EmailConfirmationToken() { 
+                                userId = user.Id, 
+                                token = await _userManager.GenerateEmailConfirmationTokenAsync(user), 
+                                expiredAt = DateTime.Now.AddHours(24) });
+                
+            var url = _configuration.GetValue<string>("URL")
+                      + "api/auth/emailconfirm?token="
+                      + dbResult.Data.Id;
+                      
             await _emailSender.SendActivationEmail(user.Email, url);
         }
     }
