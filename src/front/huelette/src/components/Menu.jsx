@@ -83,7 +83,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
                                     <i class="fa fa-superpowers nav-desktop-left-button-icon" aria-hidden="true"></i>
                                     <div>Roulette</div>
                                 </NavLink>
-                                <NavLink activeClassName="active-button" to="crash" className="nav-desktop-left-button">
+                                <NavLink activeClassName="active-button" to="/crash" className="nav-desktop-left-button">
                                     <i class="fa fa-area-chart nav-desktop-left-button-icon" aria-hidden="true"></i>
                                     <div>Crash</div>
                                 </NavLink>
