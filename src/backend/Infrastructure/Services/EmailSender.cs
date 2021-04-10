@@ -36,7 +36,6 @@ namespace Infrastructure.Services
                 }
             };
 
-            Console.WriteLine(_config.GetValue<string>("Passwords:gmail-client-username"));
             MailAddress basic = new MailAddress("cloudbytesdonotreply@gmail.com", "Do Not Reply");
             MailAddress reciver = new MailAddress(email, "New Account!");
             
