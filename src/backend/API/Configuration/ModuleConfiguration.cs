@@ -53,7 +53,6 @@ namespace API.Configuration
                  mongo.ConnectionString = _config.GetConnectionString("MongoDbTest");
              });
 
-
             _services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

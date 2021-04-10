@@ -34,15 +34,18 @@ namespace Infrastructure.Services
                     UserName = _config.GetValue<string>("Passwords:gmail-client-username"),
                     Password = _config.GetValue<string>("Passwords:gmail-client-password")
                 }
-
             };
+
+            Console.WriteLine(_config.GetValue<string>("Passwords:gmail-client-username"));
             MailAddress basic = new MailAddress("cloudbytesdonotreply@gmail.com", "Do Not Reply");
             MailAddress reciver = new MailAddress(email, "New Account!");
+            
+            // TODO - Do proper message
             MailMessage message = new MailMessage()
             {
                 From = basic,
                 Subject = "Awful Mail Activation",
-                Body = $"It's just awful mail, don't care",
+                Body = $"Testing link {url}",
                 IsBodyHtml = true
             };
             message.To.Add(reciver);

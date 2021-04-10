@@ -10,7 +10,6 @@ namespace Common.ApiResponse
         public DateTime? expiresDate { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public int level { get; set; }
         public double exp { get; set; }
         public string avatar_url { get; set; }
         public List<string> Errors { get; set; }

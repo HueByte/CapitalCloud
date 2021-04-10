@@ -94,10 +94,10 @@ namespace API.Authentication
                                 token = await _userManager.GenerateEmailConfirmationTokenAsync(user), 
                                 expiredAt = DateTime.Now.AddHours(24) });
                 
-            var url = _configuration.GetValue<string>("URL")
-                      + "api/auth/emailconfirm?token="
+            var url = _configuration.GetValue<string>("Host")
+                      + "api/auth/ConfirmEmail?token="
                       + dbResult.Data.Id;
-                      
+
             await _emailSender.SendActivationEmail(user.Email, url);
         }
     }

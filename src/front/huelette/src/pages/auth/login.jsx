@@ -22,7 +22,7 @@ const Login = () => {
             .then(reponse => {
                 //handle error
                 if (reponse == null) {
-                    PromiseRejectionEvent('');
+                    new PromiseRejectionEvent('');
                 }
                 return reponse.json();
             })
