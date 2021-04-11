@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -15,47 +16,34 @@ namespace Infrastructure.Services
     {
         private readonly IConfiguration _config;
         private readonly UserManager<ApplicationUser> _userManager;
-        public EmailSender(IConfiguration config, UserManager<ApplicationUser> userManager)
+        private readonly SmtpClient _smtp;
+        public EmailSender(IConfiguration config, UserManager<ApplicationUser> userManager, SmtpClient smtp)
         {
+            _smtp = smtp;
             _userManager = userManager;
             _config = config;
         }
         public async Task SendActivationEmail(string email, string url)
         {
-            SmtpClient client = new SmtpClient()
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential()
-                {
-                    UserName = _config.GetValue<string>("Passwords:gmail-client-username"),
-                    Password = _config.GetValue<string>("Passwords:gmail-client-password")
-                }
-            };
-
-            MailAddress basic = new MailAddress("cloudbytesdonotreply@gmail.com", "Do Not Reply");
-            MailAddress reciver = new MailAddress(email, "New Account!");
-            
             // TODO - Do proper message
+            string messageBody = File.ReadAllText("HTMLFile/ActivationEmail.html");
+            messageBody = messageBody.Replace("%ActivationLink%", url);
             MailMessage message = new MailMessage()
             {
-                From = basic,
+                From = new MailAddress("cloudbytesdonotreply@gmail.com", "CloudBytes - Do not Reply"),
                 Subject = "Awful Mail Activation",
-                Body = $"Testing link {url}",
+                Body = messageBody,
                 IsBodyHtml = true
             };
-            message.To.Add(reciver);
+            message.To.Add(new MailAddress(email, "New Account!"));
             try
             {
-                await client.SendMailAsync(message);
+                await _smtp.SendMailAsync(message);
                 Log.Information("Sended activation mail for: " + email);
             }
             catch (Exception ex)
             {
-                Log.Error("Error occurs during sending mail: ||" + ex.Message);
+                Log.Error("Error occurs during sending mail: " + ex.Message);
             }
         }
     }

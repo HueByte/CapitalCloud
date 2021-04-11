@@ -40,6 +40,7 @@ namespace API
             moduleConfiguration.ConfigureServices();
             moduleConfiguration.ConfigureCors();
             moduleConfiguration.ConfigureForwardedHeaders();
+            moduleConfiguration.ConfigureSmtpClient();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -60,7 +61,7 @@ namespace API
             app.UseSwaggerUI(c =>
              {
                  c.SwaggerEndpoint("/swagger/v0.2A/swagger.json", "Roulette");
-                //  c.RoutePrefix = "/api";
+                 //  c.RoutePrefix = "/api";
              });
 
 
