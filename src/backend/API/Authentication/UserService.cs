@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Core.RepositoriesInterfaces;
 using Core.Models;
+using System.Net.Mail;
+using System.IO;
 
 namespace API.Authentication
 {
@@ -52,12 +54,13 @@ namespace API.Authentication
                 // Login via password
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, false);
                 // handle wrong password or unverified email ----- This is on avg. 400ms faster than doing it manually 
-                if (!result.Succeeded) return new LoginResponse() 
-                    { Errors = new List<string>() 
-                        { 
-                            result.IsNotAllowed ? "Verify your e-mail" : "Either e-mail or password is incorrect" 
-                        } 
-                    };
+                if (!result.Succeeded) return new LoginResponse()
+                {
+                    Errors = new List<string>()
+                        {
+                            result.IsNotAllowed ? "Verify your e-mail" : "Either e-mail or password is incorrect"
+                        }
+                };
 
                 // handle unverified email if user provided correct password and email
                 // if (!(await _userManager.IsEmailConfirmedAsync(user))) return new LoginResponse() { Errors = new List<string>() { "Verify your e-mail" } };
@@ -139,8 +142,14 @@ namespace API.Authentication
             var url = _configuration.GetValue<string>("Host")
                       + "api/auth/ConfirmEmail?token="
                       + dbResult.Data.Id;
-
-            await _emailSender.SendActivationEmail(user.Email, url);
+            MailMessage message = new MailMessage()
+            {
+                Subject = "Awful Mail Activation",
+                Body = File.ReadAllText("HTMLFile/ActivationEmail.html").Replace("%ActivationLink%", url),
+                IsBodyHtml = true
+            };
+            var emailResponse = await _emailSender.SendEmailAsync(message, new MailAddress(user.Email));
+            if (!emailResponse) await _emailRepo.DeleteById(dbResult.Data.Id.ToString());
         }
     }
 }

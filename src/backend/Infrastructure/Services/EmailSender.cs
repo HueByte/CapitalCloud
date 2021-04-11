@@ -14,36 +14,26 @@ namespace Infrastructure.Services
 {
     public class EmailSender : IEmailSender
     {
-        private readonly IConfiguration _config;
-        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly SmtpClient _smtp;
-        public EmailSender(IConfiguration config, UserManager<ApplicationUser> userManager, SmtpClient smtp)
+        public EmailSender(SmtpClient smtp)
         {
             _smtp = smtp;
-            _userManager = userManager;
-            _config = config;
         }
-        public async Task SendActivationEmail(string email, string url)
+        public async Task<bool> SendEmailAsync(MailMessage message, MailAddress address)
         {
-            // TODO - Do proper message
-            string messageBody = File.ReadAllText("HTMLFile/ActivationEmail.html");
-            messageBody = messageBody.Replace("%ActivationLink%", url);
-            MailMessage message = new MailMessage()
-            {
-                From = new MailAddress("cloudbytesdonotreply@gmail.com", "CloudBytes - Do not Reply"),
-                Subject = "Awful Mail Activation",
-                Body = messageBody,
-                IsBodyHtml = true
-            };
-            message.To.Add(new MailAddress(email, "New Account!"));
+            message.From = new MailAddress("cloudbytesdonotreply@gmail.com", "CloudBytes - Do not Reply");
+            message.To.Add(address);
             try
             {
                 await _smtp.SendMailAsync(message);
-                Log.Information("Sended activation mail for: " + email);
+                Log.Information("Sended mail for: " + address.Address);
+                return true;
             }
             catch (Exception ex)
             {
                 Log.Error("Error occurs during sending mail: " + ex.Message);
+                return false;
             }
         }
     }
