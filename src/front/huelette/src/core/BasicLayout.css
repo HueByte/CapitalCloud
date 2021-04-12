@@ -14,7 +14,7 @@
     position: absolute;
     left: 250px;
     top: 100px;
-    height: 100%;
+    height: Calc(100% - 100px);
     padding: 2em;
     overflow: scroll;
     transition: 1s ease-in-out;
@@ -29,6 +29,7 @@
     .main__container {
         top: 60px;
         left: 90px;
+        height: Calc(100% - 60px);
         width: Calc(100% - 90px);
     }
 }

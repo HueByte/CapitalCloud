@@ -5,7 +5,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/white-cloud.jpg';
 import { AuthContext } from '../auth/AuthContext';
 
-// TODO - add media query loading 
+// TODO - add media query loading & add avatar and coins
 const Menu = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
     const [level, setLevel] = useState({
