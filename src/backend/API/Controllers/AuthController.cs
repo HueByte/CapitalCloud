@@ -22,10 +22,8 @@ namespace API.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
-        private readonly IEmailConfirmationTokenRepository _emailConfirmation;
-        public AuthController(UserManager<ApplicationUser> userManager, IUserService userService, IEmailConfirmationTokenRepository emailConfirmation)
+        public AuthController(UserManager<ApplicationUser> userManager, IUserService userService)
         {
-            _emailConfirmation = emailConfirmation;
             _userService = userService;
             _userManager = userManager;
         }
@@ -100,19 +98,9 @@ namespace API.Controllers
         [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail([FromQuery(Name = "token")] string token)
         {
-            //get email confirmation from database
-            var dbResult = await _emailConfirmation.GetById(token);
-            if (dbResult.Data == null) return BadRequest("Token not found");
-            
-            var user = await _userManager.FindByIdAsync(dbResult.Data.userId);
-            var confirmResult = await _userManager.ConfirmEmailAsync(user, dbResult.Data.token);
-            if (confirmResult.Succeeded)
-            {
-                await _emailConfirmation.DeleteById(token);
-                return Ok("you did it!");
-            }
-
-            return base.BadRequest(confirmResult.Errors);
+            var response = await _userService.ConfirmEmail(token);
+            if (response.isSuccess) return Ok(response.message);
+            else return BadRequest(response.Data);
         }
     }
 }

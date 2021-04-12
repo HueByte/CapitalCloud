@@ -16,6 +16,7 @@ using Core.RepositoriesInterfaces;
 using Core.Models;
 using System.Net.Mail;
 using System.IO;
+using Serilog;
 
 namespace API.Authentication
 {
@@ -99,6 +100,7 @@ namespace API.Authentication
             var result = await _userManager.CreateAsync(user, registermodel.Password);
             if (result.Succeeded)
             {
+                Log.Information("New User Created: " + user.UserName);
                 await SendConfirmEmail(user);
                 return new RegisterResponse() { isSuccess = true };
             }
@@ -150,6 +152,23 @@ namespace API.Authentication
             };
             var emailResponse = await _emailSender.SendEmailAsync(message, new MailAddress(user.Email));
             if (!emailResponse) await _emailRepo.DeleteById(dbResult.Data.Id.ToString());
+        }
+        public async Task<ServiceResponse<List<string>>> ConfirmEmail(string tokenId)
+        {
+            //get email confirmation from database
+            var dbResult = await _emailRepo.GetById(tokenId);
+            if (dbResult.Data == null) return StaticResponse<List<string>>.BadResponse(new List<string>() { "Empty Token" }, "", 1);
+
+            var user = await _userManager.FindByIdAsync(dbResult.Data.userId);
+            var confirmResult = await _userManager.ConfirmEmailAsync(user, dbResult.Data.token);
+            if (confirmResult.Succeeded)
+            {
+                Log.Information(user.UserName + "Activated account");
+                await _emailRepo.DeleteById(tokenId);
+                return StaticResponse<List<string>>.GoodResponse(null, "Email Confirmed");
+            }
+
+            return StaticResponse<List<String>>.BadResponse(confirmResult.Errors.Select(x => x.Description).ToList(), "", 1);
         }
     }
 }

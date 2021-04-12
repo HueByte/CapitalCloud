@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.ApiResponse;
 using Common.lib.ApiResponse;
@@ -9,10 +10,11 @@ namespace API.Authentication
 {
     public interface IUserService
     {
-         Task<RegisterResponse> RegisterUserAsync(RegisterDTO registerModel);
+        Task<RegisterResponse> RegisterUserAsync(RegisterDTO registerModel);
 
-         Task<LoginResponse> LoginUserAsync(LoginDTO loginModel);
+        Task<LoginResponse> LoginUserAsync(LoginDTO loginModel);
 
-         Task SendConfirmEmail(ApplicationUser user);
+        Task SendConfirmEmail(ApplicationUser user);
+        Task<ServiceResponse<List<string>>> ConfirmEmail(string tokenId);
     }
 }
