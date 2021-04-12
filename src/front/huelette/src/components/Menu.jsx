@@ -5,12 +5,14 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/white-cloud.jpg';
 import { AuthContext } from '../auth/AuthContext';
 
+// TODO - add media query loading 
 const Menu = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
     const [level, setLevel] = useState({
         lvl: 0,
         percent: 0
     })
+
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
 
     const logout = () => {
@@ -21,11 +23,6 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
     const hideChat = () => {
         setIsChatActive(!isChatActive);
     }
-
-    useEffect(() => {
-        if (authContext.authState != null)
-            setLevel(calcLevel(authContext.authState.exp))
-    }, []);
 
     const calcLevel = (exp) => {
         // formula
@@ -45,13 +42,17 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
         // TODO - remove testing array
         // let testArray = [];
         // for (let index = 1; index <= 3; index++) {
-        //     console.log(Math.pow(index, 2));
         //     testArray.push(25 * Math.pow(index, 2) - 25 * index);
         // }
         // console.log(testArray);
 
         return { level: level, percent: percent };
     }
+
+    useEffect(() => {
+        if (authContext.authState != null)
+            setLevel(calcLevel(authContext.authState.exp))
+    }, []);
     
     //TODO - temp variables remove later
     const variables = {
