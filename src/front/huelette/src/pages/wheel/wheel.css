@@ -17,6 +17,8 @@
 
 .game__container .wheel__container {
     flex: 1;
+    display: grid;
+    place-items: center;
 }
 
 .game__container .wheel__container .wheel {
@@ -33,7 +35,7 @@
 
 .bets__container {
     width: 100%;
-    height: 1000px;
+    max-height: 350px;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -44,6 +46,8 @@
     display: flex;
     margin: 1em;
     flex-direction: column;
+    border-radius: 10px;
+    background-color: var(--Shark);
 }
 
 .bets .bet-button {
@@ -56,7 +60,6 @@
     cursor: pointer;
     transition: 300ms ease;
     border-radius: 10px;
-    background-color: var(--Shark);
 }
 .bets:nth-child(1) .bet-button {
     border: 2px solid var(--Grey);
@@ -84,7 +87,9 @@
 }
 
 .bets .bet-people {
-
+    margin-top: 2em;
+    padding: 1em;
+    height: 500px;
 }
 
 

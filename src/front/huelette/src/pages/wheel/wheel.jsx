@@ -12,7 +12,7 @@ const Wheel = () => {
                     </div>
                     <div className="wheel__container">
                         <div className="wheel">
-                            ama wheel icon
+                            It is 100% working wheel
                         </div>
                     </div>
                     <div className="history">
@@ -22,19 +22,19 @@ const Wheel = () => {
                 <div className="bets__container">
                     <div className="bets">
                         <div className="bet-button">x2</div>
-                        <div className="bet-people">x</div>
+                        <div className="bet-people">We</div>
                     </div>
                     <div className="bets">
                         <div className="bet-button">x3</div>
-                        <div className="bet-people">x</div>
+                        <div className="bet-people">Are</div>
                     </div>
                     <div className="bets">
                         <div className="bet-button">x5</div>
-                        <div className="bet-people">x</div>
+                        <div className="bet-people">Some</div>
                     </div>
                     <div className="bets">
                         <div className="bet-button">x50</div>
-                        <div className="bet-people">x</div>
+                        <div className="bet-people">Betters?</div>
                     </div>
                 </div>
             </div>

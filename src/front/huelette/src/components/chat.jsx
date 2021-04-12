@@ -19,7 +19,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
 
     return (
         <>
-            <div className={`chat__container${isChatActive ? "" : " hide"}`} id="chat">
+            <div className={`chat__container${isChatActive ? "" : " hide"}`}>
                 <div className="chat-text">
                     {messages.length ? messages.map((mess, index) => (
                         <div key={mess.id} className="chat-message">

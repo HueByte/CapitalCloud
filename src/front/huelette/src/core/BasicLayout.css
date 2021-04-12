@@ -16,7 +16,7 @@
     top: 100px;
     height: Calc(100% - 100px);
     padding: 2em;
-    overflow: scroll;
+    overflow-y: scroll;
     transition: 1s ease-in-out;
 }
 
