@@ -5,10 +5,10 @@ import BasicLayout from '../../core/BasicLayout';
 const Wheel = () => {
     return (
         <>
-            <div className="main__wrapepr">
+            <div className="main__wrapper">
                 <div className="game__container">
                     <div className="place-bet">
-                        xxx
+                        <input type="number" placeholder="I'm your inpuuut"/>
                     </div>
                     <div className="wheel__container">
                         <div className="wheel">

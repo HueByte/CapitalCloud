@@ -1,12 +1,12 @@
 .main__wrapper {
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 .game__container {
     width: 100%;
     min-height: 350px;
-    background-color: burlywood;
     display: flex;
     align-items: center;
 }
@@ -22,11 +22,13 @@
 }
 
 .game__container .wheel__container .wheel {
-    width: 200px;
-    height: 200px;
+    width: 500px;
+    height: 500px;
     border-radius: 100%;
-    background-color: darkcyan;
-    animation: spin 10s linear infinite;
+    animation: spin 7s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+    /* border: 2px dotted var(--Rose); */
+
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='100' ry='100' stroke='%23EC3463' stroke-width='7' stroke-dasharray='50%25%2c 13%25' stroke-dashoffset='100' stroke-linecap='butt'/%3e%3c/svg%3e");
 }
 
 .game__container .history {
@@ -39,6 +41,7 @@
     position: relative;
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .bets {
@@ -47,6 +50,7 @@
     margin: 1em;
     flex-direction: column;
     border-radius: 10px;
+    max-width: 400px;
     background-color: var(--Shark);
 }
 
@@ -96,4 +100,44 @@
 @keyframes meRotate {
     0% { transform: rotate(0deg); }
     100% {transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 1500px) {
+    .game__container .wheel__container .wheel {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .bets__container {
+        flex-direction: column;
+    }
+
+    .bets__container .bet-button {
+        height: 40px;
+    }
+
+    .bet-people {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .game__container {
+        flex-direction: column;
+        min-height: 300px;
+    }
+    
+    .game__container .wheel__container {
+        order: 1;
+    }
+
+    .game__container .place-bet {
+        order: 2;
+    }
+
+    .game__container .history {
+        display: none;
+    }
 }
