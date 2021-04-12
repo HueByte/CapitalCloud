@@ -43,17 +43,17 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
         //     percent = 0;
         // }
 
-        // TODO - remove later?
+        // TODO - remove later
         console.log(`${percent}%`)
         console.log(`start ${start} -> end ${end} section ${section}`);
         console.log(`currentXp ${exp} level ${Math.cbrt(5 * exp / 3)}`);
 
         // TODO - remove testing array
-        let testArray = [];
-        for (let index = 1; index <= 999; index++) {
-            testArray.push(Math.round(3 * Math.pow(index, 3) / 5));
-        }
-        console.log(testArray);
+        // let testArray = [];
+        // for (let index = 1; index <= 999; index++) {
+        //     testArray.push(Math.round(3 * Math.pow(index, 3) / 5));
+        // }
+        // console.log(testArray);
 
         return { level: level, percent: percent };
     }
