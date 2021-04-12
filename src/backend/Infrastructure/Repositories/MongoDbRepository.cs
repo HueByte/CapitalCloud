@@ -97,7 +97,6 @@ namespace Infrastructure.Repositories
                 message = "Deleted status: " + x.DeletedCount,
                 flag = x.IsAcknowledged ? 0 : 1
             };
-            //TODO - Make It WORKS
         }
 
         public async Task<ServiceResponse<TDocument>> GetById(string id)

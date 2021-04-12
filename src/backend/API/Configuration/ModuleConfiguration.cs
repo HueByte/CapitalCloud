@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Reflection;
 using System.Text;
 using API.Authentication;
@@ -117,6 +119,23 @@ namespace API.Configuration
         public void ConfigureForwardedHeaders() => _services.Configure<ForwardedHeadersOptions>(options =>
         {
             options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        });
+
+        public void ConfigureSmtpClient() => _services.AddScoped<SmtpClient>((serviceProvider) =>
+        {
+            return new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential()
+                {
+                    UserName = _config.GetValue<string>("Passwords:gmail-client-username"),
+                    Password = _config.GetValue<string>("Passwords:gmail-client-password")
+                }
+            };
         });
     }
 }
