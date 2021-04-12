@@ -24,34 +24,29 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
 
     useEffect(() => {
         if (authContext.authState != null)
-            // setLevel(calcLevel(authContext.authState.exp))
-            setLevel(calcLevel(75));
+            setLevel(calcLevel(authContext.authState.exp))
     }, []);
 
     const calcLevel = (exp) => {
         // formula
-        // exp = Math.round(3 * Math.pow(level, 3) / 5)
-        let level = Math.floor((Math.cbrt(5 * exp / 3)));
-        let start = Math.round(3 * Math.pow(level, 3) / 5);
-        let end = Math.round(3 * Math.pow(level + 1, 3) / 5);
+        // xp = Math.floor(25 * level^2 - 25 * level) which means level =  (25 + sqrt(625 + 100 * xp)) / 50
+        let level = Math.floor(Math.floor(25 + Math.sqrt(625 + 100 * exp)) / 50)
+        let start = 25 * Math.pow(level, 2) - 25 * level;
+        let end = 25 * Math.pow(level + 1, 2) - 25 * (level + 1);
+
         let section = end - start;
         let percent = Math.round((exp - start) / section * 1000) / 10;
-
-        //style fixes
-        // if (percent == 100) {
-        //     level += 1;
-        //     percent = 0;
-        // }
 
         // TODO - remove later
         console.log(`${percent}%`)
         console.log(`start ${start} -> end ${end} section ${section}`);
-        console.log(`currentXp ${exp} level ${Math.cbrt(5 * exp / 3)}`);
+        console.log(`currentXp ${exp} level ${level}`);
 
         // TODO - remove testing array
         // let testArray = [];
-        // for (let index = 1; index <= 999; index++) {
-        //     testArray.push(Math.round(3 * Math.pow(index, 3) / 5));
+        // for (let index = 1; index <= 3; index++) {
+        //     console.log(Math.pow(index, 2));
+        //     testArray.push(25 * Math.pow(index, 2) - 25 * index);
         // }
         // console.log(testArray);
 
