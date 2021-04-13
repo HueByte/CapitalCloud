@@ -117,17 +117,6 @@
     border-radius: 10px;
     background-color: var(--Shark);
 }
-
-.bets .bet-button {
-    display: grid;
-    place-items: center;
-    height: 60px;
-    font-weight: 500;
-    font-size: 20px;
-    cursor: pointer;
-    transition: 300ms ease;
-    border-radius: 10px;
-}
 .bets:nth-child(1) {
     color: var(--Grey);
 }
@@ -140,33 +129,52 @@
 .bets:nth-child(4) {
     color: var(--Gold);
 }
-.bets:nth-child(1) .bet-button {
+
+.bets .bet-button {
+    display: grid;
+    place-items: center;
+    height: 60px;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 300ms ease;
+    border-radius: 10px;
+}
+.bets .x2 {
     border: 2px solid var(--Grey);
+    background-size: 100% 200%; 
+    background-image: linear-gradient(to bottom, var(--Shark) 50%, var(--Grey) 50%);
+    transition: 
+      background-position .2s ease-in-out, 
+      color .2s ease-in-out;
 }
-.bets:nth-child(2) .bet-button {
+.bets .x3 {
     border: 2px solid var(--Rose);
+    background-size: 100% 200%; 
+    background-image: linear-gradient(to bottom, var(--Shark) 50%, var(--Rose) 50%);
+    transition: 
+      background-position .2s ease-in-out, 
+      color .2s ease-in-out;
 }
-.bets:nth-child(3) .bet-button {
+.bets .x5 {
     border: 2px solid var(--Teal);
+    background-size: 100% 200%; 
+    background-image: linear-gradient(to bottom, var(--Shark) 50%, var(--Teal) 50%);
+    transition: 
+      background-position .2s ease-in-out, 
+      color .2s ease-in-out;
 }
-.bets:nth-child(4) .bet-button {
+.bets .x50 {
     border: 2px solid var(--Gold);
+    background-size: 100% 200%; 
+    background-image: linear-gradient(to bottom, var(--Shark) 50%, var(--Gold) 50%);
+    transition: 
+      background-position .2s ease-in-out, 
+      color .2s ease-in-out;
 }
-.bets:nth-child(1) .bet-button:hover {
-    color: white;
-    background-color: var(--Grey) !important;
-}
-.bets:nth-child(2) .bet-button:hover {
-    color: white;
-    background-color: var(--Rose) !important;
-}
-.bets:nth-child(3) .bet-button:hover {
-    color: white;
-    background-color: var(--Teal) !important;
-}
-.bets:nth-child(4) .bet-button:hover {
-    color: white;
-    background-color: var(--Gold) !important;
+.x2:hover, .x3:hover, .x5:hover, .x50:hover {
+    background-position: 0 100%;
+    color: #fff;
 }
 
 .bets .bet-people {
