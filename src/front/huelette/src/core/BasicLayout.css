@@ -18,11 +18,19 @@
     padding: 2em;
     overflow-y: scroll;
     transition: 1s ease-in-out;
+    z-index: 2;
 }
 
 .fullsize {
     width: 100%;
     left: 0;
+}
+
+.interface__wrapper .bottom-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
 }
 
 @media screen and (max-width: 1110px) {
