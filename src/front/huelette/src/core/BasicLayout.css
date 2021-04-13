@@ -16,7 +16,7 @@
     top: 100px;
     height: Calc(100% - 100px);
     padding: 2em;
-    overflow-y: scroll;
+    overflow: hidden;
     transition: 1s ease-in-out;
     z-index: 2;
 }

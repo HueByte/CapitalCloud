@@ -8,19 +8,72 @@
 .game__container {
     width: 100%;
     margin: 5em 0 5em 0;
-    min-height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.game__container .place-bet {
+.game__container .place-bet__container {
     flex: 1;
     max-width: 450px;
+    display: flex;
+    justify-content: center;
+    margin-right: 1em;
+}
+
+.game__container .place-bet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.game__container .place-bet .bet-coins {
+    padding-left: 5px;
+    color: var(--Rose);
+    margin: 1em 0 1em 0;
+    font-size: medium;
+}
+
+.game__container .place-bet .bets-values {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-weight: 600;
+    color: var(--Grey);
+    margin-bottom: 1em;
+}
+
+.game__container .place-bet .bets-values .bets-values-item {
+    cursor: pointer;
+    margin-right: 1em;
+}
+.game__container .place-bet .bets-values .bets-values-item:hover {
+    color: white;
+}
+.game__container .place-bet .bets-values .bets-values-item:nth-child(1) {
+    padding-left: 5px;
+}
+
+
+.game__container .place-bet > input {
+    color: white;
+    max-width: 300px;
+    min-height: 20px;
+    transition: 400ms linear;
+    padding: 5px;
+    background-color: var(--Shark);
+    border: 1px solid var(--MainBg);
+    border-bottom: 1px solid var(--Grey);
+    border-radius: 5px 10px 10px 0;
+}
+
+.game__container .place-bet > input:hover,
+.game__container .place-bet > input:focus {
+    border: 1px solid var(--Rose);
 }
 
 .game__container .wheel__container {
-    flex: 1;
+    /* flex: 1; */
     display: grid;
     place-items: center;
     height: 100%;
@@ -40,12 +93,14 @@
     flex: 1;
     max-width: 450px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .bets__container {
     width: 100%;
-    min-height: 300px;
+    height: 60vh;
+    max-height: 500px;
+    flex-shrink: 0;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -55,6 +110,7 @@
 .bets {
     flex: 1;
     display: flex;
+    height: auto;
     margin: 1em;
     flex-direction: column;
     border-radius: 10px;
@@ -71,6 +127,18 @@
     transition: 300ms ease;
     border-radius: 10px;
 }
+.bets:nth-child(1) {
+    color: var(--Grey);
+}
+.bets:nth-child(2) {
+    color: var(--Rose);
+}
+.bets:nth-child(3) {
+    color: var(--Teal);
+}
+.bets:nth-child(4) {
+    color: var(--Gold);
+}
 .bets:nth-child(1) .bet-button {
     border: 2px solid var(--Grey);
 }
@@ -84,15 +152,19 @@
     border: 2px solid var(--Gold);
 }
 .bets:nth-child(1) .bet-button:hover {
+    color: white;
     background-color: var(--Grey) !important;
 }
 .bets:nth-child(2) .bet-button:hover {
+    color: white;
     background-color: var(--Rose) !important;
 }
 .bets:nth-child(3) .bet-button:hover {
+    color: white;
     background-color: var(--Teal) !important;
 }
 .bets:nth-child(4) .bet-button:hover {
+    color: white;
     background-color: var(--Gold) !important;
 }
 
@@ -116,8 +188,13 @@
         order: 1;
     }
 
-    .game__container .place-bet {
+    .game__container .place-bet__container {
+        margin: 2em 0 2em 0;
         order: 2;
+    }
+
+    .game__container .place-bet > input {
+        border-radius: 10px;
     }
 
     .game__container .history {
@@ -136,6 +213,8 @@
     }
 
     .bets__container {
+        height: auto;
+        flex-shrink: 1;
         flex-direction: column;
     }
 
@@ -155,9 +234,17 @@
         min-height: unset;
     }
 
+    .game__container .place-bet__container {
+        max-width: 100%;
+    }
+
+    .game__container .place-bet .bets-values {
+        display: none;
+    }
+
     .game__container .wheel__container .wheel {
-        width: 240px;
-        height: 240px;
+        width: 220px;
+        height: 220px;
     }
 }
 

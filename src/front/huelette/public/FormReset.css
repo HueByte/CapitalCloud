@@ -142,6 +142,15 @@ input[type="submit"]
 	background:none;
 }
 
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield !important;
+}
+
 /* Textarea
 -----------------------------------------------*/
 

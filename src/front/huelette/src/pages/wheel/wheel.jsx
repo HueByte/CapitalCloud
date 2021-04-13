@@ -3,12 +3,29 @@ import './wheel.css';
 import BasicLayout from '../../core/BasicLayout';
 
 const Wheel = () => {
+    // Get coins from user
+
     return (
         <>
             <div className="main__wrapper">
                 <div className="game__container">
-                    <div className="place-bet">
-                        <input type="number" placeholder="I'm your inpuuut"/>
+                    <div className="place-bet__container">
+                        <div className="place-bet">
+                            <div className="bet-coins">
+                                <i class="fas fa-coins"></i> 192 294 422
+                        </div>
+                            <div className="bets-values">
+                                <div className="bets-values-item">Clear</div>
+                                <div className="bets-values-item">+10</div>
+                                <div className="bets-values-item">+100</div>
+                                <div className="bets-values-item">+1k</div>
+                                <div className="bets-values-item">+10k</div>
+                                <div className="bets-values-item">1/2</div>
+                                <div className="bets-values-item">2x</div>
+                                <div className="bets-values-item">Max</div>
+                            </div>
+                            <input type="number" placeholder="enter your bet" />
+                        </div>
                     </div>
                     <div className="wheel__container">
                         <div className="wheel">
