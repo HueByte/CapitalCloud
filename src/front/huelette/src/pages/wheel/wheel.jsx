@@ -3,7 +3,13 @@ import './wheel.css';
 import BasicLayout from '../../core/BasicLayout';
 
 const Wheel = () => {
+    // TODO - 
     // Get coins from user
+    // Don't show coins/bet input when user isn't logged
+    // Add people who bet
+    // Add input validator
+    // Add proper wheel
+    // Add History 
 
     return (
         <>
