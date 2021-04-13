@@ -22,14 +22,14 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <title>Huelette</title>
 </head>
-<!-- TODO (TO REMOVE)-->
+<!-- TODO Decide between html, body styles-->
 <style>
   * {
     box-sizing: border-box;
   }
 
   html,
-  body {
+  body, #root {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -42,6 +42,13 @@
     background-color: var(--MainBg);
     color: white;
     font-family: 'Roboto', sans-serif;
+  }
+
+  /* This seems like better solution after all for phones */
+  body, #root {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
   }
 
   .svgLoader {

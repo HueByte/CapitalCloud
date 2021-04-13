@@ -3,6 +3,7 @@
     flex-direction: column;
     overflow-x: hidden;
     height: 100%;
+    padding: 2em;
 }
 
 .game__container {

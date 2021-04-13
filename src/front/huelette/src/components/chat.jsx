@@ -61,7 +61,7 @@ const generateMessages = () => {
         'level': '29',
         'avatar': 'https://www.creativefabrica.com/wp-content/uploads/2019/02/Cloud-Icon-by-arus-580x386.jpg',
         'username': 'meee',
-        'text': `${window.innerWidth} - ${window.innerHeight} `
+        'text': `${window.innerWidth} - ${window.innerHeight}`
     });
 
     for (let i = 1; i < 50; i++) {
