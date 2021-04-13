@@ -10,6 +10,7 @@ const Wheel = () => {
     // Add input validator
     // Add proper wheel
     // Add History 
+    // Count of users betting on color
 
     return (
         <>

@@ -178,7 +178,7 @@
     100% {transform: rotate(360deg); }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
     .game__container {
         flex-direction: column;
         margin-bottom: 2em;
@@ -247,52 +247,3 @@
         height: 220px;
     }
 }
-
-/* @media screen and (max-width: 1400px) {
-    .game__container {
-        margin: 10em 0 0.5em 0;
-    }
-
-    .game__container .wheel__container .wheel {
-        width: 300px;
-        height: 300px;
-    }
-} */
-
-/* @media screen and (max-width: 850px) {
-    .bets__container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .bets__container .bets {
-        min-height: unset;
-    }
-
-    .bets__container .bet-button {
-        height: 40px;
-    }
-
-    .bet-people {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 780px) {
-    .game__container {
-        flex-direction: column;
-        min-height: 300px;
-    }
-    
-    .game__container .wheel__container {
-        order: 1;
-    }
-
-    .game__container .place-bet {
-        order: 2;
-    }
-
-    .game__container .history {
-        display: none;
-    }
-} */
