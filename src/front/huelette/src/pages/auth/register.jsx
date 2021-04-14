@@ -32,7 +32,6 @@ const Register = () => {
                     console.log(data.errors);
                 }
                 else {
-                    // TODO - Send verification email 
                     setIsCreated(true);
                 }
             })
@@ -52,8 +51,7 @@ const Register = () => {
                             <>
                                 <div className="auth-right-text" style={{fontSize: 'medium'}}>
                                     <p>Hi! <b style={{color: 'var(--Rose)'}}>{username}</b></p>
-                                    {/* TODO - Change Huelette */}
-                                    <span>We just need to verify your email address before you can access <b>Huelette</b></span><br />
+                                    <span>We just need to verify your email address before you can access <b>CloudLette</b></span><br />
                                     <p>You made account as <b style={{color: 'var(--Rose)'}}>{email}</b></p>
                                     <span>Thanks! - The CloudBytes teams</span>
                                 </div>

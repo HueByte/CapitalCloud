@@ -105,18 +105,26 @@
 
 .auth-button {
     cursor: pointer;
-    width: 60px;
+    width: 70px;
     padding: 10px;
     display: grid;
     place-items: center;
-    background-color: var(--Rose);
+    /* With border or without */
+    /* border: 1px solid var(--Grey); */
     margin: 0.5rem;
     border-radius: 5px;
     font-weight: bold;
-    transition: 300ms ease-in-out;
+    background-size: 100% 200%; 
+    background-image: linear-gradient(to bottom, var(--SharkSub) 50%, var(--Rose) 50%);
+    transition: 
+      background-position .2s ease-in-out, 
+      color .2s ease-in-out,
+      transform .2s ease-in-out;
 }
     .auth-button:hover {
-        transform: scale(1.1);
+        background-position: 0 100%;
+        color: #fff;
+        border-color: var(--Rose);
     }
 
 .bottom-wave {
