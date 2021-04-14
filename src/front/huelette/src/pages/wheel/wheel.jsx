@@ -39,8 +39,8 @@ const Wheel = () => {
                         </div>
                 </div>
                 <div className="history">
-                    hiiiii
-                    </div>
+
+                </div>
             </div>
             <div className="bets__container">
                 <div className="bets">
