@@ -112,9 +112,13 @@ namespace API.Configuration
         public void ConfigureCors() => _services.AddCors(o => o.AddDefaultPolicy(builder =>
         {
             // Add filter for origins and save then in appsettings: pref with .join array
-            builder.AllowAnyOrigin()
+            // builder.AllowAnyOrigin()
+            //        .AllowAnyHeader()
+            //        .AllowAnyMethod();
+            builder.WithOrigins("https://huebytes.com", "https://localhost")
                    .AllowAnyHeader()
-                   .AllowAnyMethod();
+                   .AllowAnyMethod()
+                   .AllowCredentials();
         }));
 
         public void ConfigureForwardedHeaders() => _services.Configure<ForwardedHeadersOptions>(options =>
