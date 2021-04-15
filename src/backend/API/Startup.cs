@@ -42,7 +42,7 @@ namespace API
             moduleConfiguration.ConfigureCors();
             moduleConfiguration.ConfigureForwardedHeaders();
             moduleConfiguration.ConfigureSmtpClient();
-            moduleConfiguration.AddSignalR();
+            moduleConfiguration.ConfigureSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

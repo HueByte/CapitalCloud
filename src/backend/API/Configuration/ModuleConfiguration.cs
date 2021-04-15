@@ -139,6 +139,6 @@ namespace API.Configuration
             };
         });
 
-        public void AddSignalR() => _services.AddSignalR();
+        public void ConfigureSignalR() => _services.AddSignalR();
     }
 }
