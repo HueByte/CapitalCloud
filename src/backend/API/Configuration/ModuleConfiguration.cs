@@ -111,6 +111,7 @@ namespace API.Configuration
 
         public void ConfigureCors() => _services.AddCors(o => o.AddDefaultPolicy(builder =>
         {
+            // Add filter for origins and save then in appsettings: pref with .join array
             builder.AllowAnyOrigin()
                    .AllowAnyHeader()
                    .AllowAnyMethod();
@@ -137,5 +138,7 @@ namespace API.Configuration
                 }
             };
         });
+
+        public void AddSignalR() => _services.AddSignalR();
     }
 }

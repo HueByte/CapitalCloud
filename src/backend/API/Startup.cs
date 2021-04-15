@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using API.Configuration;
+using API.Hubs;
 using Core.Entities;
 using Core.RepositoriesInterfaces;
 using Infrastructure.Repositories;
@@ -41,6 +42,7 @@ namespace API
             moduleConfiguration.ConfigureCors();
             moduleConfiguration.ConfigureForwardedHeaders();
             moduleConfiguration.ConfigureSmtpClient();
+            moduleConfiguration.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -77,6 +79,7 @@ namespace API
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
+                endpoints.MapHub<TestHub>("/api/TestingHub");
                 endpoints.MapGet("/api", async context =>
                 {
                     context.Response.ContentType = "text/plain";
