@@ -5,17 +5,45 @@ import { BaseURL } from '../../api-calls/ApiRoutes';
 
 
 const TestingZone = () => {
-    const [connection, setConnection] = useState(null);
+    const [hubConnection, setHubConnection] = useState(null);
 
-    const iConnection = new HubConnectionBuilder()
-        .withUrl(`${BaseURL}api/TestingHub`)
-        .withAutomaticReconnect()
-        .build();
-    
+    const [msg, setMsg] = useState(null);
+
     useEffect(async () => {
-        await iConnection.start();
-        console.log('SignalR connected');
+        const createHubConnection = async () => {
+            // create builder 
+            const hubConnect = new HubConnectionBuilder()
+                .withUrl(`${BaseURL}api/TestingHub`)
+                .withAutomaticReconnect()
+                .build();
+
+            // try to connect and send ID to server
+            try {
+                await hubConnect
+                    .start()
+                    .then(() => {
+                        if (hubConnect.connectionId) {
+                            hubConnect.invoke("sendID", hubConnect.connectionId);
+                        }
+                    })
+                    .then(() => {
+                        hubConnect.on("ReceiveMessage", (data, awa) => console.log(`${data} ${awa}`))
+                    });
+            }
+            catch (err) {
+                console.log(err);
+            }
+
+            // set connection state
+            setHubConnection(hubConnect);
+        }
+        
+        createHubConnection();
     }, []);
+
+    const tryMessage = () => {
+        hubConnection.invoke("Sendmessage", hubConnection.connectionId, "Hello");
+    }
 
     return (
         // <div className="container-test-absolute">
@@ -36,7 +64,9 @@ const TestingZone = () => {
             </div>
             <div className="testing-box main-bg">
                 <h1>ama box</h1>
-            </div> */}
+    </div> */}
+
+            <div onClick={tryMessage}>Push message?</div>
         </div>
     )
 }
