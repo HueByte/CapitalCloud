@@ -9,7 +9,6 @@ body, #root {
   padding: 0;
   font-size: 12px;
   overflow: hidden;
-  background-color: var(--MainBg);
   color: white;
   font-family: 'Roboto', sans-serif;
 }

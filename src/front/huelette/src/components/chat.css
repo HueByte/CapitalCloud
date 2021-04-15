@@ -204,6 +204,7 @@
     }
 }
 
+/* Make chat fullscreen */
 @media screen and (max-width: 600px) {
     .chat__container {
         width: Calc(100% - 90px);

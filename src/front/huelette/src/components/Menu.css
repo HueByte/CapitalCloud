@@ -252,6 +252,7 @@
     text-decoration: none;
 }
 
+/* Make buttons little bit smaller */
 @media screen and (max-width: 1250px) {
     .nav-desktop-right {
         flex: 1;
