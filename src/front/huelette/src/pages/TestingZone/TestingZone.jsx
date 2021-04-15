@@ -6,8 +6,9 @@ import { BaseURL } from '../../api-calls/ApiRoutes';
 
 const TestingZone = () => {
     const [hubConnection, setHubConnection] = useState(null);
+    const [message, setMessage] = useState('');
 
-    const [msg, setMsg] = useState(null);
+    const [data, setData] = useState(null);
 
     useEffect(async () => {
         const createHubConnection = async () => {
@@ -27,7 +28,7 @@ const TestingZone = () => {
                         }
                     })
                     .then(() => {
-                        hubConnect.on("ReceiveMessage", (data, awa) => console.log(`${data} ${awa}`))
+                        hubConnect.on("ReceiveMessage", (user, message) => console.log(`${user} ${message}`))
                     });
             }
             catch (err) {
@@ -42,7 +43,7 @@ const TestingZone = () => {
     }, []);
 
     const tryMessage = () => {
-        hubConnection.invoke("Sendmessage", hubConnection.connectionId, "Hello");
+        hubConnection.invoke("Sendmessage", hubConnection.connectionId, message);
     }
 
     return (
@@ -66,7 +67,8 @@ const TestingZone = () => {
                 <h1>ama box</h1>
     </div> */}
 
-            <div onClick={tryMessage}>Push message?</div>
+            <div onClick={tryMessage} style={{cursor: 'pointer'}}>Push message?</div>
+            <input type="text" onChange={event => setMessage(event.target.value)} style={{border: '1px solid #FFF', color: 'white'}} />
         </div>
     )
 }
