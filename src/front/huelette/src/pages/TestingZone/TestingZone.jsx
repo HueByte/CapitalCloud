@@ -48,6 +48,8 @@ const TestingZone = () => {
     const receiveMessage = (user, message) => {
         setData(data => [...data, { id: user, message: message }]);
         var el = document.getElementById('test-chat-container')
+
+        // TODO - if user scrolls up don't automatically scroll down
         el.scrollTop = el.scrollHeight;
     }
 
@@ -79,11 +81,9 @@ const TestingZone = () => {
                 </div>
                 <div className="test-chat-messages" id="test-chat-container">
                     {data.map((e, index) => {
-                        console.log(e.id);
-                        console.log(hubConnection.connectionId);
                         return (
                             <div key={index} className="test-message" style={{textAlign: e.id == hubConnection.connectionId ? 'left' : 'right'}}>
-                                {`${e.id}: ${e.message}`}
+                                <span>{`${e.id}: ${e.message}`}</span>
                             </div>
                         )
                     })}
