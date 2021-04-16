@@ -6,9 +6,8 @@ import { BaseURL } from '../../api-calls/ApiRoutes';
 
 const TestingZone = () => {
     const [hubConnection, setHubConnection] = useState(null);
-    const [message, setMessage] = useState('');
-
-    const [data, setData] = useState(null);
+    const [inputMessage, setInputMessage] = useState('');
+    const [data, setData] = useState([]);
 
     useEffect(async () => {
         const createHubConnection = async () => {
@@ -28,7 +27,7 @@ const TestingZone = () => {
                         }
                     })
                     .then(() => {
-                        hubConnect.on("ReceiveMessage", (user, message) => console.log(`${user} ${message}`))
+                        hubConnect.on("ReceiveMessage", (user, message) => receiveMessage(user, message));
                     });
             }
             catch (err) {
@@ -38,12 +37,18 @@ const TestingZone = () => {
             // set connection state
             setHubConnection(hubConnect);
         }
-        
+
         createHubConnection();
     }, []);
 
-    const tryMessage = () => {
-        hubConnection.invoke("Sendmessage", hubConnection.connectionId, message);
+    const sendMessage = () => {
+        hubConnection.invoke("Sendmessage", hubConnection.connectionId, inputMessage);
+    }
+
+    const receiveMessage = (user, message) => {
+        setData(data => [...data, { id: user, message: message }]);
+        var el = document.getElementById('test-chat-container')
+        el.scrollTop = el.scrollHeight;
     }
 
     return (
@@ -67,8 +72,23 @@ const TestingZone = () => {
                 <h1>ama box</h1>
     </div> */}
 
-            <div onClick={tryMessage} style={{cursor: 'pointer'}}>Push message?</div>
-            <input type="text" onChange={event => setMessage(event.target.value)} style={{border: '1px solid #FFF', color: 'white'}} />
+            <div className="test-chat">
+                <div className="test-chatbox">
+                    <div onClick={sendMessage} style={{ cursor: 'pointer' }}>Push message?</div>
+                    <input type="text" onChange={event => setInputMessage(event.target.value)} placeholder="Enter your text" />
+                </div>
+                <div className="test-chat-messages" id="test-chat-container">
+                    {data.map((e, index) => {
+                        console.log(e.id);
+                        console.log(hubConnection.connectionId);
+                        return (
+                            <div key={index} className="test-message" style={{textAlign: e.id == hubConnection.connectionId ? 'left' : 'right'}}>
+                                {`${e.id}: ${e.message}`}
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
         </div>
     )
 }

@@ -7,7 +7,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
 
-    var [messages, setMessages] = useState([]);
+    var [messages, setMessages] = useState([{}]);
     useEffect(async () => {
         await sleep(1000); // TODO - remove later (simulate loading)
         setMessages(generateMessages());

@@ -21,7 +21,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1em;
 }
 
@@ -36,11 +36,13 @@
     width: 200px;
     height: 200px;
     background-color: var(--Shark);
-    display: grid;
-    place-items: center;
     border-radius: 10px;
     margin: 1em;
     border: 2px solid var(--Gold);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .shark {
@@ -54,4 +56,44 @@
 }
 .main-bg {
     background-color: var(--MainBg);
+}
+
+/* Chat test */
+
+.test-chat {
+    display: flex;
+    flex-direction: row;
+    width: 100ch;
+}
+
+.test-chatbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.test-chatbox > input {
+    background-color: var(--Shark);
+    border: 1px solid var(--Grey);
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+    margin: 1em;
+}
+
+.test-chat-messages {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 200px;
+    width: 100%;
+    background-color: var(--Shark);
+    border-radius: 10px;
+}
+
+.test-message {
+    margin: 0.5em;
+    padding: 5px;
+    border-bottom: 1px solid var(--Grey);
 }
