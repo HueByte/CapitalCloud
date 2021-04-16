@@ -147,7 +147,7 @@ namespace API.Authentication
             MailMessage message = new MailMessage()
             {
                 Subject = "Awful Mail Activation",
-                Body = File.ReadAllText("HTMLFile/ActivationEmail.html").Replace("%ActivationLink%", url),
+                Body = File.ReadAllText("wwwroot/HTMLTemplates/ActivationEmail.html").Replace("%ActivationLink%", url),
                 IsBodyHtml = true
             };
             var emailResponse = await _emailSender.SendEmailAsync(message, new MailAddress(user.Email));
