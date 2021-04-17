@@ -36,7 +36,6 @@ export const VerifyRole = async (roles, token) => {
         redirect: 'follow'
     }
 
-    const 
     const url = `${BaseURL}api/VerifyRole/`
 
     // await fetch(`${BaseURL}api/VerifyRole/`)
