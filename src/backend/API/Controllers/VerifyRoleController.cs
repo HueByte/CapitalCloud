@@ -39,16 +39,9 @@ namespace API.Controllers
             isSuccess = true
         });
 
-        [DynamicAuthorize(ClaimTypes.Role, "user")]
+        [DynamicAuthorize]
         [HttpGet("RoleValidator")]
-        public IActionResult RoleValidator([FromQuery] string[] roles)
-        {
-            return Ok();
-        }
-
-        [DynamicAuthorize(ClaimTypes.Role, "")]
-        [HttpGet("Test")]
-        public IActionResult VerifyTest()
+        public IActionResult RoleValidator() // validates routes 
         {
             return Ok();
         }
