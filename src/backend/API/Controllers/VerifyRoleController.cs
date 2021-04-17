@@ -3,12 +3,14 @@ using Core.Models;
 using Common.lib.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using API.Authentication;
 
 namespace API.Controllers
 {
-    public class AuthTestController : BaseApiController
+    public class VerifyRoleController : BaseApiController
     {
-        public AuthTestController() { }
+        public VerifyRoleController() { }
 
         [Authorize(Roles = Roles.User)]
         [HttpGet("VerifyUser")]
@@ -36,5 +38,19 @@ namespace API.Controllers
             Data = "Verified",
             isSuccess = true
         });
+
+        [DynamicAuthorize(ClaimTypes.Role, "user")]
+        [HttpGet("RoleValidator")]
+        public IActionResult RoleValidator([FromQuery] string[] roles)
+        {
+            return Ok();
+        }
+
+        [DynamicAuthorize(ClaimTypes.Role, "")]
+        [HttpGet("Test")]
+        public IActionResult VerifyTest()
+        {
+            return Ok();
+        }
     }
 }

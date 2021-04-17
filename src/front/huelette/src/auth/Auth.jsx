@@ -28,3 +28,11 @@ export const AuthRegister = async (Email, Username, Password) => {
     
     return response;
 }
+
+export const VerifyRole = async () => {
+    
+}
+
+export const VerifyRoles = async () => {
+
+}

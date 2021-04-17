@@ -13,11 +13,13 @@ import FOUR_ZERO_FOUR from '../pages/404/FOUR_ZERO_FOUR';
 import TestingZone from '../pages/TestingZone/TestingZone';
 
 export const Routes = () => {
-    const routes = [
-        {
-            path: "/wheel",
-            component: Wheel
-        }
+    const basicLayoutRoutes = [
+        '/wheel',
+        '/roulette',
+        '/crash',
+        '/account/profile',
+        '/account/rewards',
+        '/leaderboards'
     ]
 
     return (
@@ -33,7 +35,7 @@ export const Routes = () => {
                 <Route path="/TestingZone/Tests" component={TestingZone} />
 
                 {/* TODO - figure out how to do that other way */}
-                <Route path={["/wheel", "/roulette", "/crash", "/account/profile", "/account/rewards", "/leaderboards"]} component={BasicLayout}>
+                <Route path={basicLayoutRoutes} component={BasicLayout}>
                     <BasicLayout>
                         <Route path="/wheel" component={Wheel} />
                         <Route path="/roulette" component={Roulette} />
