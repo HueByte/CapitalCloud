@@ -29,10 +29,17 @@ export const AuthRegister = async (Email, Username, Password) => {
     return response;
 }
 
-export const VerifyRole = async () => {
+export const VerifyRole = async (roles, token) => {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}`},
+        redirect: 'follow'
+    }
+
+    const 
+    const url = `${BaseURL}api/VerifyRole/`
+
+    // await fetch(`${BaseURL}api/VerifyRole/`)
+
     
-}
-
-export const VerifyRoles = async () => {
-
 }

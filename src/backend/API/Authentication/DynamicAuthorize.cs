@@ -31,10 +31,18 @@ namespace API.Authentication
             //dynamic here
             if(context.HttpContext.Request.QueryString.HasValue)
             {
-                var query = context.HttpContext.Request.QueryString.ToString();
-                var roles = HttpUtility.ParseQueryString(query).ToString();
+                // var zw = context.HttpContext.Request.QueryString;
+                // var query = context.HttpContext.Request.QueryString.ToString();
+                // var roles = HttpUtility.ParseQueryString(query);
+                // var arr = roles.AllKeys.ToDictionary(x => x, x => roles[x]);
+                // var z = arr.Values.ToArray();
 
-                Console.WriteLine(roles);
+                var query = context.HttpContext.Request.Query;
+                // var x = query.ToDictionary(x => x, x => query[x]).Values.ToArray();\
+
+
+                //TO FINISH
+                var JWTRoles = context.HttpContext.User.Claims.Where(entity => entity.Type == ClaimTypes.Role);
             }
             var hasClaim = context.HttpContext.User.Claims
                 .Where(entity => entity.Type == _claim.Type && entity.Value == _claim.Value).ToArray();
