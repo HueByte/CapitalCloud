@@ -43,8 +43,8 @@ export const Routes = () => {
                         <Route path="/wheel" component={Wheel} />
                         <Route path="/roulette" component={Roulette} />
                         <Route path="/crash" component={Crash} />
-                        <Route exact path="/account/profile" component={Account} />
-                        <Route exact path="/account/rewards" component={Rewards} />
+                        <PrivateRoute exact path="/account/profile" component={Account} />
+                        <PrivateRoute exact path="/account/rewards" component={Rewards} />
                         <Route path="/leaderboards" component={Leaderboards} />
                     </BasicLayout>
                 </Route>

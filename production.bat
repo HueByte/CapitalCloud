@@ -1,5 +1,5 @@
 @echo off
-mode con: cols=160 lines=78
+mode con: cols=70 lines=120
 set root=%cd%
 
 cd %root%/src/backend/API 

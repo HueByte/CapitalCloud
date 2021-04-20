@@ -33,7 +33,6 @@ const Login = () => {
                 }
                 else {
                     authContext.setAuthState(data);
-                    console.log(data);
                 }
             })
             .catch(() => {

@@ -115,7 +115,7 @@ namespace API.Configuration
             // builder.AllowAnyOrigin()
             //        .AllowAnyHeader()
             //        .AllowAnyMethod();
-            builder.WithOrigins("https://huebytes.com", "https://localhost")
+            builder.WithOrigins("https://huebytes.com", "https://localhost:3000", "http://localhost:3000")
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowCredentials();
