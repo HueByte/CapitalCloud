@@ -50,7 +50,7 @@ namespace API.Authentication
                 // Find user by mail
                 var user = await _userManager.FindByEmailAsync(loginModel.Email);
                 // handle user not found 
-                if (user == null) return new LoginResponse() { Errors = new List<string>() { "User not found" } };
+                if (user == null) return new LoginResponse() { Errors = new List<string>() { "Either e-mail or password is incorrect" } };
 
                 // Login via password
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, false);
