@@ -67,12 +67,14 @@
                 transition: all 300ms linear;
             }
                 .nav-desktop-left-button:hover {
-                    color: white !important;
-                    background-color: var(--RoseSub);
+                    color: white;
+                    /* background-color: var(--RoseSub); */
                 }
+
+                /* Button border-bottom idea */
                 .active-button {
-                    color: white !important;
-                    background-color: var(--Rose);
+                    color: var(--Rose) !important;
+                    border-bottom: 1px solid var(--Rose);
                 }
 
             .nav-desktop-left-button-icon {
