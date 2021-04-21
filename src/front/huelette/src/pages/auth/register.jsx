@@ -6,7 +6,6 @@ import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { AuthRegister } from '../../auth/Auth';
 
-// TODO - Add modals
 const Register = () => {
     const authContext = useContext(AuthContext);
     const [isCreated, setIsCreated] = useState(false);
