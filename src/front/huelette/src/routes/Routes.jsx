@@ -27,7 +27,7 @@ export const Routes = () => {
     return (
         <>
             <Switch>
-                {/* his can only be used in conjunction with from to exactly match a location 
+                {/* this can only be used in conjunction with from to exactly match a location 
                 when rendering a <Redirect> inside of a <Switch>. */}
                 <Redirect exact from="/" to="/wheel" />
 

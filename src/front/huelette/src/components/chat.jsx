@@ -24,7 +24,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                     {messages.length ? messages.map((mess, index) => (
                         <div key={mess.id} className="chat-message">
                             <div className="chat-message-top">
-                                <img src={mess.avatar} className="chat-message-avatar" />
+                                <img src={mess.avatar} className="chat-message-avatar" alt="avatar" />
                                 <div className="chat-message-level">{mess.level}</div>
                                 <div className="chat-message-username">{mess.username}</div>
                             </div>
