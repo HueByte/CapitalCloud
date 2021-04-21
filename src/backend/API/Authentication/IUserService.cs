@@ -15,6 +15,7 @@ namespace API.Authentication
         Task<LoginResponse> LoginUserAsync(LoginDTO loginModel);
 
         Task SendConfirmEmail(ApplicationUser user);
+
         Task<ServiceResponse<List<string>>> ConfirmEmail(string tokenId);
     }
 }

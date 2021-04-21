@@ -78,21 +78,8 @@ namespace API.Controllers
         [ProducesResponseType(typeof(LoginResponse), 400)]
         public async Task<IActionResult> LoginUser([FromBody] LoginDTO loginModel)
         {
-            // var response = await _userService.LoginUserAsync(loginModel);
-            // if (response.isSuccess)
-            //     return Ok(response);
-            // else
-            //     return BadRequest(response);
-
-            try
-            {
-                var response = await _userService.LoginUserAsync(loginModel);
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                return Ok(e);
-            }
+            var response = await _userService.LoginUserAsync(loginModel);
+            return Ok(response);
         }
 
         [HttpGet("ConfirmEmail")]

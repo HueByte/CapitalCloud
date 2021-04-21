@@ -20,20 +20,17 @@ const Register = () => {
 
     const sendRequest = () => {
         AuthRegister(email, username, password)
-            .then(reponse => {
-                //handle error
-                if (reponse == null) {
-                    new PromiseRejectionEvent('');
-                }
-                return reponse.json()
-            })
-            .then(data => {
-                if (!data.isSuccess) {
-                    console.log(data.errors);
+            .then(response => {
+                if(!response.isSuccess) {
+                    console.log(response.errors);
+                    // TODO - modal error
                 }
                 else {
                     setIsCreated(true);
                 }
+            })
+            .catch(() => {
+                console.log('Something went wrong');
             })
     }
 

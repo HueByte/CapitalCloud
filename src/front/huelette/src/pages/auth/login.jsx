@@ -19,30 +19,25 @@ const Login = () => {
     const sendRequest = () => {
         //POST
         AuthLogin(email, password)
-            .then(reponse => {
-                //handle error
-                if (reponse == null) {
-                    new PromiseRejectionEvent('');
-                }
-                return reponse.json();
-            })
-            .then(data => {
-                //set to localstorage
-                if (!data.isSuccess) {
-                    console.log(data.errors)
+            .then(response => {
+                console.log(response);
+                if (!response.isSuccess) {
+                    console.log(response.errors);
+                    // TODO - modal error
                 }
                 else {
-                    authContext.setAuthState(data);
+                    authContext.setAuthState(response)
                 }
+                return response;
             })
             .catch(() => {
-                console.log('Something went wrong with sending request');
+                console.log('Something went wrong');
             })
     }
 
     if (authContext.isAuthenticated()) return <Redirect to="/wheel" />
     else return (
-        <div className="auth-wrapper">
+      <div className="auth-wrapper">
             <div className="auth__container">
                 <div className="auth-left">
                     {/* TODO - make coin drop from img */}
