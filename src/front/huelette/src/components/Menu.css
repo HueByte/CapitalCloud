@@ -174,7 +174,7 @@
                     margin-left: 20px;
                 }
                 .nav-desktop-sub-item:hover {
-                    color: var(--Rose) !important;
+                    color: #fff !important;
                 }
                 .active-sub-item {
                     color: var(--Rose) !important;
