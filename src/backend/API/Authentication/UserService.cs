@@ -66,11 +66,15 @@ namespace API.Authentication
                 // handle unverified email if user provided correct password and email
                 // if (!(await _userManager.IsEmailConfirmedAsync(user))) return new LoginResponse() { Errors = new List<string>() { "Verify your e-mail" } };
 
+                // TODO - Consider other/faster way
+                //get names of user roles 
+                var roles = await _userManager.GetRolesAsync(user);
+
                 //Generate token and return Service Response with Token in LoginResponse
                 return new LoginResponse
                 {
                     isSuccess = true,
-                    token = _jwtAuthentication.GenerateJsonWebToken(user),
+                    token = _jwtAuthentication.GenerateJsonWebToken(user, roles),
                     UserName = user.UserName,
                     avatar_url = user.Avatar_Url,
                     exp = user.exp,

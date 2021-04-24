@@ -18,7 +18,7 @@ namespace API.Authentication
         {
             _configuration = configuration;
         }
-        public string GenerateJsonWebToken(ApplicationUser user)
+        public string GenerateJsonWebToken(ApplicationUser user, IList<string> roles)
         {
             //Create claims
             var claims = new List<Claim>() {
@@ -26,8 +26,12 @@ namespace API.Authentication
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName)
             };
+
             //add roles to claims
-            user.Roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
             var token = new JwtSecurityToken(
