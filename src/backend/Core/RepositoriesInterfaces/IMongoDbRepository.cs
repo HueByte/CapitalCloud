@@ -7,15 +7,15 @@ namespace Core.RepositoriesInterfaces
 {
     public interface IMongoDbRepository<TDocument> 
         {
-        Task<ServiceResponse<TDocument>> InsertOne(TDocument model);
-        Task<ServiceResponse<List<TDocument>>> InsertMany(List<TDocument> modelList);
+        Task<BasicApiResponse<TDocument>> InsertOne(TDocument model);
+        Task<BasicApiResponse<List<TDocument>>> InsertMany(List<TDocument> modelList);
 
-        Task<ServiceResponse<DeleteResult>> DeleteById(string id);
+        Task<BasicApiResponse<DeleteResult>> DeleteById(string id);
         
-        Task<ServiceResponse<TDocument>> GetById(string id);
+        Task<BasicApiResponse<TDocument>> GetById(string id);
 
-        Task<ServiceResponse<List<TDocument>>> GetAll();
+        Task<BasicApiResponse<List<TDocument>>> GetAll();
 
-        Task<ServiceResponse<ReplaceOneResult>> Update(string id, TDocument model);
+        Task<BasicApiResponse<ReplaceOneResult>> Update(string id, TDocument model);
     }
 }

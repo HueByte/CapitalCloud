@@ -112,24 +112,24 @@ namespace API.Authentication
         }
 
         // TODO - Change parameter for DTO & Change returning value & Add sending mail & check if user's email is verified
-        public async Task<ServiceResponse<ApplicationUser>> ChangePassword(string email, string oldPassword, string newPassword)
+        public async Task<BasicApiResponse<ApplicationUser>> ChangePassword(string email, string oldPassword, string newPassword)
         {
             // check if user exists
             var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) return new ServiceResponse<ApplicationUser>() { isSuccess = false };
+            if (user == null) return new BasicApiResponse<ApplicationUser>() { isSuccess = false };
 
             // check if password is correct and replace with a new one
             var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
             if (!result.Succeeded)
             {
-                return new ServiceResponse<ApplicationUser>()
+                return new BasicApiResponse<ApplicationUser>()
                 {
                     isSuccess = false,
                     message = result.Errors.ToString()
                 };
             }
 
-            return new ServiceResponse<ApplicationUser>() { isSuccess = true };
+            return new BasicApiResponse<ApplicationUser>() { isSuccess = true };
         }
 
         public async Task SendConfirmEmail(ApplicationUser user)
@@ -153,7 +153,7 @@ namespace API.Authentication
             var emailResponse = await _emailSender.SendEmailAsync(message, new MailAddress(user.Email));
             if (!emailResponse) await _emailRepo.DeleteById(dbResult.Data.Id.ToString());
         }
-        public async Task<ServiceResponse<List<string>>> ConfirmEmail(string tokenId)
+        public async Task<BasicApiResponse<List<string>>> ConfirmEmail(string tokenId)
         {
             //get email confirmation from database
             var dbResult = await _emailRepo.GetById(tokenId);

@@ -1,6 +1,6 @@
 namespace Core.Models
 {
-        public class ServiceResponse<T>
+        public class BasicApiResponse<T>
     {
         public T? Data;
         public string message = "";

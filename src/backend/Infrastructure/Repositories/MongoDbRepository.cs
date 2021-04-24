@@ -28,13 +28,13 @@ namespace Infrastructure.Repositories
             return (typeof(TDocument).GetCustomAttributes(typeof(BsonCollectionAttribute), true).FirstOrDefault()
                 as BsonCollectionAttribute).CollectionName;
         }
-        public async Task<ServiceResponse<TDocument>> InsertOne(TDocument model)
+        public async Task<BasicApiResponse<TDocument>> InsertOne(TDocument model)
         {
             try
             {
                 await collection.InsertOneAsync(model);
                 Log.Information("Inserted to DB: " + model.ToJson());
-                return new ServiceResponse<TDocument>()
+                return new BasicApiResponse<TDocument>()
                 {
                     Data = model,
                     isSuccess = true,
@@ -46,7 +46,7 @@ namespace Infrastructure.Repositories
             catch (Exception x)
             {
                 Log.Error("Error occurred during Insert" + x);
-                return new ServiceResponse<TDocument>()
+                return new BasicApiResponse<TDocument>()
                 {
                     Data = model,
                     isSuccess = false,
@@ -56,13 +56,13 @@ namespace Infrastructure.Repositories
             }
 
         }
-        public async Task<ServiceResponse<List<TDocument>>> InsertMany(List<TDocument> modelList)
+        public async Task<BasicApiResponse<List<TDocument>>> InsertMany(List<TDocument> modelList)
         {
             try
             {
                 await collection.InsertManyAsync(modelList);
                 Log.Information("Added " + modelList.Count + " Entities type of " + collection.CollectionNamespace + " to database " + Database.DatabaseNamespace);
-                return new ServiceResponse<List<TDocument>>()
+                return new BasicApiResponse<List<TDocument>>()
                 {
                     Data = modelList,
                     isSuccess = true,
@@ -73,7 +73,7 @@ namespace Infrastructure.Repositories
             catch (Exception x)
             {
                 Log.Error("Error occured during Insert " + modelList.Count + " Entities type of " + collection.CollectionNamespace + " to database " + Database.DatabaseNamespace);
-                return new ServiceResponse<List<TDocument>>()
+                return new BasicApiResponse<List<TDocument>>()
                 {
                     Data = modelList,
                     isSuccess = false,
@@ -84,13 +84,13 @@ namespace Infrastructure.Repositories
 
         }
 
-        public async Task<ServiceResponse<DeleteResult>> DeleteById(string id)
+        public async Task<BasicApiResponse<DeleteResult>> DeleteById(string id)
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
             var x = await collection.DeleteOneAsync(filter);
             if (x.IsAcknowledged) Log.Information("Delete Entities type of " + collection.CollectionNamespace + " with id " + id);
             else Log.Error("Error occured during delete: " + x.DeletedCount);
-            return new ServiceResponse<DeleteResult>()
+            return new BasicApiResponse<DeleteResult>()
             {
                 Data = x,
                 isSuccess = x.IsAcknowledged,
@@ -99,13 +99,13 @@ namespace Infrastructure.Repositories
             };
         }
 
-        public async Task<ServiceResponse<TDocument>> GetById(string id)
+        public async Task<BasicApiResponse<TDocument>> GetById(string id)
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
             var x = await collection.Find(filter).FirstOrDefaultAsync();
             if (x != null) Log.Information("Get Entity type of " + collection.CollectionNamespace + " with id " + id + " from " + Database.DatabaseNamespace);
             else Log.Error("Error Message");
-            return new ServiceResponse<TDocument>()
+            return new BasicApiResponse<TDocument>()
             {
                 Data = x,
                 isSuccess = x == null ? false : true,
@@ -115,11 +115,11 @@ namespace Infrastructure.Repositories
             };
         }
 
-        public async Task<ServiceResponse<List<TDocument>>> GetAll()
+        public async Task<BasicApiResponse<List<TDocument>>> GetAll()
         {
             var filter = Builders<TDocument>.Filter.Empty;
             var x = await collection.Find(filter).ToListAsync();
-            return new ServiceResponse<List<TDocument>>()
+            return new BasicApiResponse<List<TDocument>>()
             {
                 Data = x,
                 isSuccess = x == null ? false : true,
@@ -129,13 +129,13 @@ namespace Infrastructure.Repositories
             };
         }
 
-        public async Task<ServiceResponse<ReplaceOneResult>> Update(string id, TDocument model)
+        public async Task<BasicApiResponse<ReplaceOneResult>> Update(string id, TDocument model)
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
             var x = await collection.ReplaceOneAsync(filter, model);
             if (x.IsAcknowledged) Log.Information("Positive");
             else Log.Error("Error Message");
-            return new ServiceResponse<ReplaceOneResult>()
+            return new BasicApiResponse<ReplaceOneResult>()
             {
                 Data = x,
                 isSuccess = x.IsAcknowledged,

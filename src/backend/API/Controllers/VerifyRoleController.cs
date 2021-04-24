@@ -14,8 +14,8 @@ namespace API.Controllers
 
         [Authorize(Roles = Roles.User)]
         [HttpGet("VerifyUser")]
-        [ProducesResponseType(typeof(ServiceResponse<string>), 200)]
-        public IActionResult VerifyUser() => Ok(new ServiceResponse<string>
+        [ProducesResponseType(typeof(BasicApiResponse<string>), 200)]
+        public IActionResult VerifyUser() => Ok(new BasicApiResponse<string>
         {
             Data = "Verified",
             isSuccess = true,
@@ -23,8 +23,8 @@ namespace API.Controllers
 
         [Authorize(Roles = Roles.Admin)]
         [HttpGet("VerifyAdmin")]
-        [ProducesResponseType(typeof(ServiceResponse<string>), 200)]
-        public IActionResult VerifyAdmin() => Ok(new ServiceResponse<string>
+        [ProducesResponseType(typeof(BasicApiResponse<string>), 200)]
+        public IActionResult VerifyAdmin() => Ok(new BasicApiResponse<string>
         {
             Data = "Verified",
             isSuccess = true
@@ -32,8 +32,8 @@ namespace API.Controllers
 
         [Authorize(Roles = Roles.Admin + "," + Roles.User)]
         [HttpGet("VerifyAdminUser")]
-        [ProducesResponseType(typeof(ServiceResponse<string>), 200)]
-        public IActionResult VerifyAdminUser() => Ok(new ServiceResponse<string>
+        [ProducesResponseType(typeof(BasicApiResponse<string>), 200)]
+        public IActionResult VerifyAdminUser() => Ok(new BasicApiResponse<string>
         {
             Data = "Verified",
             isSuccess = true
