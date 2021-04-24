@@ -21,7 +21,11 @@ namespace API
                 .WriteTo.Console()
                 .CreateLogger();
             Log.Debug("Starting server...");
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            // TODO - seed data
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
