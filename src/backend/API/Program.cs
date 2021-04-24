@@ -15,6 +15,8 @@ namespace API
         
         public static void Main(string[] args)
         {
+            SayHi();
+            
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.File("logs/SystemLog.log", rollingInterval: RollingInterval.Day)
@@ -22,9 +24,8 @@ namespace API
                 .CreateLogger();
             Log.Debug("Starting server...");
             var host = CreateHostBuilder(args).Build();
-
             // TODO - seed data
-
+            
             host.Run();
         }
 
@@ -34,5 +35,18 @@ namespace API
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        public static void SayHi() 
+        {
+            Console.WriteLine(@"
+##     ##  #######     ##      ##     #####                 ##      ##   #####   ########     ##   ########  
+##     ## ##     ##  ####    ####    ##   ##                ##  ##  ##  ##   ##  ##     ##  ####   ##     ## 
+##     ##        ##    ##      ##   ##     ##               ##  ##  ## ##     ## ##     ##    ##   ##     ## 
+#########  #######     ##      ##   ##     ##               ##  ##  ## ##     ## ########     ##   ##     ## 
+##     ##        ##    ##      ##   ##     ##               ##  ##  ## ##     ## ##   ##      ##   ##     ## 
+##     ## ##     ##    ##      ##    ##   ##                ##  ##  ##  ##   ##  ##    ##     ##   ##     ## 
+##     ##  #######   ######  ######   #####                  ###  ###    #####   ##     ##  ###### ########  
+            ");
+        }
     }
 }
