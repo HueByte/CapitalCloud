@@ -89,6 +89,7 @@ namespace API.Authentication
         {
             if (registermodel == null)
                 return new RegisterResponse() { Errors = new List<string>() { "EmptyForm" } };
+                
             var user = new ApplicationUser()
             {
                 Id = Guid.NewGuid().ToString(),

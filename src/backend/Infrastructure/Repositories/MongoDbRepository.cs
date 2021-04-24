@@ -17,8 +17,10 @@ namespace Infrastructure.Repositories
         //TODO - MAKE MESSAGE FOR LOGS
         public IMongoCollection<TDocument> collection;
         public IMongoDatabase Database { get; }
+        
         public MongoDbRepository(MongoClient client)
         {
+            // TODO - Add it to config / appsettings.json
             Database = client.GetDatabase("RouletteTest");
             var collectionName = GetCollectionName();
             collection = Database.GetCollection<TDocument>(collectionName);
@@ -34,6 +36,7 @@ namespace Infrastructure.Repositories
             {
                 await collection.InsertOneAsync(model);
                 Log.Information("Inserted to DB: " + model.ToJson());
+                
                 return new BasicApiResponse<TDocument>()
                 {
                     Data = model,
@@ -46,6 +49,7 @@ namespace Infrastructure.Repositories
             catch (Exception x)
             {
                 Log.Error("Error occurred during Insert" + x);
+                
                 return new BasicApiResponse<TDocument>()
                 {
                     Data = model,
@@ -62,6 +66,7 @@ namespace Infrastructure.Repositories
             {
                 await collection.InsertManyAsync(modelList);
                 Log.Information("Added " + modelList.Count + " Entities type of " + collection.CollectionNamespace + " to database " + Database.DatabaseNamespace);
+                
                 return new BasicApiResponse<List<TDocument>>()
                 {
                     Data = modelList,
@@ -73,6 +78,7 @@ namespace Infrastructure.Repositories
             catch (Exception x)
             {
                 Log.Error("Error occured during Insert " + modelList.Count + " Entities type of " + collection.CollectionNamespace + " to database " + Database.DatabaseNamespace);
+                
                 return new BasicApiResponse<List<TDocument>>()
                 {
                     Data = modelList,
@@ -88,8 +94,10 @@ namespace Infrastructure.Repositories
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
             var x = await collection.DeleteOneAsync(filter);
+
             if (x.IsAcknowledged) Log.Information("Delete Entities type of " + collection.CollectionNamespace + " with id " + id);
             else Log.Error("Error occured during delete: " + x.DeletedCount);
+
             return new BasicApiResponse<DeleteResult>()
             {
                 Data = x,

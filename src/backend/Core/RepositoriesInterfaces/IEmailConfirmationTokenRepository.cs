@@ -3,8 +3,5 @@ using Core.Entities;
 
 namespace Core.RepositoriesInterfaces
 {
-    public interface IEmailConfirmationTokenRepository :IMongoDbRepository<EmailConfirmationToken>
-    {
-         
-    }
+    public interface IEmailConfirmationTokenRepository :IMongoDbRepository<EmailConfirmationToken> { }
 }

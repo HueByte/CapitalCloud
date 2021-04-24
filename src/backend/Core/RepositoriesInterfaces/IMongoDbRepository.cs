@@ -8,6 +8,7 @@ namespace Core.RepositoriesInterfaces
     public interface IMongoDbRepository<TDocument> 
         {
         Task<BasicApiResponse<TDocument>> InsertOne(TDocument model);
+        
         Task<BasicApiResponse<List<TDocument>>> InsertMany(List<TDocument> modelList);
 
         Task<BasicApiResponse<DeleteResult>> DeleteById(string id);

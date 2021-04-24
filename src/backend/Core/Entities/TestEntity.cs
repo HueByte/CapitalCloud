@@ -15,8 +15,10 @@ namespace Core.Entities
 
         [BsonElement("name")]
         public string Name { get; set; }
+        
         [BsonElement("email")]
         public string Email { get; set; }
+        
         [BsonElement("password")]
         public string Password { get; set; }
 

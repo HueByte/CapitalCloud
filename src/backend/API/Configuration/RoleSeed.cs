@@ -22,6 +22,7 @@ namespace API.Configuration
             {
                 Name = "admin",
             });
+
             var resultuser = await _roleManager.FindByNameAsync(Roles.User);
             if(resultuser == null) await _roleManager.CreateAsync(new ApplicationRole()
             {
