@@ -22,6 +22,8 @@ namespace API.Controllers
         [HttpGet("users/{page}")]
         public IActionResult GetUsers(int page)
         {
+            // TODO - Check query result for memory saving
+            // var users = _userManager.Users.Skip((page - 1) * 10).Take(10);
             var users = _userManager.Users;
             return Ok(new BasicApiResponse<IQueryable<ApplicationUser>>()
             {
