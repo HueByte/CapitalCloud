@@ -7,6 +7,6 @@ namespace API.Authentication
 {
     public interface IJwtAuthentication
     {
-         string GenerateJsonWebToken(ApplicationUser user, IList<string> roles);
+         Task<string> GenerateJsonWebToken(ApplicationUser user);
     }
 }
