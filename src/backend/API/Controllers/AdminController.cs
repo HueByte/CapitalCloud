@@ -43,5 +43,21 @@ namespace API.Controllers
             if (response.isSuccess) return Ok(response);
             return BadRequest(response);
         }
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPost("role/{userid}/{rolename}")]
+        public async Task<IActionResult> GrantRole(string userid, string rolename)
+        {
+            var response = await _adminService.GrantRole(userid, rolename);
+            if (response.isSuccess) return Ok(response);
+            return BadRequest(response);
+        }
+        [Authorize(Roles = Roles.Admin)]
+        [HttpDelete("role/{userid}/{rolename}")]
+        public async Task<IActionResult> RevokeRole(string userid, string rolename)
+        {
+            var response = await _adminService.RevokeRole(userid, rolename);
+            if (response.isSuccess) return Ok(response);
+            return BadRequest(response);
+        }
     }
 }

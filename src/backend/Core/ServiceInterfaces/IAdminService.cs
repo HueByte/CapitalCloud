@@ -11,5 +11,7 @@ namespace Core.ServiceInterfaces
         BasicApiResponse<IQueryable<ApplicationUser>> GetUsers(int page);
         Task<BasicApiResponse<ApplicationUser>> GetUserById(string id);
         Task<BasicApiResponse<List<string>>> DeleteUser(string id);
+        Task<BasicApiResponse<List<string>>> GrantRole(string userId, string roleId);
+        Task<BasicApiResponse<List<string>>> RevokeRole(string userId, string roleId);
     }
 }
