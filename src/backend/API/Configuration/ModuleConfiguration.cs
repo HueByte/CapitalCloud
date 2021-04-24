@@ -107,6 +107,7 @@ namespace API.Configuration
             _services.AddScoped<IEmailSender, EmailSender>();
             _services.AddScoped<IUserService, UserService>();
             _services.AddScoped<IJwtAuthentication, JwtAuthentication>();
+            _services.AddScoped<IAdminService, AdminService>();
         }
 
         public void ConfigureCors() => _services.AddCors(o => o.AddDefaultPolicy(builder =>
