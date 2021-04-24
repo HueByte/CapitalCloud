@@ -11,7 +11,6 @@ namespace Infrastructure.Repositories
         public EmailConfirmationTokenRepository(MongoClient client) : base(client)
         {
             _client = client;
-
         }
     }
 }
