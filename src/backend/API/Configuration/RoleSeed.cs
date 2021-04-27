@@ -20,13 +20,13 @@ namespace API.Configuration
             var resultadmin = await _roleManager.FindByNameAsync(Roles.Admin);
             if(resultadmin == null) await _roleManager.CreateAsync(new ApplicationRole()
             {
-                Name = "admin",
+                Name = Roles.Admin,
             });
 
             var resultuser = await _roleManager.FindByNameAsync(Roles.User);
             if(resultuser == null) await _roleManager.CreateAsync(new ApplicationRole()
             {
-                Name = "user",
+                Name = Roles.User,
             });
         }
     }
