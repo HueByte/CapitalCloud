@@ -15,14 +15,16 @@ using MongoDB.Driver;
 
 namespace API.Controllers
 {
-    [Authorize]
+
     public class TestController : BaseApiController
     {
-        private readonly IMongoDbRepository<EmailConfirmationToken> _mongoDbRepository;
+        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TestController(IMongoDbRepository<EmailConfirmationToken> mongoDbRepository)
+        public TestController(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
         {
-            _mongoDbRepository = mongoDbRepository;
+            _userManager = userManager;
+            _roleManager = roleManager;
 
         }
 
@@ -33,12 +35,10 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Get()
         {
-            await _mongoDbRepository.InsertOne(new EmailConfirmationToken()
-            {
-                userId = Guid.NewGuid().ToString(),
-                token = "123",
-                expiredAt = DateTime.Now.AddHours(24)
-            });
+            var role = await _roleManager.FindByNameAsync("admin");
+            var user = await _userManager.FindByIdAsync("337dc7bc-29cd-4402-94f4-e14868e7cfe8");
+            await _userManager.AddToRoleAsync(user,role.Name);
+
             return Redirect("google.com");
         }
 

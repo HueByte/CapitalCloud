@@ -72,10 +72,10 @@ namespace Infrastructure.Services
                 return StaticResponse<List<string>>.BadResponse(result.Errors.Select(x => x.Description).ToList(), "Error Occured", 1);
 
             Log.Information($"Granted {role.Name} for {user.UserName}");
-            
+
             return StaticResponse<List<string>>.GoodResponse(null, "Role Granted!");
         }
-         public async Task<BasicApiResponse<List<string>>> RevokeRole(string userId, string rolename)
+        public async Task<BasicApiResponse<List<string>>> RevokeRole(string userId, string rolename)
         {
             var role = await _roleManager.FindByNameAsync(rolename);
             if (role == null)
@@ -92,6 +92,21 @@ namespace Infrastructure.Services
             Log.Information($"Revoke {role.Name} from {user.UserName}");
 
             return StaticResponse<List<string>>.GoodResponse(null, "Role Granted!");
+        }
+
+        public async Task<BasicApiResponse<List<string>>> ConfirmUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return StaticResponse<List<string>>.BadResponse(null, "No user finded", 1);
+            if (await _userManager.IsEmailConfirmedAsync(user))
+                return StaticResponse<List<string>>.BadResponse(null, "User is already Confirmed", 1);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user); 
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+                return StaticResponse<List<string>>.BadResponse(result.Errors.Select(x => x.Description).ToList(), "Error Occured", 1);
+            Log.Information($"Confirmed {user} with AdminPanel");
+            return StaticResponse<List<string>>.GoodResponse(null, "User Confirmed!");
         }
     }
 }

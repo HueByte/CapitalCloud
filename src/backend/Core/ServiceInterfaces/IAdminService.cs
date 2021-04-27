@@ -13,5 +13,6 @@ namespace Core.ServiceInterfaces
         Task<BasicApiResponse<List<string>>> DeleteUser(string id);
         Task<BasicApiResponse<List<string>>> GrantRole(string userId, string roleId);
         Task<BasicApiResponse<List<string>>> RevokeRole(string userId, string roleId);
+        Task<BasicApiResponse<List<string>>> ConfirmUser(string id);
     }
 }
