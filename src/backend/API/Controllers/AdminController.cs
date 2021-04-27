@@ -59,5 +59,13 @@ namespace API.Controllers
             if (response.isSuccess) return Ok(response);
             return BadRequest(response);
         }
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPost("email/{userid}")]
+        public async Task<IActionResult> ConfirmAccount(string userid)
+        {
+            var response = await _adminService.ConfirmUser(userid);
+            if (response.isSuccess) return Ok(response);
+            return BadRequest(response);
+        }
     }
 }
