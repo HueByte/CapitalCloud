@@ -74,6 +74,7 @@ namespace API.Authentication
                     UserName = user.UserName,
                     avatar_url = user.Avatar_Url,
                     exp = user.exp,
+                    coins = user.coins,
                     Email = user.Email,
                     tokenType = "Bearer",
                     expiresDate = DateTime.Now.AddDays(30)

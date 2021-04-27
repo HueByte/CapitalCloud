@@ -79,7 +79,9 @@ namespace API.Controllers
         public async Task<IActionResult> LoginUser([FromBody] LoginDTO loginModel)
         {
             var response = await _userService.LoginUserAsync(loginModel);
+            if(!String.IsNullOrEmpty(response.token))
             return Ok(response);
+            return BadRequest(response);
         }
 
         [HttpGet("ConfirmEmail")]

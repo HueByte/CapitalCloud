@@ -8,5 +8,6 @@ namespace Core.Entities
     {
         public string Avatar_Url { get; set; }
         public double exp { get; set; } = 1;
+        public uint coins { get; set; }
     }
 }
