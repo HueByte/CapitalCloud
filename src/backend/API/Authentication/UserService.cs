@@ -113,7 +113,7 @@ namespace API.Authentication
                 return new RegisterResponse() { Errors = errorlist.ToList() };
             }
         }
-
+   
         // TODO - Change parameter for DTO & Change returning value & Add sending mail & check if user's email is verified
         public async Task<BasicApiResponse<ApplicationUser>> ChangePassword(string email, string oldPassword, string newPassword)
         {
@@ -156,6 +156,7 @@ namespace API.Authentication
             var emailResponse = await _emailSender.SendEmailAsync(message, new MailAddress(user.Email));
             if (!emailResponse) await _emailRepo.DeleteById(dbResult.Data.Id.ToString());
         }
+
         public async Task<BasicApiResponse<List<string>>> ConfirmEmail(string tokenId)
         {
             //get email confirmation from database

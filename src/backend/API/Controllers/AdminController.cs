@@ -19,6 +19,7 @@ namespace API.Controllers
         {
             _adminService = adminService;
         }
+
         [Authorize(Roles = Roles.Admin)]
         [HttpGet("users/{page}")]
         public IActionResult GetUsers(int page)
@@ -35,6 +36,7 @@ namespace API.Controllers
             if (response.isSuccess) return Ok(response);
             return BadRequest(response);
         }
+
         [Authorize(Roles = Roles.Admin)]
         [HttpDelete("user/{id}")]
         public async Task<IActionResult> DeleteuserById(string id)
@@ -43,6 +45,7 @@ namespace API.Controllers
             if (response.isSuccess) return Ok(response);
             return BadRequest(response);
         }
+
         [Authorize(Roles = Roles.Admin)]
         [HttpPost("role/{userid}/{rolename}")]
         public async Task<IActionResult> GrantRole(string userid, string rolename)
@@ -51,6 +54,7 @@ namespace API.Controllers
             if (response.isSuccess) return Ok(response);
             return BadRequest(response);
         }
+
         [Authorize(Roles = Roles.Admin)]
         [HttpDelete("role/{userid}/{rolename}")]
         public async Task<IActionResult> RevokeRole(string userid, string rolename)
@@ -59,6 +63,7 @@ namespace API.Controllers
             if (response.isSuccess) return Ok(response);
             return BadRequest(response);
         }
+        
         [Authorize(Roles = Roles.Admin)]
         [HttpPost("email/{userid}")]
         public async Task<IActionResult> ConfirmAccount(string userid)

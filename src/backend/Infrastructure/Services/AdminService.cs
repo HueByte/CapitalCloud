@@ -45,6 +45,7 @@ namespace Infrastructure.Services
                 isSuccess = true
             };
         }
+
         public BasicApiResponse<IQueryable<ApplicationUser>> GetUsers(int page)
         {
             var users = _userManager.Users.Skip((page - 1) * 10).Take(10);
@@ -75,6 +76,7 @@ namespace Infrastructure.Services
 
             return StaticResponse<List<string>>.GoodResponse(null, "Role Granted!");
         }
+        
         public async Task<BasicApiResponse<List<string>>> RevokeRole(string userId, string rolename)
         {
             var role = await _roleManager.FindByNameAsync(rolename);
@@ -97,15 +99,18 @@ namespace Infrastructure.Services
         public async Task<BasicApiResponse<List<string>>> ConfirmUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+            
             if (user == null)
                 return StaticResponse<List<string>>.BadResponse(null, "No user finded", 1);
+
             if (await _userManager.IsEmailConfirmedAsync(user))
                 return StaticResponse<List<string>>.BadResponse(null, "User is already Confirmed", 1);
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user); 
-            var result = await _userManager.ConfirmEmailAsync(user, token);
-            if (!result.Succeeded)
-                return StaticResponse<List<string>>.BadResponse(result.Errors.Select(x => x.Description).ToList(), "Error Occured", 1);
+
+            user.EmailConfirmed = true;
+            await _userManager.UpdateAsync(user);
+            
             Log.Information($"Confirmed {user} with AdminPanel");
+
             return StaticResponse<List<string>>.GoodResponse(null, "User Confirmed!");
         }
     }
