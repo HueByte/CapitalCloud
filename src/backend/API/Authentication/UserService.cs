@@ -17,6 +17,7 @@ using Core.Models;
 using System.Net.Mail;
 using System.IO;
 using Serilog;
+using Common.lib.Types;
 
 namespace API.Authentication
 {
@@ -51,7 +52,6 @@ namespace API.Authentication
                 var user = await _userManager.FindByEmailAsync(loginModel.Email);
                 // handle user not found 
                 if (user == null) return new LoginResponse() { Errors = new List<string>() { "Either e-mail or password is incorrect" } };
-
                 // Login via password
                 var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, false);
                 // handle wrong password or unverified email ----- This is on avg. 400ms faster than doing it manually 
@@ -100,7 +100,7 @@ namespace API.Authentication
             };
 
             var result = await _userManager.CreateAsync(user, registermodel.Password);
-            await _userManager.AddToRoleAsync(user, "user");
+            await _userManager.AddToRoleAsync(user, Roles.User);
 
             if (result.Succeeded)
             {

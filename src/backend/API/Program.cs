@@ -22,15 +22,21 @@ namespace API
                 .MinimumLevel.Information()
                 .Enrich.WithThreadId()
                 .Enrich.WithThreadName()
-                .WriteTo.File(new CompactJsonFormatter(),"./logs/systemlog.json", rollingInterval: RollingInterval.Day)
+                .WriteTo.File(new CompactJsonFormatter(), "./logs/systemlog.json", rollingInterval: RollingInterval.Day)
                 .WriteTo.Seq("http://localhost:5341")
                 .WriteTo.Console()
                 .CreateLogger();
-            Log.Debug("Starting server...");
-            var host = CreateHostBuilder(args).Build();
-            // TODO - seed data
-
-            host.Run();
+            Log.Information("Starting server...");
+            try
+            {
+                var host = CreateHostBuilder(args).Build();
+                // TODO - seed data
+                host.Run();
+            }
+            catch(Exception ex)
+            {
+                Log.Fatal(ex, "Fatal Error Occured during start!");
+            }
             Log.CloseAndFlush();
         }
 
