@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 using Serilog.Formatting.Compact;
 
 namespace API
@@ -20,6 +21,8 @@ namespace API
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.WithThreadId()
                 .Enrich.WithThreadName()
                 .WriteTo.File(new CompactJsonFormatter(), "./logs/systemlog.json", rollingInterval: RollingInterval.Day)

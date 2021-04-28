@@ -96,7 +96,7 @@ namespace API.Authentication
                 Id = Guid.NewGuid().ToString(),
                 UserName = registermodel.Username,
                 Email = registermodel.Email,
-                EmailConfirmed = true   // TODO - DELETE
+                EmailConfirmed = false   // TODO - DELETE
             };
 
             var result = await _userManager.CreateAsync(user, registermodel.Password);
