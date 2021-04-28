@@ -7,26 +7,31 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Formatting.Compact;
 
 namespace API
 {
     public class Program
     {
-        
+
         public static void Main(string[] args)
         {
             SayHi();
-            
+
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.File("logs/SystemLog.log", rollingInterval: RollingInterval.Day)
+                .MinimumLevel.Information()
+                .Enrich.WithThreadId()
+                .Enrich.WithThreadName()
+                .WriteTo.File(new CompactJsonFormatter(),"./logs/systemlog.json", rollingInterval: RollingInterval.Day)
+                .WriteTo.Seq("http://localhost:5341")
                 .WriteTo.Console()
                 .CreateLogger();
             Log.Debug("Starting server...");
             var host = CreateHostBuilder(args).Build();
             // TODO - seed data
-            
+
             host.Run();
+            Log.CloseAndFlush();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -34,9 +39,9 @@ namespace API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }).UseSerilog();
 
-        public static void SayHi() 
+        public static void SayHi()
         {
             Console.WriteLine(@"
 ##     ##  #######     ##      ##     #####                 ##      ##   #####   ########     ##   ########  

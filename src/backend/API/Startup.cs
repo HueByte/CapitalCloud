@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace API
 {
@@ -66,6 +67,7 @@ namespace API
                  c.SwaggerEndpoint("/swagger/v0.2A/swagger.json", "Roulette");
                  //  c.RoutePrefix = "/api";
              });
+             app.UseSerilogRequestLogging();
 
 
 
