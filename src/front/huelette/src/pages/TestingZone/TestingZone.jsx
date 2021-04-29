@@ -8,6 +8,11 @@ const TestingZone = () => {
     const [hubConnection, setHubConnection] = useState(null);
     const [inputMessage, setInputMessage] = useState('');
     const [data, setData] = useState([]);
+    const textBox = document.getElementById('text-tester');
+
+    const handleEnter = (event) => {
+        if (event.key === "Enter") sendMessage();
+    }
 
     useEffect(async () => {
         const createHubConnection = async () => {
@@ -42,6 +47,8 @@ const TestingZone = () => {
     }, []);
 
     const sendMessage = () => {
+        setInputMessage('');
+        textBox.value = '';
         hubConnection.invoke("Sendmessage", hubConnection.connectionId, inputMessage);
     }
 
@@ -77,7 +84,7 @@ const TestingZone = () => {
             <div className="test-chat">
                 <div className="test-chatbox">
                     <div onClick={sendMessage} style={{ cursor: 'pointer' }}>Push message?</div>
-                    <input type="text" onChange={event => setInputMessage(event.target.value)} placeholder="Enter your text" />
+                    <input type="text" id="text-tester" onKeyDown={handleEnter} onChange={event => setInputMessage(event.target.value)} placeholder="Enter your text" />
                 </div>
                 <div className="test-chat-messages" id="test-chat-container">
                     {data.map((e, index) => {

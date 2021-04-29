@@ -62,7 +62,7 @@
 
 .test-chat {
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
     width: 100ch;
 }
 
@@ -70,7 +70,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .test-chatbox > input {
@@ -87,6 +87,7 @@
     flex-direction: column;
     overflow: auto;
     max-height: 200px;
+    min-height: 200px;
     width: 100%;
     background-color: var(--Shark);
     border-radius: 10px;
