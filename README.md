@@ -2,7 +2,7 @@
 
 ## 🔎 About 🔎
 The project is a web application that imitates internet roulette. The application allows you to register, log in, store data about users (their level, experience) in MongoDB.
-We use React.js as technologies, and Asp.Net in BackEnd.We doubt that someone would use this code, but we provide its code under the MIT License. The application uses a design created by By Start Bootstrap under the MIT license
+We use React.js as technologies, and Asp.Net in BackEnd.We doubt that someone would use this code, but we provide its code under the MIT License.
 
 ## 💻 Technologies used 💻
 ### `BACKEND`
