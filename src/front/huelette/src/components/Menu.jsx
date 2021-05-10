@@ -8,11 +8,14 @@ import { AuthContext } from '../auth/AuthContext';
 // TODO - add media query loading & add avatar and coins
 const Menu = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
+
+    console.log(authContext.authState);
+
     const [level, setLevel] = useState({
         lvl: 0,
         percent: 0
     })
-
+    const [coins, setCoins] = useState(0);
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
 
     const logout = () => {
@@ -50,16 +53,13 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
     }
 
     useEffect(() => {
-        if (authContext.authState != null)
-            setLevel(calcLevel(authContext.authState.exp))
+        console.log('xx');
+        if (authContext.authState != null) {
+            console.log('zz');
+            setLevel(calcLevel(authContext.authState.exp));
+            setCoins(authContext.authState.coins);
+        }
     }, []);
-    
-    //TODO - temp variables remove later
-    const variables = {
-        lvl: 160,
-        barProgress: 33,
-        coins: 1999292
-    }
 
     return (
         <>
@@ -94,7 +94,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
                                                     <span style={{ textTransform: "uppercase", marginLeft: 5 }}>coins</span>
                                                 </div>
                                                 <div className="nav-coins-balance">
-                                                    {variables.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                                                    {coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                                                 </div>
                                             </div>
                                             <NavLink to="/account/profile"
@@ -156,7 +156,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
                                                 </div>
                                                 <div className="nav-progress-bar-number">
                                                     {level.percent}%
-                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <NavLink to="/account/options" className="nav-desktop-sub-optional">
@@ -180,7 +180,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
                                     <span style={{ textTransform: "uppercase", marginLeft: 5 }}>coins</span>
                                 </div>
                                 <div className="nav-coins-balance">
-                                    {variables.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                                    {coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                                 </div>
                             </div>
                             <NavLink to="/account/profile"
@@ -284,6 +284,18 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
             </div>
         </>
     )
+}
+
+const NavDesktop = () => {
+    
+}
+
+const NavMobile = () => {
+
+}
+
+const NavSide = () => {
+    
 }
 
 export default Menu;
