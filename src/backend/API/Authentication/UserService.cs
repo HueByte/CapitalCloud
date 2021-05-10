@@ -90,7 +90,7 @@ namespace API.Authentication
         {
             if (registermodel == null)
                 return new RegisterResponse() { Errors = new List<string>() { "EmptyForm" } };
-                
+
             var user = new ApplicationUser()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -114,7 +114,26 @@ namespace API.Authentication
                 return new RegisterResponse() { Errors = errorlist.ToList() };
             }
         }
-   
+
+        public async Task<LoginResponse> GetUserLoginDataAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return null;
+
+            return new LoginResponse
+            {
+                isSuccess = true,
+                token = await _jwtAuthentication.GenerateJsonWebToken(user),
+                UserName = user.UserName,
+                avatar_url = user.Avatar_Url,
+                exp = user.exp,
+                coins = user.coins,
+                Email = user.Email,
+                tokenType = "Bearer",
+                expiresDate = DateTime.Now.AddDays(30)
+            };
+        }
+
         // TODO - Change parameter for DTO & Change returning value & Add sending mail & check if user's email is verified
         public async Task<BasicApiResponse<ApplicationUser>> ChangePassword(string email, string oldPassword, string newPassword)
         {
