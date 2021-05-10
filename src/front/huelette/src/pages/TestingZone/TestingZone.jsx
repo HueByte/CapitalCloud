@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './TestingZone.css';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BaseURL } from '../../api-calls/ApiRoutes';
-
+import img from '../../assets/favicon.svg';
 
 const TestingZone = () => {
     const [hubConnection, setHubConnection] = useState(null);
     const [inputMessage, setInputMessage] = useState('');
+    // TODO - useCallback() ?
     const [data, setData] = useState([]);
     const textBox = document.getElementById('text-tester');
 
@@ -54,8 +55,9 @@ const TestingZone = () => {
 
     const receiveMessage = (user, message) => {
         setData(data => [...data, { id: user, message: message }]);
+        // TODO - useRef()?
         var el = document.getElementById('test-chat-container')
-
+        
         // TODO - if user scrolls up don't automatically scroll down
         el.scrollTop = el.scrollHeight;
     }
@@ -82,6 +84,7 @@ const TestingZone = () => {
     </div> */}
 
             <div className="test-chat">
+                <img src={img} style={{width: '500px'}}/>
                 <div className="test-chatbox">
                     <div onClick={sendMessage} style={{ cursor: 'pointer' }}>Push message?</div>
                     <input type="text" id="text-tester" onKeyDown={handleEnter} onChange={event => setInputMessage(event.target.value)} placeholder="Enter your text" />

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import './Menu.css';
 import './Menu-mobile.css';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import logo from '../assets/white-cloud.jpg';
+import logo from '../assets/favicon.svg';
 import { AuthContext } from '../auth/AuthContext';
 
 // TODO - add media query loading & add avatar and coins

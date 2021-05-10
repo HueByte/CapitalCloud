@@ -1,6 +1,7 @@
 import React from 'react'
 import './wheel.css';
 import BasicLayout from '../../core/BasicLayout';
+import logo from '../../assets/favicon.svg';
 
 const Wheel = () => {
     // TODO - 
@@ -35,8 +36,8 @@ const Wheel = () => {
                 </div>
                 <div className="wheel__container">
                     <div className="wheel">
-                        It is 100% working wheel
-                        </div>
+                        <img src={logo} alt="test" style={{width: '30px'}}/>
+                    </div>
                 </div>
                 <div className="history">
 
