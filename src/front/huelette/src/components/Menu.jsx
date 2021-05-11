@@ -8,9 +8,6 @@ import { AuthContext } from '../auth/AuthContext';
 // TODO - add media query loading & add avatar and coins
 const Menu = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
-
-    console.log(authContext.authState);
-
     const [level, setLevel] = useState({
         lvl: 0,
         percent: 0

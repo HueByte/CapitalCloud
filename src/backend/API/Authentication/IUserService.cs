@@ -17,5 +17,7 @@ namespace API.Authentication
         Task SendConfirmEmail(ApplicationUser user);
 
         Task<BasicApiResponse<List<string>>> ConfirmEmail(string tokenId);
+
+        Task<UpdatedUser> FetchNewUserDataAsync(string email);
     }
 }

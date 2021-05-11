@@ -9,6 +9,7 @@ using Core.DTOModels;
 using Core.Entities;
 using Core.Models;
 using Core.RepositoriesInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +23,12 @@ namespace API.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
-        public AuthController(UserManager<ApplicationUser> userManager, IUserService userService)
+        private readonly IJwtAuthentication _jwtAuth;
+        public AuthController(UserManager<ApplicationUser> userManager, IUserService userService, IJwtAuthentication jwtAuth)
         {
             _userService = userService;
             _userManager = userManager;
+            _jwtAuth = jwtAuth;
         }
 
         /// <summary>
@@ -79,8 +82,8 @@ namespace API.Controllers
         public async Task<IActionResult> LoginUser([FromBody] LoginDTO loginModel)
         {
             var response = await _userService.LoginUserAsync(loginModel);
-            if(!String.IsNullOrEmpty(response.token))
-            return Ok(response);
+            if (!String.IsNullOrEmpty(response.token))
+                return Ok(response);
             return BadRequest(response);
         }
 
@@ -90,6 +93,22 @@ namespace API.Controllers
             var response = await _userService.ConfirmEmail(token);
             if (response.isSuccess) return Ok(response.message);
             else return BadRequest(response.Data);
+        }
+
+        [HttpPost("FetchNewData")]
+        [Authorize]
+        public async Task<IActionResult> FetchNewUserDataAsync([FromBody] string token)
+        {
+            Console.WriteLine(token);
+            try
+            {
+                string email = _jwtAuth.GetEmailFromToken(token);
+                var newUserData = await _userService.FetchNewUserDataAsync(email);
+                return Ok(newUserData);
+            }
+            catch (Exception e) { Console.WriteLine(e); }
+
+            return Ok();
         }
     }
 }

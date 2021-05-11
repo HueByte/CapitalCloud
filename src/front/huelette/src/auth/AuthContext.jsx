@@ -1,13 +1,9 @@
-import React, { createContext, useState } from 'react';
-import { AuthLogin } from './Auth';
+import React, { createContext, useEffect, useState } from 'react';
+import { AuthLogin, FetchNewUserData } from './Auth';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    useState(() => {
-        console.log("test");
-    }, [])
-
     const user = JSON.parse(localStorage.getItem('currentUser'));
     const [authState, setAuthState] = useState(user);
 
@@ -15,7 +11,7 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem('currentUser', JSON.stringify(userData));
         setAuthState(userData);
     }
-    
+
     const singout = () => {
         localStorage.clear();
         setAuthState({});
@@ -26,9 +22,23 @@ const AuthProvider = ({ children }) => {
         return true;
     }
 
-    const getFreshUserData = () => {
-        
+    const getFreshUserData = (user) => {
+        FetchNewUserData(user);
     }
+
+    useEffect(async () => {
+        if (isAuthenticated()) {
+            var tempUser = authState;
+            var updatedUser = await FetchNewUserData(user);
+            ({ userName: tempUser.userName, 
+                exp: tempUser.exp, 
+                coins: tempUser.coins, 
+                avatar_url: tempUser.avatar_url } = updatedUser);
+            // setAuthInfo(updatedUser);
+            
+            setAuthInfo(tempUser);
+        }
+    }, [])
 
     const value = {
         authState,

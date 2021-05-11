@@ -46,5 +46,12 @@ namespace API.Authentication
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public string GetEmailFromToken(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
+            return jwtToken.Claims.First(claim => claim.Type == ClaimTypes.Email).Value;
+        }
     }
 }

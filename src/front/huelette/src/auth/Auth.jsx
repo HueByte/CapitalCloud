@@ -22,3 +22,15 @@ export const AuthRegister = async (Email, Username, Password) => {
     return await fetch(`${BaseURL}api/auth/register`, requestOptions)
         .then(response => response.json());
 }
+
+export const FetchNewUserData = async (user) => {
+    const { token: token } = user;
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(token)
+    }
+
+    return await fetch(`${BaseURL}api/auth/FetchNewData`, requestOptions)
+        .then(response => response.json());
+}

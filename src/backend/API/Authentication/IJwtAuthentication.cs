@@ -8,5 +8,6 @@ namespace API.Authentication
     public interface IJwtAuthentication
     {
          Task<string> GenerateJsonWebToken(ApplicationUser user);
+         string GetEmailFromToken(string token);
     }
 }

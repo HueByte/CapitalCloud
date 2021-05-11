@@ -115,22 +115,17 @@ namespace API.Authentication
             }
         }
 
-        public async Task<LoginResponse> GetUserLoginDataAsync(string email)
+        public async Task<UpdatedUser> FetchNewUserDataAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null) return null;
-
-            return new LoginResponse
+            
+            return new UpdatedUser
             {
-                isSuccess = true,
-                token = await _jwtAuthentication.GenerateJsonWebToken(user),
-                UserName = user.UserName,
                 avatar_url = user.Avatar_Url,
-                exp = user.exp,
                 coins = user.coins,
-                Email = user.Email,
-                tokenType = "Bearer",
-                expiresDate = DateTime.Now.AddDays(30)
+                exp = user.exp,
+                UserName = user.UserName
             };
         }
 

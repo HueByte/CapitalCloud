@@ -12,8 +12,8 @@ namespace Common.ApiResponse
         public string Email { get; set; }
         public double exp { get; set; }
         public string avatar_url { get; set; }
-        public uint coins { get; set; } =0;
-        
+        public uint coins { get; set; } = 0;
+
         public List<string> Errors { get; set; }
         public bool isSuccess { get; set; } = false;
     }
