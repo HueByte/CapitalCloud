@@ -20,7 +20,6 @@ const Login = () => {
         //POST
         AuthLogin(email, password)
             .then(response => {
-                console.log(response);
                 if (!response.isSuccess) {
                     console.log(response.errors);
                     // TODO - modal error

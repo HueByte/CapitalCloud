@@ -99,16 +99,17 @@ namespace API.Controllers
         [Authorize]
         public async Task<IActionResult> FetchNewUserDataAsync([FromBody] string token)
         {
-            Console.WriteLine(token);
             try
             {
                 string email = _jwtAuth.GetEmailFromToken(token);
                 var newUserData = await _userService.FetchNewUserDataAsync(email);
                 return Ok(newUserData);
             }
-            catch (Exception e) { Console.WriteLine(e); }
+            
+            // Handle it somehow?
+            catch (Exception e) {  }
 
-            return Ok();
+            return BadRequest();
         }
     }
 }

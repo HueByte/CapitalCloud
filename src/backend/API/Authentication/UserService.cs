@@ -125,7 +125,8 @@ namespace API.Authentication
                 avatar_url = user.Avatar_Url,
                 coins = user.coins,
                 exp = user.exp,
-                UserName = user.UserName
+                UserName = user.UserName,
+                isSuccess = true
             };
         }
 
