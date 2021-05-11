@@ -55,14 +55,14 @@
 .chat-message {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid var(--MainBg);
+    /* border-bottom: 1px solid var(--MainBg); */
     margin-bottom: 1em;
     padding-bottom: 10px;
 }
-
+/* 
 .chat-message:nth-child(1) {
     border-bottom: none;
-}
+} */
 
 .chat-message-top {
     display: flex;
@@ -109,7 +109,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: Calc(100vh - 90vh - 2em);
+    height: Calc(5vh - 2em);
     min-height: 50px;
     background-color: #18181d;
 }
@@ -120,7 +120,7 @@
     transition: 400ms linear;
     padding: 5px;
     border: 1px solid #18181d;
-    border-bottom: 1px solid var(--Grey);
+    /* border-bottom: 1px solid var(--Grey); */
 }
 
 .chat-input > input:focus {

@@ -35,7 +35,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                 <div className="chat-input">
                     {isLogged ? (
                         <>
-                            <input type="text" placeholder="Place your text here" />
+                            <input type="text" placeholder="Chat here" />
                             <div className="chat-input-submit"><i class="fas fa-arrow-right"></i></div>
                         </>
                     ) :
