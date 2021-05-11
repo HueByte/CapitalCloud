@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import './wheel.css';
 import BasicLayout from '../../core/BasicLayout';
 import logo from '../../assets/favicon.svg';
+import { AuthContext } from '../../auth/AuthContext';
 
 const Wheel = () => {
     // TODO - 
@@ -13,13 +14,16 @@ const Wheel = () => {
     // Add History 
     // Count of users betting on color
 
+    const authContext = useContext(AuthContext);
+    const [coins, setCoins] = useState(authContext.authState.coins);
+
     return (
         <div className="main__wrapper">
             <div className="game__container">
                 <div className="place-bet__container">
                     <div className="place-bet">
                         <div className="bet-coins">
-                            <i class="fas fa-coins"></i> 192 294 422
+                            <i class="fas fa-coins"></i> {coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                         </div>
                         <div className="bets-values">
                             <div className="bets-values-item">Clear</div>

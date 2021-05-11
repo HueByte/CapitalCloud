@@ -25,7 +25,6 @@ export const AuthRegister = async (Email, Username, Password) => {
 
 export const FetchNewUserData = async (user) => {
     const { token: token } = user;
-    console.log(token);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
