@@ -103,9 +103,10 @@ namespace API.Controllers
             {
                 string email = _jwtAuth.GetEmailFromToken(token);
                 var newUserData = await _userService.FetchNewUserDataAsync(email);
+                if(newUserData == null) throw new Exception("Didn't find user data with that email");
                 return Ok(newUserData);
             }
-            
+
             // Handle it somehow?
             catch (Exception e) {  }
 
