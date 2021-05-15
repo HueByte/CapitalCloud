@@ -63,8 +63,8 @@ const TestingZone = () => {
         // TODO - useRef()?
         var el = document.getElementById('test-chat-container')
 
-        // TODO - if user scrolls up don't automatically scroll down
-        el.scrollTop = el.scrollHeight;
+        if(el.scrollTop > (el.scrollHeight - 400))
+            el.scrollTop = el.scrollHeight; 
     }
 
     const userConnected = (newUsers) => {
@@ -83,28 +83,6 @@ const TestingZone = () => {
         </div>
     )
     return (
-        // <div className="container-100v">
-        //     <div className="test-chat">
-        //         <div className="test-chatbox">
-        //             <div className="test-chat-messages" id="test-chat-container">
-        //                 {data.map((e, index) => {
-        //                     return (
-        //                         <div key={index} className="test-message" style={{ textAlign: e.id == hubConnection.connectionId ? 'left' : 'right' }}>
-        //                             <span>{`${e.id}: ${e.message}`}</span>
-        //                         </div>
-        //                     )
-        //                 })}
-        //             </div>
-        //             <div className="test-users">
-        //                 user
-        //                 user
-        //             </div>
-
-        //             <div onClick={sendMessage} style={{ cursor: 'pointer' }}>Push message?</div>
-        //                 <input type="text" id="text-tester" onKeyDown={handleEnter} onChange={event => setInputMessage(event.target.value)} placeholder="Enter your text" />
-        //             </div>
-        //         </div>
-        // </div>
         <div className="container-100v">
             <div className="wrapper">
                 <div className="chat-container">
