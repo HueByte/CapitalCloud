@@ -10,6 +10,8 @@ const TestingZone = () => {
     const [data, setData] = useState([]);
     const [users, setUsers] = useState([]);
     const [userName, setUserName] = useState(null);
+    const [doesFollow, setDoesFollow] = useState(true);
+    const [unreadCount, setUnreadCount] = useState(0);
     const textBox = document.getElementById('text-tester');
 
     const handleEnter = (event) => {
@@ -17,7 +19,7 @@ const TestingZone = () => {
     }
 
     useEffect(async () => {
-        if (userName == null) return;
+        if (userName == null || userName == "") return;
         const createHubConnection = async () => {
             if (hubConnection != null) return;
 
@@ -63,16 +65,22 @@ const TestingZone = () => {
         // TODO - useRef()?
         var el = document.getElementById('test-chat-container')
 
-        if(el.scrollTop > (el.scrollHeight - 400))
-            el.scrollTop = el.scrollHeight; 
+        if (el.scrollTop > (el.scrollHeight - 400)) {
+            el.scrollTop = el.scrollHeight;
+            setDoesFollow(true);
+            setUnreadCount(0);
+        }
+        else {
+            setDoesFollow(false);
+            setUnreadCount(currentCount => currentCount + 1);
+        }
     }
 
     const userConnected = (newUsers) => {
-        console.log(newUsers)
         setUsers(newUsers);
     }
 
-    if (userName == null) return (
+    if (userName === null || userName == "") return (
         <div className="container-100v">
             <input type="text" id="user-nick"
                 placeholder="Enter your nickname"
@@ -86,11 +94,16 @@ const TestingZone = () => {
         <div className="container-100v">
             <div className="wrapper">
                 <div className="chat-container">
+                    {doesFollow ? <></> :
+                        <div className="updates-modal">
+                            New messages! {unreadCount == 0 ? '' : unreadCount}
+                        </div>
+                    }
                     <div className="chat-messages" id="test-chat-container">
                         {data.map((e, index) => {
                             return (
                                 <div key={index} className="chat-test-message">
-                                    <span style={{ color: e.user == userName ? '#50C5B7' : '#fd0069' }}>{`${e.user}: `}</span> {`${e.message}`}
+                                    <span style={{ color: e.user == userName ? '#50C5B7' : '#fd0069', fontWeight: 'bold', letterSpacing: '1px' }}>{`${e.user}: `}</span> {`${e.message}`}
                                 </div>
                             )
                         })}

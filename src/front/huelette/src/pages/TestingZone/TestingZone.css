@@ -38,6 +38,7 @@
     flex-direction: row;
     flex-wrap: row;
     width: 500px;
+    font-size: large;
 }
 
 .test-chatbox > input {
@@ -83,17 +84,36 @@
     flex-wrap: wrap;
     width: 70vw;
     max-width: 600px;
+    position: relative;
 }
 
 .chat-messages {
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     max-height: 300px;
     min-height: 300px;
     min-width: 100%;
     background-color: var(--Shark);
     border-radius: 10px;
+    font-size: small;
+    position: relative;
+}
+
+.updates-modal {
+    position: absolute;
+    z-index: 100;
+    width: 90%;
+    left: 50%;
+    transition: 200ms ease-in-out;
+    transform: translate(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 0 0 10px 10px;
+    background-color: var(--Rose);
 }
 
 .chat-test-message {
