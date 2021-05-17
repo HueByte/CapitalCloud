@@ -63,6 +63,12 @@ const TestingZone = () => {
         createHubConnection();
     }, [username]);
 
+    useEffect(() => 
+    {
+        if(unreadCount > 0)
+            document.title = `(${unreadCount}) CloudLette`;
+    }, [unreadCount]);
+
     const handleEnter = (event) => {
         if (event.key === "Enter") sendMessage();
     }
@@ -90,8 +96,9 @@ const TestingZone = () => {
             setUnreadCount(0);
         }
         else
+        {
             setUnreadCount(count => count + 1);
-        
+        }
         console.log(data);
     }
 
