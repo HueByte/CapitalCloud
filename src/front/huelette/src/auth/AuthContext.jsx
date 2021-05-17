@@ -33,7 +33,8 @@ const AuthProvider = ({ children }) => {
             var tempUser = authState;
             await FetchNewUserData(user)
                 .then(response => {
-                    if (response == null || response.status >= 300) singout();
+                    if (response == null || response.status >= 300) 
+                        singout();
                     return response.json()
                 })
                 .then(updatedUser => {
