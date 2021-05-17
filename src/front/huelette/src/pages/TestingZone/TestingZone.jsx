@@ -64,10 +64,7 @@ const TestingZone = () => {
     }, [username]);
 
     useEffect(() => {
-        if (unreadCount > 0)
-            document.title = `(${unreadCount}) CloudLette`;
-        else
-            document.title = 'CloudLette';
+        unreadCount > 0 ? document.title = `(${unreadCount}) CloudLette`: document.title = 'CloudLette';
     }, [unreadCount]);
 
     const handleEnter = (event) => {
