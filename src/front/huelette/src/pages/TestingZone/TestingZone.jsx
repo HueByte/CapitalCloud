@@ -45,7 +45,7 @@ const TestingZone = () => {
                     .then(() => {
                         hubConnect.on("OnReceiveMessage", (user, message) => receiveMessage(user, message));
                         hubConnect.on("OnUserConnected", (users) => userConnected(users));
-                        hubConnect.on("OnJoinSession", (messages) => getSessionMessages(messages));
+                        hubConnect.on("OnJoinSession", (messages) => getSessionMessages(messages))
                         hubConnect.on("OnUserDisconnected", (users) => userConnected(users));
                     });
             }
@@ -90,14 +90,24 @@ const TestingZone = () => {
         }
         else
             setUnreadCount(count => count + 1);
-    }
-
-    const userConnected = (newUsers) => {
-        setUsers(newUsers);
+        
+        console.log(data);
     }
 
     const getSessionMessages = (messages) => {
         console.log(messages);
+        console.log(data);
+        // setData(data => [...data, { user: 'www', content: 'xxx' }]);
+        // setData(data => data.map(item => ([...item, { user: messages.user, content: messages.content }])));
+        // setData(data => [...data, messages.map(item => { return { user: item.user, content: item.content }}]);
+        setData(messages);
+        chatElement.current.scrollTop = chatElement.current.scrollHeight;
+        // var msges = data;
+        // setData(data => [...data, ({user: messages.user, message: messages.content} = messages)]);
+    }
+
+    const userConnected = (newUsers) => {
+        setUsers(newUsers);
     }
 
     const clearUnread = () => {
@@ -127,7 +137,7 @@ const TestingZone = () => {
                         {data.map((e, index) => {
                             return (
                                 <div key={index} className="chat-test-message">
-                                    <span style={{ color: e.user == username ? '#50C5B7' : '#fd0069', fontWeight: 'bold', letterSpacing: '1px' }}>{`${e.user}: `}</span> {`${e.message}`}
+                                    <span style={{ color: e.user == username ? '#50C5B7' : '#fd0069', fontWeight: 'bold', letterSpacing: '1px' }}>{`${e.user}: `}</span> {`${e.content}`}
                                 </div>
                             )
                         })}

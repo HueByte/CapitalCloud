@@ -40,6 +40,9 @@ namespace API.Hubs
 
             Clients.All.SendAsync("OnUserDisconnected", users.Values.ToArray()).GetAwaiter().GetResult(); // event
 
+            if(users.Count == 0)
+                sessionMessages.Clear();
+
             return base.OnDisconnectedAsync(exception);
         }
     }
