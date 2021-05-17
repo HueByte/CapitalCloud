@@ -183,7 +183,7 @@ namespace API.Authentication
             var confirmResult = await _userManager.ConfirmEmailAsync(user, dbResult.Data.token);
             if (confirmResult.Succeeded)
             {
-                Log.Information(user.UserName + "Activated account");
+                Log.Information(user.UserName + " Activated account");
                 await _emailRepo.DeleteById(tokenId);
                 return StaticResponse<List<string>>.GoodResponse(null, "Email Confirmed");
             }
