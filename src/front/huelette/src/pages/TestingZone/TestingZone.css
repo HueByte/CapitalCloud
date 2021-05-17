@@ -76,14 +76,15 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    z-index: 20;
 }
 
 .chat-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 70vw;
-    max-width: 600px;
+    width: 80vw;
+    max-width: 800px;
     position: relative;
 }
 
@@ -92,12 +93,13 @@
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 300px;
-    min-height: 300px;
+    max-height: 400px;
+    min-height: 400px;
     min-width: 100%;
     background-color: var(--Shark);
     border-radius: 10px;
     font-size: small;
+    scroll-behavior: smooth;
 }
 
 .updates-modal {
@@ -137,7 +139,8 @@
     justify-content: space-between;
     padding: 1em;
     margin-top: 1em;
-    background-color: var(--SharkDark);
+    /* background-color: var(--SharkDark); */
+    background-color: var(--SharkDarkSub);
     border-radius: 10px;
 }
 
@@ -182,17 +185,17 @@
     overflow: auto;
     margin-left: 1em;
     border-radius: 10px;
-    background-color: var(--Shark);
+    background-color: var(--SharkDarkSub);
     padding: 0.5em;
     font-weight: bold;
     letter-spacing: 1px;
-    min-height: 300px;
-    max-height: 300px; 
+    min-height: 400px;
+    max-height: 400px; 
 }
 
 .user-menu {
     border-radius: 10px;
-    background-color: var(--Shark);
+    background-color: var(--SharkDark);
     margin-left: 1rem;
     margin-top: 1rem;
     display: flex;

@@ -25,7 +25,8 @@ namespace API.Hubs
         public async Task OnConnected(string userName, string id)
         {
             //Add user
-            users.Add(id, userName);
+            if(!users.Values.Any(entry => entry == userName))
+                users.Add(id, userName);
 
             await Clients.All.SendAsync("OnUserConnected", users.Values.ToArray()); // event
             await Clients.Caller.SendAsync("OnJoinSession", sessionMessages); // event
