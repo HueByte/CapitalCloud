@@ -47,7 +47,8 @@ const TestingZone = () => {
                         hubConnect.on("OnUserConnected", (users) => userConnected(users));
                         hubConnect.on("OnJoinSession", (messages) => getSessionMessages(messages))
                         hubConnect.on("OnUserDisconnected", (users) => userConnected(users));
-                    });
+                    })
+                    .catch(e => console.log(e));
             }
             catch (err) {
                 console.log(err);

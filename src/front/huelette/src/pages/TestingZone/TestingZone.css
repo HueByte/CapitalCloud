@@ -203,6 +203,13 @@
     font-size: 20px;
 }
 
+.user-container > p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: white;
+}
+
 .user-menu .item {
     cursor: pointer;
     transition: 200ms ease-out;
