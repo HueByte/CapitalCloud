@@ -95,15 +95,8 @@ const TestingZone = () => {
     }
 
     const getSessionMessages = (messages) => {
-        console.log(messages);
-        console.log(data);
-        // setData(data => [...data, { user: 'www', content: 'xxx' }]);
-        // setData(data => data.map(item => ([...item, { user: messages.user, content: messages.content }])));
-        // setData(data => [...data, messages.map(item => { return { user: item.user, content: item.content }}]);
         setData(messages);
         chatElement.current.scrollTop = chatElement.current.scrollHeight;
-        // var msges = data;
-        // setData(data => [...data, ({user: messages.user, message: messages.content} = messages)]);
     }
 
     const userConnected = (newUsers) => {
