@@ -29,9 +29,12 @@ const TestingZone = () => {
 
             // create builder 
             const hubConnect = new HubConnectionBuilder()
-                .withUrl(`${BaseURL}api/TestingHub`)
+                .withUrl(`${BaseURL}api/TestingHub`, { accessTokenFactory: () => authContext.authState?.token ?? '' })
                 .withAutomaticReconnect()
                 .build();
+            
+            // console.log(authContext.authState.token);
+            console.log(hubConnect);
 
             // try to connect and send ID to server
             try {

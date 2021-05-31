@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace API.Hubs
@@ -11,11 +12,13 @@ namespace API.Hubs
         public string User { get; set; }
         public string Content { get; set; }
     }
+
     public class TestHub : Hub
     {
         public static readonly Dictionary<string, string> users = new Dictionary<string, string>();
         public static List<MessageTest> sessionMessages = new List<MessageTest>();
 
+        [Authorize]
         public Task SendMessage(string user, string content)
         {
             sessionMessages.Add(new MessageTest() { User = user, Content = content });

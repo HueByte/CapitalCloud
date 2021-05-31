@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using API.Authentication;
 using AspNetCore.Identity.Mongo;
 using Core.Entities;
@@ -74,10 +75,15 @@ namespace API.Configuration
 
                 options.Events = new JwtBearerEvents
                 {
-                    // OnMessageReceived = context => 
-                    // {
-                    //     var accessToken = context.Request.Query["access_token"];
-                    // }
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        if (string.IsNullOrEmpty(accessToken) == false)
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
         }
