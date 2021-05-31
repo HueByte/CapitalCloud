@@ -30,6 +30,7 @@ namespace API
                 .WriteTo.Console()
                 .CreateLogger();
             Log.Information("Starting server...");
+            
             try
             {
                 var host = CreateHostBuilder(args).Build();

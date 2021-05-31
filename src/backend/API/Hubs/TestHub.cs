@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace API.Hubs
 {
-    public class Message
+    public class MessageTest
     {
         public string User { get; set; }
         public string Content { get; set; }
@@ -14,11 +14,11 @@ namespace API.Hubs
     public class TestHub : Hub
     {
         public static readonly Dictionary<string, string> users = new Dictionary<string, string>();
-        public static List<Message> sessionMessages = new List<Message>();
+        public static List<MessageTest> sessionMessages = new List<MessageTest>();
 
         public Task SendMessage(string user, string content)
         {
-            sessionMessages.Add(new Message() { User = user, Content = content });
+            sessionMessages.Add(new MessageTest() { User = user, Content = content });
             return Clients.All.SendAsync("OnReceiveMessage", user, content); // event
         }
 

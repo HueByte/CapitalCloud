@@ -111,6 +111,12 @@ const TestingZone = () => {
         setUnreadCount(0);
     }
 
+    const disconnect = () => {
+        if(hubConnection.connectionId) {
+            hubConnection.stop();
+        }
+    }
+
     if (username === null || username == "") return (
         <div className="container-100v">
             <input type="text" id="user-nick"
@@ -159,8 +165,8 @@ const TestingZone = () => {
                         })}
                     </div>
                     <div className="user-menu">
-                        <NavLink to="/account" className="item"><i class="fa fa-user" aria-hidden="true"></i></NavLink>
-                        <NavLink to="/wheel" className="item"><i class="fa fa-home"></i></NavLink>
+                        <NavLink onClick={disconnect} to="/account" className="item"><i class="fa fa-user" aria-hidden="true"></i></NavLink>
+                        <NavLink onClick={disconnect} to="/wheel" className="item"><i class="fa fa-home"></i></NavLink>
                     </div>
                 </div>
             </div>

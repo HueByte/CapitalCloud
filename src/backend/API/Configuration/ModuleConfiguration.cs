@@ -71,6 +71,14 @@ namespace API.Configuration
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"])),
                     ValidateIssuerSigningKey = true
                 };
+
+                options.Events = new JwtBearerEvents
+                {
+                    // OnMessageReceived = context => 
+                    // {
+                    //     var accessToken = context.Request.Query["access_token"];
+                    // }
+                };
             });
         }
         public void ConfigureSwagger()
