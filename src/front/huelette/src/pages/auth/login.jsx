@@ -46,12 +46,12 @@ const Login = () => {
     const errorModal = (msg) => {
         store.addNotification({
             title: 'Something went wrong!',
-            message: msg.join(' || '),
+            message: msg.join('\n'),
             type: 'danger',
             insert: 'top',
             container: 'top-right',
-            animationIn: ["animate__animated animate__fadeIn"], // `animate.css v4` classes
-            animationOut: ["animate__animated animate__fadeOut"], // `animate.css v4` classes
+            animationIn: ["animate__animated animate__fadeIn"], 
+            animationOut: ["animate__animated animate__fadeOut"], 
             dismiss: {
                 duration: 5000,
                 onScreen: true,
@@ -63,7 +63,7 @@ const Login = () => {
     if (authContext.isAuthenticated()) return <Redirect to="/wheel" />
     else return (
         <div className="auth-wrapper">
-            <ReactNotification />
+            <ReactNotification isMobile={true} />
             <div className="auth__container">
                 <div className="auth-left">
                     <img src={logo} alt="logo" />

@@ -82,8 +82,8 @@
 
 .chat-message-avatar {
     border-radius: 100%;
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     border: 1px solid var(--SharkDark);
     /* border: 1px solid var(--Rose); */
 }
@@ -93,7 +93,7 @@
     display: grid;
     place-items: center;
     width: 30px;
-    height: 20px;
+    height: 25px;
     border-radius: 15px;
     background-color: var(--SharkDarkSub);
     font-size: x-small;

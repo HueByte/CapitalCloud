@@ -5,6 +5,10 @@ import { AuthContext } from '../../auth/AuthContext';
 import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { AuthRegister } from '../../auth/Auth';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { store } from 'react-notifications-component';
+import 'animate.css';
 
 const Register = () => {
     const authContext = useContext(AuthContext);
@@ -12,44 +16,111 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [working, setWorking] = useState(false);
 
     const handleEnter = (event) => {
-        if (event.key === 'Enter') sendRequest();
+        if (event.key === 'Enter') setWorking(true);
     }
 
-    const sendRequest = () => {
-        AuthRegister(email, username, password)
+    useEffect(async () => {
+        if (working) sendRequest();
+    }, [working])
+
+    const sendRequest = async () => {
+        infoModal('Creating account...');
+        await AuthRegister(email, username, password)
             .then(response => {
-                if(!response.isSuccess) {
+                if (!response.isSuccess) {
                     console.log(response.errors);
+                    errorModal(response.errors);
                     // TODO - modal error
                 }
                 else {
+                    successModal('Your account has been successfully created');
                     setIsCreated(true);
                 }
             })
             .catch(() => {
-                console.log('Something went wrong');
+                errorModal(["We couldn't catch the problem"]);
             })
+        setWorking(false);
+    }
+
+    const infoModal = (msg) => {
+        store.addNotification({
+            title: 'Info',
+            message: msg ?? '',
+            type: 'info',
+            insert: 'top',
+            container: 'top-right',
+            animationIn: ["animate__animated animate__fadeIn"],
+            animationOut: ["animate__animated animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+                onScreen: true,
+                pauseOnHover: true
+            }
+        })
+    }
+
+    const successModal = (msg) => {
+        store.addNotification({
+            title: 'success!',
+            message: msg ?? '',
+            type: 'success',
+            insert: 'top',
+            container: 'top-right',
+            animationIn: ["animate__animated animate__fadeIn"],
+            animationOut: ["animate__animated animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+                onScreen: true,
+                pauseOnHover: true
+            }
+        })
+    }
+
+    const errorModal = (msg) => {
+        store.addNotification({
+            title: 'Something went wrong!',
+            message: msg.join('\n'),
+            type: 'danger',
+            insert: 'top',
+            container: 'top-right',
+            animationIn: ["animate__animated animate__fadeIn"],
+            animationOut: ["animate__animated animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+                onScreen: true,
+                pauseOnHover: true
+            }
+        })
     }
 
     if (authContext.isAuthenticated()) return <Redirect to="/wheel" />
     else return (
         <div className="auth-wrapper">
+            <ReactNotification isMobile={true} />
             <div className="auth__container">
                 <div className="auth-left">
-                    {/* TODO - make coin drop from img */}
                     <img src={logo} alt="logo" />
+                    {working ?
+                        <div className="auth-left-overlay">
+                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                        :
+                        <></>
+                    }
                 </div>
                 <div className="auth-right">
                     {isCreated ?
                         (
                             <>
-                                <div className="auth-right-text" style={{fontSize: 'medium'}}>
-                                    <p>Hi! <b style={{color: 'var(--Rose)'}}>{username}</b></p>
+                                <div className="auth-right-text" style={{ fontSize: 'medium' }}>
+                                    <p>Hi! <b style={{ color: 'var(--Rose)' }}>{username}</b></p>
                                     <span>We just need to verify your email address before you can access <b>CloudLette</b></span><br />
-                                    <p>You made account as <b style={{color: 'var(--Rose)'}}>{email}</b></p>
-                                    <span>Thanks! - The CloudBytes teams</span>
+                                    <p>You made account as <b style={{ color: 'var(--Rose)' }}>{email}</b></p>
+                                    <span>Thanks! - The CloudBytes team</span>
                                 </div>
                                 <div className="right-buttons__container">
                                     <div className="buttons-right" style={{ justifyContent: 'flex-end' }}>
@@ -67,15 +138,15 @@ const Register = () => {
                                 <div className="right-input__container">
                                     <input type="text" className="auth-input" placeholder="E-mail"
                                         onChange={event => setEmail(event.target.value)}
-                                        onKeyDown={handleEnter} 
+                                        onKeyDown={handleEnter}
                                         required />
                                     <input type="text" className="auth-input" placeholder="Username"
                                         onChange={event => setUsername(event.target.value)}
-                                        onKeyDown={handleEnter} 
+                                        onKeyDown={handleEnter}
                                         required />
                                     <input type="password" className="auth-input" placeholder="Password"
                                         onChange={event => setPassword(event.target.value)}
-                                        onKeyDown={handleEnter} 
+                                        onKeyDown={handleEnter}
                                         required />
                                     {/* TODO - add birth date */}
                                 </div>
@@ -85,7 +156,7 @@ const Register = () => {
                                         </div> */}
                                     <div className="buttons-right" style={{ justifyContent: 'flex-end' }}>
                                         <NavLink to="/wheel" className="auth-button">Home</NavLink>
-                                        <div className="auth-button" onClick={sendRequest}>Register</div>
+                                        <div className="auth-button" onClick={() => {setWorking(true)}}>Register</div>
                                     </div>
                                 </div>
                             </>
