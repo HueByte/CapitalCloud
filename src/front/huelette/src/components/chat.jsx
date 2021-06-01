@@ -32,10 +32,10 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                     .start()
                     .then(() => {
                         if (hubConnection.connectionId) {
-                            if(user)
+                            if (user)
                                 hubConnection.invoke('OnConnected', user.userName, hubConnection.connectionId, user.exp, user.avatar_url);
                             else
-                                hubConnection.invoke('OnConnected', 'anon', hubConnection.connectionId)
+                                hubConnection.invoke('OnConnectedAnon', hubConnection.connectionId)
                         }
                     })
                     .then(() => {
@@ -46,7 +46,6 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                         hubConnection.on('OnUserDisconnected', () => userDisconnected());
                     })
                     .catch(e => console.log(e));
-
             }
             catch (err) {
                 console.log(err)
@@ -64,20 +63,20 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
 
     //events 
     const sendMessage = () => {
-        hub.invoke('SendMessage', inputContainer.current.value)
-        inputContainer.current.value = '';
-        chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
-        // hubConnection.invoke('SendMessage', authContext.authState?.userName, inputMessage.current )
+        if (inputContainer.current.value.length !== 0) {
+            hub.invoke('SendMessage', inputContainer.current.value)
+            inputContainer.current.value = '';
+        }
     }
 
     const receiveMessage = (message) => {
         setMessages(data => [...data, { user: { avatarUrl: message.user.avatarUrl, level: message.user.level, username: message.user.username }, content: message.content }])
+        if((chatContainer.current.scrollHeight - chatContainer.current.scrollTop) < 1100 )
+            chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
     }
 
     const getMessages = (messages) => {
         setMessages(messages);
-        console.log(chatContainer.current.scrollTop);
-        console.log('reeeeeeeeeeeeeeeeeeeeeeeeeee------@$$$$$$$$$$$$$$$$')
         chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
     }
 
@@ -101,12 +100,13 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     return (
         <>
             <div className={`chat__container${isChatActive ? "" : " hide"}`}>
-                <div className="chat-users-count"><i class="fa fa-user" aria-hidden="true" style={{marginRight: '5px'}}></i> {users}</div>
+                <div className="chat-users-count"><i class="fa fa-user" aria-hidden="true" style={{ marginRight: '5px' }}></i> {users}</div>
                 <div className="chat-text" id="chat-container">
                     {messages.length ? messages.map((mess, index) => (
-                        <div key={mess.id} className="chat-message">
+                        <div key={index} className="chat-message">
                             <div className="chat-message-top">
-                                <img src={mess.user?.avatar ?? 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" />
+                                {/* <img src={mess.user.avatar != null ? mess.user.avatar : 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" /> */}
+                                <img src={mess.user.avatarUrl ?? 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" />
                                 <div className="chat-message-level">{mess.user?.level}</div>
                                 <div className="chat-message-username">{mess.user?.username}</div>
                             </div>
@@ -121,11 +121,11 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                             <div className="chat-input-submit" onClick={sendMessage}><i class="fas fa-arrow-right"></i></div>
                         </>
                     ) :
-                    (
-                        <>
-                            <NavLink to="/auth/login">Log in to chat</NavLink>
-                        </>
-                    )}
+                        (
+                            <>
+                                <NavLink to="/auth/login">Log in to chat</NavLink>
+                            </>
+                        )}
                 </div>
                 <div className="chat-hide-button" onClick={hideChat}><i class={`fas fa-arrow-left${isChatActive ? "" : " active"}`}></i></div>
             </div>
