@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import './auth.css';
 import logo from '../../assets/white-cloud.jpg';
@@ -15,14 +15,19 @@ const Login = () => {
     const [redirect, setRedirect] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [working, setWroking] = useState(false);
 
     const handleEnter = (event) => {
-        if (event.key === "Enter") sendRequest();
+        if (event.key === "Enter") setWroking(true);
     }
 
-    const sendRequest = () => {
+    useEffect(async () => {
+        if (working) sendRequest();
+    }, [working])
+
+    const sendRequest = async () => {
         //POST
-        AuthLogin(email, password)
+        await AuthLogin(email, password)
             .then(response => {
                 if (!response.isSuccess) {
                     errorModal(response.errors);
@@ -35,6 +40,7 @@ const Login = () => {
             .catch(() => {
                 errorModal(["We couldn't catch the problem"]);
             })
+        setWroking(false);
     }
 
     const errorModal = (msg) => {
@@ -54,28 +60,20 @@ const Login = () => {
         })
     }
 
-    useEffect(() => {
-        // store.addNotification({
-        //     title: 'Test',
-        //     message: 'im message',
-        //     type: 'success',
-        //     insert: 'top',
-        //     container: 'top-right',
-        //     dismiss: {
-        //         duration: 5000,
-        //         onScreen: true
-        //     }
-        // });
-    }, [])
-
     if (authContext.isAuthenticated()) return <Redirect to="/wheel" />
     else return (
         <div className="auth-wrapper">
             <ReactNotification />
             <div className="auth__container">
                 <div className="auth-left">
-                    {/* TODO - make coin drop from img */}
                     <img src={logo} alt="logo" />
+                    {working ?
+                        <div className="auth-left-overlay">
+                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                        :
+                        <></>
+                    }
                 </div>
                 <div className="auth-right">
                     <div className="auth-right-text">
@@ -98,7 +96,7 @@ const Login = () => {
                         </div>
                         <div className="buttons-right">
                             <NavLink to="/wheel" className="auth-button">Home</NavLink>
-                            <div className="auth-button" onClick={sendRequest}>Login</div>
+                            <div className="auth-button" onClick={() => { setWroking(true) }}>Login</div>
                         </div>
                     </div>
                     <div className="bottom-wave">
