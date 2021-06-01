@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { BaseURL } from '../api-calls/ApiRoutes';
 import { AuthContext } from '../auth/AuthContext';
+import UserIcon from '../assets/userIcon.png';
 import './chat.css';
 
 const Chat = ({ isChatActive, setIsChatActive }) => {
@@ -69,6 +70,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
         }
     }
 
+    // Consider adding message cleaner here to avoid rerendering 
     const receiveMessage = (message) => {
         setMessages(data => [...data, { user: { avatarUrl: message.user.avatarUrl, level: message.user.level, username: message.user.username }, content: message.content }])
         if((chatContainer.current.scrollHeight - chatContainer.current.scrollTop) < 1100 )
@@ -88,14 +90,15 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
         setUsers(users => users - 1);
     }
 
-    // useEffect(async () => {
-    //     await sleep(1000); // TODO - remove later (simulate loading)
-    //     setMessages(generateMessages());
-    // }, [])
-
     const hideChat = () => {
         setIsChatActive(!isChatActive);
     }
+
+    useEffect(() => {
+        if(messages.length > 100) {
+            messages.shift();
+        }
+    }, [messages])
 
     return (
         <>
@@ -106,7 +109,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                         <div key={index} className="chat-message">
                             <div className="chat-message-top">
                                 {/* <img src={mess.user.avatar != null ? mess.user.avatar : 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" /> */}
-                                <img src={mess.user.avatarUrl ?? 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" />
+                                <img src={mess.user.avatarUrl ?? UserIcon} className="chat-message-avatar" alt="avatar" />
                                 <div className="chat-message-level">{mess.user?.level}</div>
                                 <div className="chat-message-username">{mess.user?.username}</div>
                             </div>
@@ -131,47 +134,6 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
             </div>
         </>
     )
-}
-
-const generateMessages = () => {
-    let messages = [];
-    let nameArray = ['Jerry', 'Json', 'ScriptKiddo', '😈xxxCoolGuyPLxxx😈', 'Hue', 'Sinner', 'Sabo', 'Miki 😂', 'My name is too long boiiiiiiiiii'];
-    let messageArray = ['This is short message', 'This is pretty medium message I would say, so Im typing something', 'This is longest message meant for only best of the best players and cool boys you have no choice but accept that we are cool'];
-    let avatarArray = ['https://timesofindia.indiatimes.com/photo/67586673.cms', 'https://www.creativefabrica.com/wp-content/uploads/2019/02/Cloud-Icon-by-arus-580x386.jpg', 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg']
-    messages.push({
-        'id': '066',
-        'level': '29',
-        'avatar': 'https://www.creativefabrica.com/wp-content/uploads/2019/02/Cloud-Icon-by-arus-580x386.jpg',
-        'username': 'meee',
-        'text': `${window.innerWidth} - ${window.innerHeight}`
-    });
-
-    for (let i = 1; i < 50; i++) {
-        messages.push({
-            'id': uuidv4(),
-            'level': rnd(1000),
-            'avatar': avatarArray[rnd(avatarArray.length)],
-            'username': nameArray[rnd(nameArray.length)],
-            'text': messageArray[rnd(messageArray.length)]
-        })
-    }
-
-    return messages;
-}
-
-function uuidv4() {
-    return 'xxxx-xxxx-xxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-
-const rnd = (max) => {
-    return Math.floor(Math.random() * max);
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default Chat;
