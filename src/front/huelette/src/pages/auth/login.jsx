@@ -1,9 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import './auth.css';
 import logo from '../../assets/white-cloud.jpg';
 import { AuthContext } from '../../auth/AuthContext';
 import { AuthLogin } from '../../auth/Auth';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css'
+import { store } from 'react-notifications-component';
+import 'animate.css'
 
 // TODO - Add modals
 const Login = () => {
@@ -21,8 +25,7 @@ const Login = () => {
         AuthLogin(email, password)
             .then(response => {
                 if (!response.isSuccess) {
-                    console.log(response.errors);
-                    // TODO - modal error
+                    errorModal(response.errors);
                 }
                 else {
                     authContext.setAuthState(response)
@@ -30,13 +33,45 @@ const Login = () => {
                 return response;
             })
             .catch(() => {
-                console.log('Something went wrong');
+                errorModal(["We couldn't catch the problem"]);
             })
     }
 
+    const errorModal = (msg) => {
+        store.addNotification({
+            title: 'Something went wrong!',
+            message: msg.join(' || '),
+            type: 'danger',
+            insert: 'top',
+            container: 'top-right',
+            animationIn: ["animate__animated animate__fadeIn"], // `animate.css v4` classes
+            animationOut: ["animate__animated animate__fadeOut"], // `animate.css v4` classes
+            dismiss: {
+                duration: 5000,
+                onScreen: true,
+                pauseOnHover: true
+            }
+        })
+    }
+
+    useEffect(() => {
+        // store.addNotification({
+        //     title: 'Test',
+        //     message: 'im message',
+        //     type: 'success',
+        //     insert: 'top',
+        //     container: 'top-right',
+        //     dismiss: {
+        //         duration: 5000,
+        //         onScreen: true
+        //     }
+        // });
+    }, [])
+
     if (authContext.isAuthenticated()) return <Redirect to="/wheel" />
     else return (
-      <div className="auth-wrapper">
+        <div className="auth-wrapper">
+            <ReactNotification />
             <div className="auth__container">
                 <div className="auth-left">
                     {/* TODO - make coin drop from img */}
@@ -50,7 +85,7 @@ const Login = () => {
                     <div className="right-input__container">
                         <input type="text" className="auth-input" placeholder="E-mail"
                             onChange={event => setEmail(event.target.value)}
-                            onKeyDown={handleEnter} 
+                            onKeyDown={handleEnter}
                             autoComplete='email' />
                         <input type="password" className="auth-input" placeholder="Password"
                             onChange={event => setPassword(event.target.value)}
