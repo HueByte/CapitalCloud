@@ -54,7 +54,8 @@
 .chat-text {
     position: relative;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
+    scroll-behavior: smooth;
     /* margin: 1em 0 1em 0; */
     height: 85vh;
     width: 90%;

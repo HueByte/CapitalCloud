@@ -66,22 +66,18 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     const sendMessage = () => {
         hub.invoke('SendMessage', inputContainer.current.value)
         inputContainer.current.value = '';
+        chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
         // hubConnection.invoke('SendMessage', authContext.authState?.userName, inputMessage.current )
     }
 
     const receiveMessage = (message) => {
-        console.log(message);
         setMessages(data => [...data, { user: { avatarUrl: message.user.avatarUrl, level: message.user.level, username: message.user.username }, content: message.content }])
-
-        console.log(messages);
     }
-
-    useEffect(() => {
-        console.log(messages);
-    }, [messages])
 
     const getMessages = (messages) => {
         setMessages(messages);
+        console.log(chatContainer.current.scrollTop);
+        console.log('reeeeeeeeeeeeeeeeeeeeeeeeeee------@$$$$$$$$$$$$$$$$')
         chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
     }
 
@@ -106,7 +102,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
         <>
             <div className={`chat__container${isChatActive ? "" : " hide"}`}>
                 <div className="chat-users-count"><i class="fa fa-user" aria-hidden="true" style={{marginRight: '5px'}}></i> {users}</div>
-                <div className="chat-text">
+                <div className="chat-text" id="chat-container">
                     {messages.length ? messages.map((mess, index) => (
                         <div key={mess.id} className="chat-message">
                             <div className="chat-message-top">
