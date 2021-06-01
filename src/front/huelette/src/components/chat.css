@@ -95,7 +95,9 @@
     width: 30px;
     height: 20px;
     border-radius: 15px;
-    background-color: var(--Rose);
+    background-color: var(--SharkDarkSub);
+    font-size: x-small;
+    letter-spacing: 1px;
 }
 
 .chat-message-username {

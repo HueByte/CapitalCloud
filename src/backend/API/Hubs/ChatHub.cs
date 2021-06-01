@@ -44,15 +44,18 @@ namespace API.Hubs
         [Authorize]
         public async Task SendMessage(string content)
         {
-            try
+            if (!string.IsNullOrEmpty(content))
             {
-                if (messages.Count >= 1000) messages.Remove(messages.First());
-                var user = chatUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
-                var message = new Message() { User = user, Content = content };
-                messages.Add(message);
-                await Clients.All.SendAsync("OnReceiveMessage", message);
+                try
+                {
+                    if (messages.Count >= 1000) messages.Remove(messages.First());
+                    var user = chatUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
+                    var message = new Message() { User = user, Content = content };
+                    messages.Add(message);
+                    await Clients.All.SendAsync("OnReceiveMessage", message);
+                }
+                catch (Exception e) { Console.WriteLine(e); }
             }
-            catch (Exception e) { Console.WriteLine(e); }
         }
 
         // TODO - Consider making HTTP request every 10seconds instead of websocket
@@ -73,15 +76,31 @@ namespace API.Hubs
         public async Task OnConnectedAnon(string connectionId)
         {
             // TODO - Maybe add public IP checker to avoid fake user count 
-            chatUsers.Add(new ChatUser("anon", Context.ConnectionId));
-            await Clients.All.SendAsync("OnUserConnected", chatUsers.Count);
+            try
+            {
+                chatUsers.Add(new ChatUser("anon", Context.ConnectionId));
+                _logger.Log(LogLevel.Information, "Anon connected");
+                await Clients.All.SendAsync("OnUserConnected", chatUsers.Count);
+                await Clients.Caller.SendAsync("OnJoinSession", messages);
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Error, e.Message);
+            }
         }
 
         public override Task OnDisconnectedAsync(Exception e)
         {
             ChatUser user = chatUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
-            _logger.Log(LogLevel.Information, $"Client disconnected {user.Username}");
-            chatUsers.Remove(user);
+            if (user != null)
+            {
+                _logger.Log(LogLevel.Information, $"Client disconnected {user.Username}");
+                chatUsers.Remove(user);
+            }
+            else 
+            {
+                _logger.Log(LogLevel.Warning, $"Client disconnected and wasn't in user list");
+            }
             Clients.All.SendAsync("OnUserDisconnected").GetAwaiter().GetResult();
             return base.OnDisconnectedAsync(e);
         }

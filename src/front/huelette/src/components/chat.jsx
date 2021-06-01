@@ -58,6 +58,13 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
         createHubConnection();
     }, [])
 
+    const colorLevel = (level) => {
+        return level >= 50 ? '#50C5B7'
+            : level >= 100 ? '#ffc870'
+                : level >= 200 ? '#fd0069'
+                    : '#a7a7a7'
+    }
+
     const handleEnter = (event) => {
         if (event.key === "Enter") sendMessage();
     }
@@ -72,8 +79,8 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
 
     // Consider adding message cleaner here to avoid rerendering 
     const receiveMessage = (message) => {
-        setMessages(data => [...data, { user: { avatarUrl: message.user.avatarUrl, level: message.user.level, username: message.user.username }, content: message.content }])
-        if((chatContainer.current.scrollHeight - chatContainer.current.scrollTop) < 1100 )
+        setMessages(data => [...data, { user: { avatarUrl: message.user?.avatarUrl, level: message.user?.level, username: message.user?.username }, content: message.content }])
+        if (!(chatContainer.current.scrollHeight - chatContainer.current.scrollTop >= chatContainer.current.clientHeight + 300))
             chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
     }
 
@@ -95,7 +102,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     }
 
     useEffect(() => {
-        if(messages.length > 100) {
+        if (messages.length > 100) {
             messages.shift();
         }
     }, [messages])
@@ -109,9 +116,9 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                         <div key={index} className="chat-message">
                             <div className="chat-message-top">
                                 {/* <img src={mess.user.avatar != null ? mess.user.avatar : 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" /> */}
-                                <img src={mess.user.avatarUrl ?? UserIcon} className="chat-message-avatar" alt="avatar" />
+                                <img src={mess.user?.avatarUrl ?? UserIcon} className="chat-message-avatar" alt="avatar" />
                                 <div className="chat-message-level">{mess.user?.level}</div>
-                                <div className="chat-message-username">{mess.user?.username}</div>
+                                <div className="chat-message-username" style={{color: colorLevel(mess.user?.level)}}>{mess.user?.username}</div>
                             </div>
                             <div className="chat-message-text">{mess.content}</div>
                         </div>
