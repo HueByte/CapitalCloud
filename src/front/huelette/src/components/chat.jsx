@@ -1,17 +1,102 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { HubConnectionBuilder } from '@microsoft/signalr';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { BaseURL } from '../api-calls/ApiRoutes';
 import { AuthContext } from '../auth/AuthContext';
 import './chat.css';
 
 const Chat = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
+    const [user, setUser] = useState(authContext.authState ?? '');
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
     const [messages, setMessages] = useState([]);
+    const [users, setUsers] = useState(0);
+    const chatContainer = useRef();
+    const inputContainer = useRef();
+    //SignalR
+    const [hub, setHub] = useState(null);
 
     useEffect(async () => {
-        await sleep(1000); // TODO - remove later (simulate loading)
-        setMessages(generateMessages());
+        chatContainer.current = document.getElementById('chat-container');
+        inputContainer.current = document.getElementById('chat-input-box');
+
+        const createHubConnection = async () => {
+            console.log('Creating wss connection');
+            const hubConnection = new HubConnectionBuilder()
+                .withUrl(`${BaseURL}api/ChatHub`, { accessTokenFactory: () => authContext.authState?.token ?? '' })
+                .withAutomaticReconnect()
+                .build();
+
+            try {
+                await hubConnection
+                    .start()
+                    .then(() => {
+                        if (hubConnection.connectionId) {
+                            if(user)
+                                hubConnection.invoke('OnConnected', user.userName, hubConnection.connectionId, user.exp, user.avatar_url);
+                            else
+                                hubConnection.invoke('OnConnected', 'anon', hubConnection.connectionId)
+                        }
+                    })
+                    .then(() => {
+                        //events
+                        hubConnection.on('OnReceiveMessage', (message) => receiveMessage(message));
+                        hubConnection.on('OnUserConnected', (userCount) => userConnected(userCount));
+                        hubConnection.on('OnJoinSession', (messages) => getMessages(messages));
+                        hubConnection.on('OnUserDisconnected', () => userDisconnected());
+                    })
+                    .catch(e => console.log(e));
+
+            }
+            catch (err) {
+                console.log(err)
+            }
+
+            setHub(hubConnection);
+        }
+
+        createHubConnection();
     }, [])
+
+    const handleEnter = (event) => {
+        if (event.key === "Enter") sendMessage();
+    }
+
+    //events 
+    const sendMessage = () => {
+        hub.invoke('SendMessage', inputContainer.current.value)
+        inputContainer.current.value = '';
+        // hubConnection.invoke('SendMessage', authContext.authState?.userName, inputMessage.current )
+    }
+
+    const receiveMessage = (message) => {
+        console.log(message);
+        setMessages(data => [...data, { user: { avatarUrl: message.user.avatarUrl, level: message.user.level, username: message.user.username }, content: message.content }])
+
+        console.log(messages);
+    }
+
+    useEffect(() => {
+        console.log(messages);
+    }, [messages])
+
+    const getMessages = (messages) => {
+        setMessages(messages);
+        chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
+    }
+
+    const userConnected = (newUsers) => {
+        setUsers(newUsers);
+    }
+
+    const userDisconnected = () => {
+        setUsers(users => users - 1);
+    }
+
+    // useEffect(async () => {
+    //     await sleep(1000); // TODO - remove later (simulate loading)
+    //     setMessages(generateMessages());
+    // }, [])
 
     const hideChat = () => {
         setIsChatActive(!isChatActive);
@@ -20,30 +105,31 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     return (
         <>
             <div className={`chat__container${isChatActive ? "" : " hide"}`}>
+                <div className="chat-users-count"><i class="fa fa-user" aria-hidden="true" style={{marginRight: '5px'}}></i> {users}</div>
                 <div className="chat-text">
                     {messages.length ? messages.map((mess, index) => (
                         <div key={mess.id} className="chat-message">
                             <div className="chat-message-top">
-                                <img src={mess.avatar} className="chat-message-avatar" alt="avatar" />
-                                <div className="chat-message-level">{mess.level}</div>
-                                <div className="chat-message-username">{mess.username}</div>
+                                <img src={mess.user?.avatar ?? 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" />
+                                <div className="chat-message-level">{mess.user?.level}</div>
+                                <div className="chat-message-username">{mess.user?.username}</div>
                             </div>
-                            <div className="chat-message-text">{mess.text}</div>
+                            <div className="chat-message-text">{mess.content}</div>
                         </div>
                     )) : <div className="chat-loader"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>}
                 </div>
                 <div className="chat-input">
                     {isLogged ? (
                         <>
-                            <input type="text" placeholder="Chat here" />
-                            <div className="chat-input-submit"><i class="fas fa-arrow-right"></i></div>
+                            <input type="text" id="chat-input-box" placeholder="Chat here" onKeyDown={handleEnter} />
+                            <div className="chat-input-submit" onClick={sendMessage}><i class="fas fa-arrow-right"></i></div>
                         </>
                     ) :
-                        (
-                            <>
-                                <NavLink to="/auth/login">Log in to chat</NavLink>
-                            </>
-                        )}
+                    (
+                        <>
+                            <NavLink to="/auth/login">Log in to chat</NavLink>
+                        </>
+                    )}
                 </div>
                 <div className="chat-hide-button" onClick={hideChat}><i class={`fas fa-arrow-left${isChatActive ? "" : " active"}`}></i></div>
             </div>

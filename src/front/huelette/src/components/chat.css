@@ -39,13 +39,24 @@
     z-index: 10;
 }
 
+.chat-users-count {
+    height: 5vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 2em;
+    width: 100%;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    color: var(--Rose);
+}
+
 .chat-text {
     position: relative;
     display: flex;
     flex-direction: column-reverse;
     /* margin: 1em 0 1em 0; */
-    margin-top: 1rem;
-    height: 90vh;
+    height: 85vh;
     width: 90%;
     /* background-color: teal; */
     overflow-y: scroll;

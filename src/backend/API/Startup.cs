@@ -84,7 +84,7 @@ namespace API
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 endpoints.MapHub<TestHub>("/api/TestingHub");
-                endpoints.MapHub<ChatHub>("/api/Chat");
+                endpoints.MapHub<ChatHub>("/api/ChatHub");
                 endpoints.MapGet("/api", async context =>
                 {
                     context.Response.ContentType = "text/plain";
