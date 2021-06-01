@@ -119,7 +119,7 @@ namespace API.Authentication
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null) return null;
-            
+
             return new UpdatedUser
             {
                 avatar_url = user.Avatar_Url,
@@ -143,8 +143,10 @@ namespace API.Authentication
             {
                 return new BasicApiResponse<ApplicationUser>()
                 {
+                    Data = null,
+                    errors = result.Errors.Select(error => error.Description).ToList(),
+                    flag = 1,
                     isSuccess = false,
-                    message = result.Errors.ToString()
                 };
             }
 
@@ -163,6 +165,7 @@ namespace API.Authentication
             var url = _configuration.GetValue<string>("Host")
                       + "api/auth/ConfirmEmail?token="
                       + dbResult.Data.Id;
+
             MailMessage message = new MailMessage()
             {
                 Subject = "Awful Mail Activation",
@@ -177,7 +180,8 @@ namespace API.Authentication
         {
             //get email confirmation from database
             var dbResult = await _emailRepo.GetById(tokenId);
-            if (dbResult.Data == null) return StaticResponse<List<string>>.BadResponse(new List<string>() { "Empty Token" }, "", 1);
+            if (dbResult.Data == null)
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "Empty token" }, false, 1); // TODO - Verify this? What Token?
 
             var user = await _userManager.FindByIdAsync(dbResult.Data.userId);
             var confirmResult = await _userManager.ConfirmEmailAsync(user, dbResult.Data.token);
@@ -185,10 +189,10 @@ namespace API.Authentication
             {
                 Log.Information(user.UserName + " Activated account");
                 await _emailRepo.DeleteById(tokenId);
-                return StaticResponse<List<string>>.GoodResponse(null, "Email Confirmed");
+                return new BasicApiResponse<List<string>>(null, null, true, 0);
             }
 
-            return StaticResponse<List<String>>.BadResponse(confirmResult.Errors.Select(x => x.Description).ToList(), "", 1);
+            return new BasicApiResponse<List<string>>(null, confirmResult.Errors.Select(error => error.Description).ToList(), false, 1);
         }
     }
 }

@@ -91,7 +91,7 @@ namespace API.Controllers
         public async Task<IActionResult> ConfirmEmail([FromQuery(Name = "token")] string token)
         {
             var response = await _userService.ConfirmEmail(token);
-            if (response.isSuccess) return Ok(response.message);
+            if (response.isSuccess) return Ok(response);
             else return BadRequest(response.Data);
         }
 
@@ -103,12 +103,12 @@ namespace API.Controllers
             {
                 string email = _jwtAuth.GetEmailFromToken(token);
                 var newUserData = await _userService.FetchNewUserDataAsync(email);
-                if(newUserData == null) throw new Exception("Didn't find user data with that email");
+                if (newUserData == null) throw new Exception("Didn't find user data with that email");
                 return Ok(newUserData);
             }
 
             // Handle it somehow?
-            catch (Exception e) {  }
+            catch (Exception e) { }
 
             return BadRequest();
         }

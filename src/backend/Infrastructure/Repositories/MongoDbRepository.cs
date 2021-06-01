@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
         //TODO - MAKE MESSAGE FOR LOGS
         public IMongoCollection<TDocument> collection;
         public IMongoDatabase Database { get; }
-        
+
         public MongoDbRepository(MongoClient client)
         {
             // TODO - Add it to config / appsettings.json
@@ -36,12 +36,12 @@ namespace Infrastructure.Repositories
             {
                 await collection.InsertOneAsync(model);
                 Log.Information("Inserted to DB: " + model.ToJson());
-                
+
                 return new BasicApiResponse<TDocument>()
                 {
                     Data = model,
                     isSuccess = true,
-                    message = "Successfully insert Entity to DB",
+                    errors = null,
                     flag = 0
                 };
             }
@@ -49,12 +49,12 @@ namespace Infrastructure.Repositories
             catch (Exception x)
             {
                 Log.Error("Error occurred during Insert" + x);
-                
+
                 return new BasicApiResponse<TDocument>()
                 {
                     Data = model,
                     isSuccess = false,
-                    message = "Error occurred during Insert Entity",
+                    errors = new List<string>() { "Error occurred during Entity insertion" },
                     flag = 1
                 };
             }
@@ -66,24 +66,25 @@ namespace Infrastructure.Repositories
             {
                 await collection.InsertManyAsync(modelList);
                 Log.Information("Added " + modelList.Count + " Entities type of " + collection.CollectionNamespace + " to database " + Database.DatabaseNamespace);
-                
+
                 return new BasicApiResponse<List<TDocument>>()
                 {
                     Data = modelList,
                     isSuccess = true,
-                    message = "Added " + modelList.Count + " Entities to Database",
+                    // message = "Added " + modelList.Count + " Entities to Database",
+                    errors = null,
                     flag = 0
                 };
             }
             catch (Exception x)
             {
                 Log.Error("Error occured during Insert " + modelList.Count + " Entities type of " + collection.CollectionNamespace + " to database " + Database.DatabaseNamespace);
-                
+
                 return new BasicApiResponse<List<TDocument>>()
                 {
                     Data = modelList,
                     isSuccess = false,
-                    message = "Error ocured during add " + modelList.Count + " Entities to Database: " + x.Message,
+                    errors = new List<string>() { "Error ocured during adding " + modelList.Count + " entities to Database: " + x.Message },
                     flag = 1
                 };
             }
@@ -96,13 +97,14 @@ namespace Infrastructure.Repositories
             var x = await collection.DeleteOneAsync(filter);
 
             if (x.IsAcknowledged) Log.Information("Delete Entities type of " + collection.CollectionNamespace + " with id " + id);
-            else Log.Error("Error occured during delete: " + x.DeletedCount);
+            else Log.Error("Error occured during deleting: " + x.DeletedCount);
 
             return new BasicApiResponse<DeleteResult>()
             {
                 Data = x,
                 isSuccess = x.IsAcknowledged,
-                message = "Deleted status: " + x.DeletedCount,
+                // message = "Deleted status: " + x.DeletedCount,
+                errors = null,
                 flag = x.IsAcknowledged ? 0 : 1
             };
         }
@@ -117,7 +119,8 @@ namespace Infrastructure.Repositories
             {
                 Data = x,
                 isSuccess = x == null ? false : true,
-                message = x == null ? "Didnt find Entity with id" + id : "Get Entity with id" + id,
+                // message = x == null ? "Didnt find Entity with id" + id : "Get Entity with id" + id,
+                errors = null,
                 flag = x == null ? 1 : 0
 
             };
@@ -131,7 +134,9 @@ namespace Infrastructure.Repositories
             {
                 Data = x,
                 isSuccess = x == null ? false : true,
-                message = x == null ? "Problem occured during loading" : "Entities List Loaded",
+                // wtf? 
+                // message = x == null ? "Problem occured during loading" : "Entities List Loaded", 
+                errors = x == null ? new List<string>() { "Problem occured during loading " } : null,
                 flag = x == null ? 1 : 0
 
             };
@@ -141,13 +146,16 @@ namespace Infrastructure.Repositories
         {
             var filter = Builders<TDocument>.Filter.Eq("_id", id);
             var x = await collection.ReplaceOneAsync(filter, model);
-            if (x.IsAcknowledged) Log.Information("Positive");
-            else Log.Error("Error Message");
+            if (x.IsAcknowledged)
+                Log.Information("Positive");
+            else
+                Log.Error("Error Message");
+
             return new BasicApiResponse<ReplaceOneResult>()
             {
                 Data = x,
                 isSuccess = x.IsAcknowledged,
-                message = "Update status: " + x.ModifiedCount,
+                errors = null,
                 flag = x.IsAcknowledged ? 0 : 1
             };
         }

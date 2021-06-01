@@ -22,9 +22,10 @@ namespace Infrastructure.Services
         {
             var identityResult = await _userManager.DeleteAsync(new ApplicationUser() { Id = id });
             if (!identityResult.Succeeded)
-                return new BasicApiResponse<List<string>>() { Data = identityResult.Errors.Select(x => x.Description).ToList(), message = "Error Occured", flag = 1, isSuccess = false };
-            Log.Information($"Delete user: {id}");
-            return new BasicApiResponse<List<string>>() { Data = null, message = "User Deketed", flag = 0, isSuccess = true };
+                return new BasicApiResponse<List<string>>() { Data = identityResult.Errors.Select(x => x.Description).ToList(), errors = new List<string>() { "Request failed" }, flag = 1, isSuccess = false };
+
+            Log.Information($"Deleted user: {id}");
+            return new BasicApiResponse<List<string>>() { Data = null, errors = null, flag = 0, isSuccess = true };
         }
         public async Task<BasicApiResponse<ApplicationUser>> GetUserById(string id)
         {
@@ -33,14 +34,14 @@ namespace Infrastructure.Services
                 return new BasicApiResponse<ApplicationUser>()
                 {
                     Data = null,
-                    message = $"Didn't find user",
+                    errors = new List<string>() { "Didn't find user" },
                     flag = 1,
                     isSuccess = false
                 };
             return new BasicApiResponse<ApplicationUser>()
             {
                 Data = user,
-                message = $"Loaded users",
+                errors = null,
                 flag = 0,
                 isSuccess = true
             };
@@ -52,7 +53,7 @@ namespace Infrastructure.Services
             return new BasicApiResponse<IQueryable<ApplicationUser>>()
             {
                 Data = users,
-                message = $"Loaded users",
+                errors = null,
                 flag = 0,
                 isSuccess = true
             };
@@ -62,56 +63,93 @@ namespace Infrastructure.Services
         {
             var role = await _roleManager.FindByNameAsync(rolename);
             if (role == null)
-                return StaticResponse<List<string>>.BadResponse(null, "No role finded", 1);
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "Role not found" }, false, 1);
 
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
-                return StaticResponse<List<string>>.BadResponse(null, "No user finded", 1);
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "User not found" }, false, 1);
 
-            var result = await _userManager.AddToRoleAsync(user, "admin");
+            var result = await _userManager.AddToRoleAsync(user, role.Name);
             if (!result.Succeeded)
-                return StaticResponse<List<string>>.BadResponse(result.Errors.Select(x => x.Description).ToList(), "Error Occured", 1);
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "Couldn't add user to role" }, false, 1);
 
             Log.Information($"Granted {role.Name} for {user.UserName}");
 
-            return StaticResponse<List<string>>.GoodResponse(null, "Role Granted!");
+            return new BasicApiResponse<List<string>>(null, null, true, 0);
+
+            // var role = await _roleManager.FindByNameAsync(rolename);
+            // if (role == null)
+            //     return StaticResponse<List<string>>.BadResponse(null, "No role found", 1);
+
+            // var user = await _userManager.FindByIdAsync(userId);
+            // if (user == null)
+            //     return StaticResponse<List<string>>.BadResponse(null, "No user found", 1);
+
+            // var result = await _userManager.AddToRoleAsync(user, "admin");
+            // if (!result.Succeeded)
+            //     return StaticResponse<List<string>>.BadResponse(result.Errors.Select(x => x.Description).ToList(), "Error Occured", 1);
+
+            // Log.Information($"Granted {role.Name} for {user.UserName}");
+
+            // return StaticResponse<List<string>>.GoodResponse(null, "Role Granted!");
         }
-        
+
         public async Task<BasicApiResponse<List<string>>> RevokeRole(string userId, string rolename)
         {
             var role = await _roleManager.FindByNameAsync(rolename);
             if (role == null)
-                return StaticResponse<List<string>>.BadResponse(null, "No role finded", 1);
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "Role not found" }, false, 1);
 
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
-                return StaticResponse<List<string>>.BadResponse(null, "No user finded", 1);
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "User not found" }, false, 1);
 
             var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
             if (!result.Succeeded)
-                return StaticResponse<List<string>>.BadResponse(result.Errors.Select(x => x.Description).ToList(), "Error Occured", 1);
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "Couldn't remove user from that role" }, false, 1);
 
-            Log.Information($"Revoke {role.Name} from {user.UserName}");
+            Log.Information($"Removed {user.UserName} from {role.Name} role");
 
-            return StaticResponse<List<string>>.GoodResponse(null, "Role Granted!");
+            return new BasicApiResponse<List<string>>(null, null, true, 0);
+
+            // var role = await _roleManager.FindByNameAsync(rolename);
+            // if (role == null)
+            //     return StaticResponse<List<string>>.BadResponse(null, "No role finded", 1);
+
+            // var user = await _userManager.FindByIdAsync(userId);
+            // if (user == null)
+            //     return StaticResponse<List<string>>.BadResponse(null, "No user finded", 1);
+
+            // var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
+            // if (!result.Succeeded)
+            //     return StaticResponse<List<string>>.BadResponse(result.Errors.Select(x => x.Description).ToList(), "Error Occured", 1);
+
+            // Log.Information($"Revoke {role.Name} from {user.UserName}");
+
+            // return StaticResponse<List<string>>.GoodResponse(null, "Role Granted!");
         }
 
         public async Task<BasicApiResponse<List<string>>> ConfirmUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            
+
             if (user == null)
-                return StaticResponse<List<string>>.BadResponse(null, "No user finded", 1);
+                // return StaticResponse<List<string>>.BadResponse(null, "No user finded", 1);
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "User not found" }, false, 1);
 
             if (await _userManager.IsEmailConfirmedAsync(user))
-                return StaticResponse<List<string>>.BadResponse(null, "User is already Confirmed", 1);
+                // return StaticResponse<List<string>>.BadResponse(null, "User is already Confirmed", 1);
+                return new BasicApiResponse<List<string>>(null, new List<string>() { "User email is already confirmed" }, false, 1);
 
             user.EmailConfirmed = true;
-            await _userManager.UpdateAsync(user);
-            
-            Log.Information($"Confirmed {user} with AdminPanel");
 
-            return StaticResponse<List<string>>.GoodResponse(null, "User Confirmed!");
+            await _userManager.UpdateAsync(user);
+
+            // Explain ?
+            // Log.Information($"Confirmed {user} with AdminPanel");
+
+            // return StaticResponse<List<string>>.GoodResponse(null, "User Confirmed!");
+            return new BasicApiResponse<List<string>>(null, null, true, 0);
         }
     }
 }
