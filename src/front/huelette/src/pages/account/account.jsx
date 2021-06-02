@@ -31,6 +31,9 @@ const Account = () => {
             if (checkURL(urlContainer.current.value)) {
                 await ChangeAvatar(authContext.authState?.token, urlContainer.current.value)
                     .then(updatedUser => {
+                        console.log(updatedUser.errors);
+                        if (!updatedUser.isSuccess)
+                            throw Error(updatedUser.errors.join(', '));
                         let user = authContext.authState;
                         ({
                             userName: user.userName,
@@ -44,7 +47,7 @@ const Account = () => {
                         successModal('Changed avatar');
                     })
                     .catch(err => {
-                        errorModal(err)
+                        errorModal([err.message]);
                     });
             }
             else {

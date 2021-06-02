@@ -62,7 +62,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     text-overflow: ellipsis;
-    word-break: keep-all;
+    overflow-wrap: break-word;
     color: white;
 }
 

@@ -139,7 +139,7 @@ namespace API.Authentication
             user.Avatar_Url = avatarUrl;
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
-                throw new Exception("Couldn't update avatar");
+                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description).ToArray()));
 
             UpdatedUser newUser = new UpdatedUser()
             {

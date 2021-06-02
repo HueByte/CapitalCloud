@@ -1,6 +1,7 @@
 import { store } from 'react-notifications-component';
 
 export const errorModal = (err) => {
+    console.log(err);
     store.addNotification({
         title: 'Error',
         message: err.join(', '),
