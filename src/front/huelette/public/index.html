@@ -10,12 +10,13 @@
   <link href="%PUBLIC_URL%/root.css" type="text/css" rel="stylesheet" />
   <!-- <link href="%PUBLIC_URL%/themeColors.css" type="text/css" rel="stylesheet" /> -->
   <link href="%PUBLIC_URL%/FormReset.css" type="text/css" rel="stylesheet" />
+  <link href="%PUBLIC_URL%/base.css" type="text/css" rel="stylesheet" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -28,8 +29,10 @@
   * {
     box-sizing: border-box;
   }
+
   html,
-  body, #root {
+  body,
+  #root {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -44,7 +47,8 @@
   }
 
   /* This seems like better solution after all for phones */
-  body, #root {
+  body,
+  #root {
     height: 100vh;
     width: 100vw;
     position: relative;
@@ -77,7 +81,6 @@
       transform: rotate(360deg);
     }
   }
-
 </style>
 
 <body>

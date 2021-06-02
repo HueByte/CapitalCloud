@@ -8,6 +8,7 @@ import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css'
 import { store } from 'react-notifications-component';
 import 'animate.css'
+import Loader from '../../components/Loader';
 
 // TODO - Add modals
 const Login = () => {
@@ -50,8 +51,8 @@ const Login = () => {
             type: 'danger',
             insert: 'top',
             container: 'top-right',
-            animationIn: ["animate__animated animate__fadeIn"], 
-            animationOut: ["animate__animated animate__fadeOut"], 
+            animationIn: ["animate__animated animate__fadeIn"],
+            animationOut: ["animate__animated animate__fadeOut"],
             dismiss: {
                 duration: 5000,
                 onScreen: true,
@@ -69,7 +70,7 @@ const Login = () => {
                     <img src={logo} alt="logo" />
                     {working ?
                         <div className="auth-left-overlay">
-                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                            <Loader />
                         </div>
                         :
                         <></>

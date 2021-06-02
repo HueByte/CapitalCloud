@@ -9,6 +9,7 @@ import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { store } from 'react-notifications-component';
 import 'animate.css';
+import Loader from '../../components/Loader';
 
 const Register = () => {
     const authContext = useContext(AuthContext);
@@ -106,7 +107,7 @@ const Register = () => {
                     <img src={logo} alt="logo" />
                     {working ?
                         <div className="auth-left-overlay">
-                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                            <Loader />
                         </div>
                         :
                         <></>
@@ -156,7 +157,7 @@ const Register = () => {
                                         </div> */}
                                     <div className="buttons-right" style={{ justifyContent: 'flex-end' }}>
                                         <NavLink to="/wheel" className="auth-button">Home</NavLink>
-                                        <div className="auth-button" onClick={() => {setWorking(true)}}>Register</div>
+                                        <div className="auth-button" onClick={() => { setWorking(true) }}>Register</div>
                                     </div>
                                 </div>
                             </>

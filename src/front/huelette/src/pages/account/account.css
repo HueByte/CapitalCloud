@@ -1,10 +1,65 @@
-.container {
-    display: grid;
-    place-items: center;
+.avatar-wrapper {
+    display: flex;
     width: 100%;
     height: 100%;
 }
 
-.avatar-input {
-    
+.avatar-wrapper .container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
+
+.avatar-preview {
+    width: 40vw;
+    height: 40vw;
+    max-width: 500px;
+    max-height: 500px;
+    border-radius: 100%;
+    display: grid;
+    place-items: center;
+    border: 3px solid var(--Rose);
+    margin-bottom: 2em;
+}
+
+.avatar-preview > img {
+    width: 100%;
+    border-radius: 100%;
+}
+
+.avatar-input {
+    width: 80%;
+    max-width: 500px;
+}
+
+.avatar-button__container {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 80%;
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.avatar-button {
+    margin-left: 1em;
+}
+
+.avatar-overlay {
+    display: grid;
+    place-items: center;
+    z-index: 999;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 245, 0.9);
+}
+
