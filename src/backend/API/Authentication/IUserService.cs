@@ -19,5 +19,6 @@ namespace API.Authentication
         Task<BasicApiResponse<List<string>>> ConfirmEmail(string tokenId);
 
         Task<UpdatedUser> FetchNewUserDataAsync(string email);
+        Task<UpdatedUser> UpdateAvatarAsync(string email, string avatarUrl);
     }
 }

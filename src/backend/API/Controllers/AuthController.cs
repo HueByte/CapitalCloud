@@ -112,5 +112,21 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
+        [HttpPost("UpdateAvatar")]
+        [Authorize]
+        public async Task<IActionResult> UpdateAvatarAsync([FromBody] NewAvatarDTO newAvatar)
+        {
+            try
+            {
+                string email = _jwtAuth.GetEmailFromToken(newAvatar.Token);
+                var newUserData = await _userService.UpdateAvatarAsync(email, newAvatar.AvatarUrl);
+                return Ok(new BasicApiResponse<UpdatedUser>(newUserData, null, true, 0));
+            }
+            catch (Exception e)
+            {
+                return Ok(new BasicApiResponse<UpdatedUser>(null, new List<string>() { e.Message }, false, 1));
+            }
+        }
     }
 }

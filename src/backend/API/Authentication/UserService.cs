@@ -130,6 +130,29 @@ namespace API.Authentication
             };
         }
 
+        public async Task<UpdatedUser> UpdateAvatarAsync(string email, string avatarUrl)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new Exception("Coudln't find user");
+
+            user.Avatar_Url = avatarUrl;
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                throw new Exception("Couldn't update avatar");
+
+            UpdatedUser newUser = new UpdatedUser()
+            {
+                avatar_url = user.Avatar_Url,
+                coins = user.coins,
+                exp = user.exp,
+                UserName = user.UserName,
+                isSuccess = true
+            };
+
+            return newUser;
+        }
+
         // TODO - Change parameter for DTO & Change returning value & Add sending mail & check if user's email is verified
         public async Task<BasicApiResponse<ApplicationUser>> ChangePassword(string email, string oldPassword, string newPassword)
         {
