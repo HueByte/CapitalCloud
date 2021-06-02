@@ -10,6 +10,7 @@ import 'react-notifications-component/dist/theme.css';
 import { store } from 'react-notifications-component';
 import 'animate.css';
 import Loader from '../../components/Loader';
+import { errorModal, infoModal, successModal } from '../../components/Modals';
 
 const Register = () => {
     const authContext = useContext(AuthContext);
@@ -34,7 +35,6 @@ const Register = () => {
                 if (!response.isSuccess) {
                     console.log(response.errors);
                     errorModal(response.errors);
-                    // TODO - modal error
                 }
                 else {
                     successModal('Your account has been successfully created');
@@ -45,57 +45,6 @@ const Register = () => {
                 errorModal(["We couldn't catch the problem"]);
             })
         setWorking(false);
-    }
-
-    const infoModal = (msg) => {
-        store.addNotification({
-            title: 'Info',
-            message: msg ?? '',
-            type: 'info',
-            insert: 'top',
-            container: 'top-right',
-            animationIn: ["animate__animated animate__fadeIn"],
-            animationOut: ["animate__animated animate__fadeOut"],
-            dismiss: {
-                duration: 5000,
-                onScreen: true,
-                pauseOnHover: true
-            }
-        })
-    }
-
-    const successModal = (msg) => {
-        store.addNotification({
-            title: 'success!',
-            message: msg ?? '',
-            type: 'success',
-            insert: 'top',
-            container: 'top-right',
-            animationIn: ["animate__animated animate__fadeIn"],
-            animationOut: ["animate__animated animate__fadeOut"],
-            dismiss: {
-                duration: 5000,
-                onScreen: true,
-                pauseOnHover: true
-            }
-        })
-    }
-
-    const errorModal = (msg) => {
-        store.addNotification({
-            title: 'Something went wrong!',
-            message: msg.join('\n'),
-            type: 'danger',
-            insert: 'top',
-            container: 'top-right',
-            animationIn: ["animate__animated animate__fadeIn"],
-            animationOut: ["animate__animated animate__fadeOut"],
-            dismiss: {
-                duration: 5000,
-                onScreen: true,
-                pauseOnHover: true
-            }
-        })
     }
 
     if (authContext.isAuthenticated()) return <Redirect to="/wheel" />

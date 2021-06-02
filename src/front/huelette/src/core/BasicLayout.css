@@ -32,6 +32,16 @@
     z-index: 1;
 }
 
+.notifications-component  > .notification-container--top-right {
+    top: 150px !important; 
+}
+
+/*
+.notifications-component {
+    height: Calc(100% - 150px);
+} */
+
+
 @media screen and (max-width: 1110px) {
     .main__container {
         top: 60px;

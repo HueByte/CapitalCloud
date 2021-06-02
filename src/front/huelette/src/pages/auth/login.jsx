@@ -5,10 +5,11 @@ import logo from '../../assets/white-cloud.jpg';
 import { AuthContext } from '../../auth/AuthContext';
 import { AuthLogin } from '../../auth/Auth';
 import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css'
+import 'react-notifications-component/dist/theme.css';
 import { store } from 'react-notifications-component';
 import 'animate.css'
 import Loader from '../../components/Loader';
+import { errorModal } from '../../components/Modals';
 
 // TODO - Add modals
 const Login = () => {
@@ -44,22 +45,22 @@ const Login = () => {
         setWroking(false);
     }
 
-    const errorModal = (msg) => {
-        store.addNotification({
-            title: 'Something went wrong!',
-            message: msg.join('\n'),
-            type: 'danger',
-            insert: 'top',
-            container: 'top-right',
-            animationIn: ["animate__animated animate__fadeIn"],
-            animationOut: ["animate__animated animate__fadeOut"],
-            dismiss: {
-                duration: 5000,
-                onScreen: true,
-                pauseOnHover: true
-            }
-        })
-    }
+    // const errorModal = (msg) => {
+    //     store.addNotification({
+    //         title: 'Something went wrong!',
+    //         message: msg.join('\n'),
+    //         type: 'danger',
+    //         insert: 'top',
+    //         container: 'top-right',
+    //         animationIn: ["animate__animated animate__fadeIn"],
+    //         animationOut: ["animate__animated animate__fadeOut"],
+    //         dismiss: {
+    //             duration: 5000,
+    //             onScreen: true,
+    //             pauseOnHover: true
+    //         }
+    //     })
+    // }
 
     if (authContext.isAuthenticated()) return <Redirect to="/wheel" />
     else return (

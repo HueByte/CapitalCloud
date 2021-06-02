@@ -4,6 +4,12 @@ import './BasicLayout.css';
 import Menu from '../components/Menu';
 import Chat from '../components/chat';
 
+// notification
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { store } from 'react-notifications-component';
+import 'animate.css';
+
 const BasicLayout = ({ children }) => {
   const [isChatActive, setIsChatActive] = useState(window.innerWidth <= 1100 ? false : true);
 
@@ -11,6 +17,8 @@ const BasicLayout = ({ children }) => {
     <div className="interface__wrapper">
       <Menu isChatActive={isChatActive} setIsChatActive={setIsChatActive} />
       <Chat isChatActive={isChatActive} setIsChatActive={setIsChatActive} />
+      <ReactNotification isMobile={true} />
+
       <main className={`main__container${isChatActive ? "" : " fullsize"}`}>
         {children}
         {/* BODY */}

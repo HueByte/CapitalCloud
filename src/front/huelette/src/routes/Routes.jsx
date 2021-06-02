@@ -1,6 +1,8 @@
+// base
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Switch, Link, Redirect, NavLink } from 'react-router-dom';
-import BasicLayout from '../core/BasicLayout';
+
+// pages
 import Wheel from '../pages/wheel/wheel';
 import Roulette from '../pages/roulette/roulette';
 import Crash from '../pages/crash/crash';
@@ -11,8 +13,18 @@ import Login from '../pages/auth/login';
 import Register from '../pages/auth/register';
 import FOUR_ZERO_FOUR from '../pages/404/FOUR_ZERO_FOUR';
 import TestingZone from '../pages/TestingZone/TestingZone';
-import PrivateRoute from '../core/AuthenticatedRoute';
 import Admin from '../pages/admin/admin';
+
+// other
+import PrivateRoute from '../core/AuthenticatedRoute';
+import BasicLayout from '../core/BasicLayout';
+
+// notofication
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { store } from 'react-notifications-component';
+import 'animate.css';
+
 
 export const Routes = () => {
     const basicLayoutRoutes = [

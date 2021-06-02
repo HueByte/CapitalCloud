@@ -5,6 +5,8 @@ import '../../core/basicLayoutStyles.css';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../auth/AuthContext';
 import { ChangeAvatar } from '../../api-calls/ApiUser';
+import Loader from '../../components/Loader';
+import { errorModal, successModal, warningModal } from '../../components/Modals';
 
 const Account = () => {
     const authContext = useContext(AuthContext);
@@ -20,7 +22,9 @@ const Account = () => {
         setAvatar(urlContainer.current.value);
     }
 
-
+    useEffect(() => {
+        if (isUploading) save();
+    }, [isUploading])
 
     const save = async () => {
         if (urlContainer.current.value.length !== 0) {
@@ -37,10 +41,20 @@ const Account = () => {
 
                         authContext.setAuthState(user);
                         setAvatar(urlContainer.current.value);
+                        successModal('Changed avatar');
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => {
+                        errorModal(err)
+                    });
+            }
+            else {
+                errorModal(["Provided link is incorrect, check it and try again"]);
             }
         }
+        else {
+            warningModal('You must provide link to your avatar')
+        }
+        setIsUploading(false);
     }
 
     const checkURL = (url) => {
@@ -52,11 +66,18 @@ const Account = () => {
             <div className="container">
                 <div className="avatar-preview">
                     <img src={avatar} alt="Your avatar preview" />
+                    {isUploading ?
+                        <div className="avatar-overlay">
+                            <Loader />
+                        </div>
+                        :
+                        <></>
+                    }
                 </div>
                 <input id="urlContainer" type="text" className="basic-input avatar-input" placeholder="Enter your avatar url here" />
                 <div className="avatar-button__container">
                     <div className="basic-button avatar-button" onClick={preview}>Preview</div>
-                    <div className="basic-button avatar-button" onClick={save}>Save</div>
+                    <div className="basic-button avatar-button" onClick={() => setIsUploading(true)}>Save</div>
                 </div>
             </div>
         </div>
