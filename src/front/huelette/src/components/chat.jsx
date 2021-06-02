@@ -59,8 +59,8 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     }, [])
 
     const colorLevel = (level) => {
-        return level >= 50 ? '#50C5B7'
-            : level >= 100 ? '#ffc870'
+        return level >= 50 && level < 100 ? '#50C5B7'
+            : level >= 100 && level < 200 ? '#ffc870'
                 : level >= 200 ? '#fd0069'
                     : '#a7a7a7'
     }
@@ -118,7 +118,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                                 {/* <img src={mess.user.avatar != null ? mess.user.avatar : 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" /> */}
                                 <img src={mess.user?.avatarUrl ?? UserIcon} className="chat-message-avatar" alt="avatar" />
                                 <div className="chat-message-level">{mess.user?.level}</div>
-                                <div className="chat-message-username" style={{color: colorLevel(mess.user?.level)}}>{mess.user?.username}</div>
+                                <div className="chat-message-username" style={{ color: colorLevel(mess.user?.level) }}>{mess.user?.username}</div>
                             </div>
                             <div className="chat-message-text">{mess.content}</div>
                         </div>

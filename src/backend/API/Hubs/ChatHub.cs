@@ -32,7 +32,8 @@ namespace API.Hubs
 
     public class ChatHub : Hub
     {
-        public static List<ChatUser> chatUsers = new List<ChatUser>();
+        public static List<ChatUser> chatUsers = new List<ChatUser>(); // Consider adding List<string> connectionIds instead of new instance for each connection of the same user
+        public static List<string> anonConnections = new List<string>();
         public static List<Message> messages = new List<Message>();
         private readonly ILogger<ChatHub> _logger;
 
@@ -64,12 +65,12 @@ namespace API.Hubs
         {
             lock (chatUsers)
             {
-                if (!chatUsers.Any(entry => entry.Username == username))
-                    chatUsers.Add(new ChatUser(username, id, avatar_url, xp));
+                // if (!chatUsers.Any(entry => entry.Username == username))
+                chatUsers.Add(new ChatUser(username, id, avatar_url, xp));
             }
 
             _logger.Log(LogLevel.Information, $"{username} connected to the chat");
-            await Clients.All.SendAsync("OnUserConnected", chatUsers.Count);
+            await Clients.All.SendAsync("OnUserConnected", (chatUsers.GroupBy(u => u.Username).Select(e => e.First()).Count() + anonConnections.Count));
             await Clients.Caller.SendAsync("OnJoinSession", messages);
         }
 
@@ -78,9 +79,10 @@ namespace API.Hubs
             // TODO - Maybe add public IP checker to avoid fake user count 
             try
             {
-                chatUsers.Add(new ChatUser("anon", Context.ConnectionId));
+                anonConnections.Add(Context.ConnectionId);
                 _logger.Log(LogLevel.Information, "Anon connected");
-                await Clients.All.SendAsync("OnUserConnected", chatUsers.Count);
+                // TODO - do something with this, user count isn't unique 
+                await Clients.All.SendAsync("OnUserConnected", (chatUsers.GroupBy(u => u.Username).Select(e => e.First()).Count() + anonConnections.Count));
                 await Clients.Caller.SendAsync("OnJoinSession", messages);
             }
             catch (Exception e)
@@ -91,15 +93,16 @@ namespace API.Hubs
 
         public override Task OnDisconnectedAsync(Exception e)
         {
+            // TODO - uhh think about anon disconnecting 
             ChatUser user = chatUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             if (user != null)
             {
                 _logger.Log(LogLevel.Information, $"Client disconnected {user.Username}");
                 chatUsers.Remove(user);
             }
-            else 
+            else
             {
-                _logger.Log(LogLevel.Warning, $"Client disconnected and wasn't in user list");
+                _logger.Log(LogLevel.Warning, $"Client disconnected and wasn't in user list or was anon");
             }
             Clients.All.SendAsync("OnUserDisconnected").GetAwaiter().GetResult();
             return base.OnDisconnectedAsync(e);
