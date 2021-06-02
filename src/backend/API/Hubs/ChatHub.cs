@@ -102,7 +102,15 @@ namespace API.Hubs
             }
             else
             {
-                _logger.Log(LogLevel.Warning, $"Client disconnected and wasn't in user list or was anon");
+                try
+                {
+                    anonConnections.Remove(Context.ConnectionId);
+                    _logger.Log(LogLevel.Information, "Disconnected anon user");
+                }
+                catch (Exception err)
+                {
+                    _logger.Log(LogLevel.Error, $"Disconnected client which wasn't anon or user {err.Message}");
+                }
             }
             Clients.All.SendAsync("OnUserDisconnected").GetAwaiter().GetResult();
             return base.OnDisconnectedAsync(e);
