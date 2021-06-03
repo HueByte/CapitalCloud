@@ -127,7 +127,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                 <div className="chat-input">
                     {isLogged ? (
                         <>
-                            <input type="text" id="chat-input-box" placeholder="Chat here" onKeyDown={handleEnter} />
+                            <input autocomplete="off" type="text" id="chat-input-box" placeholder="Chat here" onKeyDown={handleEnter} />
                             <div className="chat-input-submit" onClick={sendMessage}><i class="fas fa-arrow-right"></i></div>
                         </>
                     ) :
