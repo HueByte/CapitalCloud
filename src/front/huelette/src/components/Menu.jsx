@@ -13,6 +13,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
         percent: 0
     })
     const [coins, setCoins] = useState(0);
+    const [authAvatar, setAuthAvatar] = useState(authContext.authState?.avatar_url);
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
 
     const logout = () => {
@@ -34,18 +35,6 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
         let section = end - start;
         let percent = Math.round((exp - start) / section * 1000) / 10;
 
-        // TODO - remove later
-        console.log(`${percent}%`)
-        console.log(`start ${start} -> end ${end} section ${section}`);
-        console.log(`currentXp ${exp} level ${level}`);
-
-        // TODO - remove testing array
-        // let testArray = [];
-        // for (let index = 1; index <= 3; index++) {
-        //     testArray.push(25 * Math.pow(index, 2) - 25 * index);
-        // }
-        // console.log(testArray);
-
         return { level: level, percent: percent };
     }
 
@@ -59,7 +48,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
     return (
         <>
             <section className="nav-top">
-                <NavDesktop coins={coins} isLogged={isLogged} level={level} logout={logout} />
+                <NavDesktop coins={coins} isLogged={isLogged} avatar={authAvatar} level={level} logout={logout} />
                 <NavMobile coins={coins} isLogged={isLogged} />
             </section>
             <NavSide isLogged={isLogged} logout={logout} isChatActive={isChatActive} hideChat={hideChat} />
@@ -67,7 +56,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
     )
 }
 
-const NavDesktop = ({ coins, isLogged, level, logout }) => {
+const NavDesktop = ({ coins, isLogged, level, avatar, logout }) => {
     return (
         <div className="nav-desktop">
             <div className="nav-logo">
@@ -104,7 +93,7 @@ const NavDesktop = ({ coins, isLogged, level, logout }) => {
                                     </div>
                                     <NavLink to="/account/profile"
                                         className="nav-avatar"
-                                        style={{ backgroundImage: "url(https://lh3.googleusercontent.com/iFjN0aRv7Olsk3uHMzLQdALoJVA3qRyAgJ75Z5PsTLOrUOSzSYP2kbGMvwveZc4a7P9byIV5rbZXDwwfttbyD_wP=w640-h400-e365-rj-sc0x00ffffff)" }}
+                                        style={{ backgroundImage: `url(${avatar})` }}
                                         title="Profile">
                                     </NavLink>
                                 </>
