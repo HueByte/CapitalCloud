@@ -7,6 +7,7 @@ import { AuthContext } from '../../auth/AuthContext';
 import { ChangeAvatar } from '../../api-calls/ApiUser';
 import Loader from '../../components/Loader';
 import { errorModal, successModal, warningModal } from '../../components/Modals';
+import validator from 'validator';
 
 const Account = () => {
     const authContext = useContext(AuthContext);
@@ -18,50 +19,79 @@ const Account = () => {
         urlContainer.current = document.getElementById('urlContainer');
     })
 
-    const preview = () => {
-        setAvatar(urlContainer.current.value);
-    }
-
     useEffect(() => {
         if (isUploading) save();
     }, [isUploading])
 
-    const save = async () => {
-        if (urlContainer.current.value.length !== 0) {
-            if (checkURL(urlContainer.current.value)) {
-                await ChangeAvatar(authContext.authState?.token, urlContainer.current.value)
-                    .then(updatedUser => {
-                        console.log(updatedUser.errors);
-                        if (!updatedUser.isSuccess)
-                            throw Error(updatedUser.errors.join(', '));
-                        let user = authContext.authState;
-                        ({
-                            userName: user.userName,
-                            exp: user.exp,
-                            coins: user.coins,
-                            avatar_url: user.avatar_url
-                        } = updatedUser);
-
-                        authContext.setAuthState(user);
-                        setAvatar(urlContainer.current.value);
-                        successModal('Changed avatar');
-                    })
-                    .catch(err => {
-                        errorModal([err.message]);
-                    });
-            }
-            else {
-                errorModal(["Provided link is incorrect, check it and try again"]);
-            }
+    const preview = async () => {
+        if (validateImage(urlContainer.current.value)) {
+            successModal('Updated your preview');
+            setAvatar(urlContainer.current.value);
         }
-        else {
-            warningModal('You must provide link to your avatar')
+    }
+
+    const save = async () => {
+        if (validateImage(urlContainer.current.value)) {
+            await ChangeAvatar(authContext.authState?.token, urlContainer.current.value)
+                .then(updatedUser => {
+                    if (!updatedUser.isSuccess)
+                        throw Error(updatedUser.errors.join(', '));
+                    let user = authContext.authState;
+                    ({
+                        userName: user.userName,
+                        exp: user.exp,
+                        coins: user.coins,
+                        avatar_url: user.avatar_url
+                    } = updatedUser);
+
+                    authContext.setAuthState(user);
+                    setAvatar(urlContainer.current.value);
+                    successModal('Changed avatar');
+                })
+                .catch(err => {
+                    errorModal([err.message]);
+                });
         }
         setIsUploading(false);
     }
 
-    const checkURL = (url) => {
-        return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+
+    const validateImage = (url) => {
+        if (url.length !== 0) {
+            if (validator.isURL(url)) {
+                if (checkIfImageExists(url)) {
+                    return true;
+                }
+                else {
+                    errorModal(["You must provide link directly to image"])
+                }
+            }
+            else {
+                errorModal(["Provided link is incorrect"]);
+            }
+        }
+        else {
+            warningModal('You must provide link to your avatar');
+        }
+
+        return false;
+    }
+
+    function checkIfImageExists(url, callback) {
+        const img = new Image();
+
+        img.src = url;
+
+        if (img.complete) {
+            return true;
+        } else {
+            img.onload = () => {
+                return true;
+            };
+            img.onerror = () => {
+                return false;
+            };
+        }
     }
 
     return (

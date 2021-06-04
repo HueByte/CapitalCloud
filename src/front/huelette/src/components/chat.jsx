@@ -58,6 +58,12 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
         createHubConnection();
     }, [])
 
+    useEffect(() => {
+        if (messages.length > 100) {
+            messages.shift();
+        }
+    }, [messages])
+
     const colorLevel = (level) => {
         return level >= 50 && level < 100 ? '#50C5B7'
             : level >= 100 && level < 200 ? '#ffc870'
@@ -101,12 +107,6 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
         setIsChatActive(!isChatActive);
     }
 
-    useEffect(() => {
-        if (messages.length > 100) {
-            messages.shift();
-        }
-    }, [messages])
-
     return (
         <>
             <div className={`chat__container${isChatActive ? "" : " hide"}`}>
@@ -116,7 +116,8 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                         <div key={index} className="chat-message">
                             <div className="chat-message-top">
                                 {/* <img src={mess.user.avatar != null ? mess.user.avatar : 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" /> */}
-                                <img src={mess.user?.avatarUrl ?? UserIcon} className="chat-message-avatar" alt="avatar" />
+                                {/* <img src={mess.user?.avatarUrl ?? UserIcon} className="chat-message-avatar" alt="avatar" /> */}
+                                <img src={mess.user?.avatarUrl ?? UserIcon} onError={(e) => { e.target.onError = null; e.target.src = UserIcon }} className="chat-message-avatar" alt="avatar" />
                                 <div className="chat-message-level">{mess.user?.level}</div>
                                 <div className="chat-message-username" style={{ color: colorLevel(mess.user?.level) }}>{mess.user?.username}</div>
                             </div>
