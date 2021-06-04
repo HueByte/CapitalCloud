@@ -61,16 +61,13 @@ const Account = () => {
             if (validator.isURL(url)) {
                 if (checkIfImageExists(url)) {
                     return true;
-                }
-                else {
+                } else {
                     errorModal(["You must provide link directly to image"])
                 }
-            }
-            else {
+            } else {
                 errorModal(["Provided link is incorrect"]);
             }
-        }
-        else {
+        } else {
             warningModal('You must provide link to your avatar');
         }
 
