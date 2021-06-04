@@ -6,9 +6,9 @@ import { AuthContext } from '../auth/AuthContext';
 import UserIcon from '../assets/userIcon.png';
 import './chat.css';
 
+//Dynamic avatar/info change
 const Chat = ({ isChatActive, setIsChatActive }) => {
     const authContext = useContext(AuthContext);
-    const [user, setUser] = useState(authContext.authState ?? '');
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState(0);
@@ -33,8 +33,8 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                     .start()
                     .then(() => {
                         if (hubConnection.connectionId) {
-                            if (user)
-                                hubConnection.invoke('OnConnected', user.userName, hubConnection.connectionId, user.exp, user.avatar_url);
+                            if (authContext.authState)
+                                hubConnection.invoke('OnConnected', authContext.authState.userName, hubConnection.connectionId, authContext.authState.exp, authContext.authState.avatar_url);
                             else
                                 hubConnection.invoke('OnConnectedAnon', hubConnection.connectionId)
                         }
@@ -110,7 +110,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     return (
         <>
             <div className={`chat__container${isChatActive ? "" : " hide"}`}>
-                <div className="chat-users-count"><i class="fa fa-user" aria-hidden="true" style={{ marginRight: '5px' }}></i> {users}</div>
+                <div className="chat-users-count"><i className="fa fa-user" aria-hidden="true" style={{ marginRight: '5px' }}></i> {users}</div>
                 <div className="chat-text" id="chat-container">
                     {messages.length ? messages.map((mess, index) => (
                         <div key={index} className="chat-message">
@@ -123,13 +123,13 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                             </div>
                             <div className="chat-message-text">{mess.content}</div>
                         </div>
-                    )) : <div className="chat-loader"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>}
+                    )) : <div className="chat-loader"><div className="lds-ring"><div></div><div></div><div></div><div></div></div></div>}
                 </div>
                 <div className="chat-input">
                     {isLogged ? (
                         <>
                             <input autoComplete="off" type="text" id="chat-input-box" placeholder="Chat here" onKeyDown={handleEnter} />
-                            <div className="chat-input-submit" onClick={sendMessage}><i class="fas fa-arrow-right"></i></div>
+                            <div className="chat-input-submit" onClick={sendMessage}><i className="fas fa-arrow-right"></i></div>
                         </>
                     ) :
                         (
@@ -138,7 +138,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
                             </>
                         )}
                 </div>
-                <div className="chat-hide-button" onClick={hideChat}><i class={`fas fa-arrow-left${isChatActive ? "" : " active"}`}></i></div>
+                <div className="chat-hide-button" onClick={hideChat}><i className={`fas fa-arrow-left${isChatActive ? "" : " active"}`}></i></div>
             </div>
         </>
     )

@@ -3,7 +3,7 @@ import { store } from 'react-notifications-component';
 export const errorModal = (err) => {
     store.addNotification({
         title: 'Error',
-        message: err.join(', '),
+        message: err.join(', ') ?? '',
         type: 'danger',
         insert: 'top',
         container: 'top-right',
@@ -21,7 +21,7 @@ export const errorModal = (err) => {
 export const warningModal = (message) => {
     store.addNotification({
         title: 'Warning',
-        message: message ?? '',
+        message: message ?? 'Something went wrong',
         type: 'warning',
         insert: 'top',
         container: 'top-right',

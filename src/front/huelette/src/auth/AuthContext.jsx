@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
 import Loader from '../components/Loader';
 import { AuthLogin, FetchNewUserData } from './Auth';
 
@@ -19,8 +20,10 @@ const AuthProvider = ({ children }) => {
         setAuthState({});
     }
 
+    // TODO - uh yeah figure it out later
     const isAuthenticated = () => {
-        if (authState == null) return false;
+        if (authState == null || authState == undefined || Object.keys(authState).length === 0 && authState.constructor === Object)
+            return false
         return true;
     }
 
@@ -33,7 +36,7 @@ const AuthProvider = ({ children }) => {
             var tempUser = authState;
             await FetchNewUserData(user)
                 .then(response => {
-                    if (response == null || response.status >= 300) 
+                    if (response == null || response.status >= 300)
                         singout();
                     return response.json()
                 })
@@ -45,6 +48,7 @@ const AuthProvider = ({ children }) => {
                         avatar_url: tempUser.avatar_url
                     } = updatedUser);
 
+                    console.log(tempUser);
                     setAuthInfo(tempUser);
                 })
         }

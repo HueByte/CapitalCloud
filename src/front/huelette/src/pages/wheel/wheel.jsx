@@ -15,13 +15,6 @@ const Wheel = () => {
     // Count of users betting on color
 
     const authContext = useContext(AuthContext);
-    const [coins, setCoins] = useState(0);
-
-    useEffect(() => {
-        if (authContext.authState != null) {
-            setCoins(authContext.authState.coins);
-        }
-    }, []);
 
     return (
         <div className="main__wrapper">
@@ -30,7 +23,7 @@ const Wheel = () => {
                     {authContext.isAuthenticated() ?
                         <div className="place-bet">
                             <div className="bet-coins">
-                                <i class="fas fa-coins"></i> {coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                                <i className="fas fa-coins"></i> {authContext.authState?.coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                             </div>
                             <div className="bets-values">
                                 <div className="bets-values-item">Clear</div>

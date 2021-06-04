@@ -13,7 +13,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
         percent: 0
     })
     const [coins, setCoins] = useState(0);
-    const [authAvatar, setAuthAvatar] = useState(authContext.authState?.avatar_url);
+    // const [authAvatar, setAuthAvatar] = useState(authContext.authState?.avatar_url);
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
 
     const logout = () => {
@@ -39,17 +39,16 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
     }
 
     useEffect(() => {
-        if (authContext.authState != null) {
-            setLevel(calcLevel(authContext.authState.exp));
-            setCoins(authContext.authState.coins);
-        }
-    }, []);
+        setLevel(calcLevel(authContext.authState.exp));
+    }, [authContext.authState?.exp])
+
+    console.log(authContext);
 
     return (
         <>
             <section className="nav-top">
-                <NavDesktop coins={coins} isLogged={isLogged} avatar={authAvatar} level={level} logout={logout} />
-                <NavMobile coins={coins} isLogged={isLogged} />
+                <NavDesktop coins={authContext.authState?.coins} isLogged={isLogged} avatar={authContext.authState?.avatar_url} level={level} logout={logout} />
+                <NavMobile coins={authContext.authState?.coins} avatar={authContext.authState?.avatar_url} isLogged={isLogged} />
             </section>
             <NavSide isLogged={isLogged} logout={logout} isChatActive={isChatActive} hideChat={hideChat} />
         </>
@@ -66,15 +65,15 @@ const NavDesktop = ({ coins, isLogged, level, avatar, logout }) => {
                 <div className="nav-desktop-main__container">
                     <div className="nav-desktop-left">
                         <NavLink activeClassName="active-button" to="/wheel" className="nav-desktop-left-button">
-                            <i class="fa fa-circle-o nav-desktop-left-button-icon"></i>
+                            <i className="fa fa-circle-o nav-desktop-left-button-icon"></i>
                             <div>Wheel</div>
                         </NavLink>
                         <NavLink activeClassName="active-button" to="/roulette" className="nav-desktop-left-button">
-                            <i class="fa fa-superpowers nav-desktop-left-button-icon" aria-hidden="true"></i>
+                            <i className="fa fa-superpowers nav-desktop-left-button-icon" aria-hidden="true"></i>
                             <div>Roulette</div>
                         </NavLink>
                         <NavLink activeClassName="active-button" to="/crash" className="nav-desktop-left-button">
-                            <i class="fa fa-area-chart nav-desktop-left-button-icon" aria-hidden="true"></i>
+                            <i className="fa fa-area-chart nav-desktop-left-button-icon" aria-hidden="true"></i>
                             <div>Crash</div>
                         </NavLink>
                     </div>
@@ -84,7 +83,7 @@ const NavDesktop = ({ coins, isLogged, level, avatar, logout }) => {
                                 <>
                                     <div className="nav-coins__container">
                                         <div className="nav-coins-icon">
-                                            <i class="fas fa-coins"></i>
+                                            <i className="fas fa-coins"></i>
                                             <span style={{ textTransform: "uppercase", marginLeft: 5 }}>coins</span>
                                         </div>
                                         <div className="nav-coins-balance">
@@ -117,13 +116,13 @@ const NavDesktop = ({ coins, isLogged, level, avatar, logout }) => {
                                 <>
                                     <NavLink activeClassName="active-sub-item" to="/account/profile" className="nav-desktop-sub-item">
                                         <div className="nav-desktop-sub-item-icon">
-                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            <i className="fa fa-user" aria-hidden="true"></i>
                                         </div>
                                         <div>My Account</div>
                                     </NavLink>
                                     <NavLink activeClassName="active-sub-item" to="/account/rewards" className="nav-desktop-sub-item">
                                         <div className="nav-desktop-sub-item-icon">
-                                            <i class="fa fa-gift" aria-hidden="true"></i>
+                                            <i className="fa fa-gift" aria-hidden="true"></i>
                                         </div>
                                         <div>Rewards</div>
                                     </NavLink>
@@ -132,7 +131,7 @@ const NavDesktop = ({ coins, isLogged, level, avatar, logout }) => {
                             (<></>)}
                         <NavLink activeClassName="active-sub-item" to="/leaderboards" className="nav-desktop-sub-item">
                             <div className="nav-desktop-sub-item-icon">
-                                <i class="fa fa-trophy" aria-hidden="true"></i>
+                                <i className="fa fa-trophy" aria-hidden="true"></i>
                             </div>
                             <div>Leaderboards</div>
                         </NavLink>
@@ -154,10 +153,10 @@ const NavDesktop = ({ coins, isLogged, level, avatar, logout }) => {
                                     </div>
                                 </div>
                                 <NavLink to="/account/options" className="nav-desktop-sub-optional">
-                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                    <i className="fa fa-cog" aria-hidden="true"></i>
                                 </NavLink>
                                 <div className="nav-desktop-sub-optional">
-                                    <i class="fa fa-sign-out" aria-hidden="true" onClick={logout}></i>
+                                    <i className="fa fa-sign-out" aria-hidden="true" onClick={logout}></i>
                                 </div>
                             </>) :
                             (<></>)}
@@ -168,14 +167,14 @@ const NavDesktop = ({ coins, isLogged, level, avatar, logout }) => {
     )
 }
 
-const NavMobile = ({ coins, isLogged }) => {
+const NavMobile = ({ coins, isLogged, avatar }) => {
     return (
         <div className="nav-mobile">
             {isLogged ? (
                 <>
                     <div className="nav-coins__container">
                         <div className="nav-coins-icon">
-                            <i class="fas fa-coins"></i>
+                            <i className="fas fa-coins"></i>
                             <span style={{ textTransform: "uppercase", marginLeft: 5 }}>coins</span>
                         </div>
                         <div className="nav-coins-balance">
@@ -184,7 +183,7 @@ const NavMobile = ({ coins, isLogged }) => {
                     </div>
                     <NavLink to="/account/profile"
                         className="nav-avatar"
-                        style={{ backgroundImage: "url(https://lh3.googleusercontent.com/iFjN0aRv7Olsk3uHMzLQdALoJVA3qRyAgJ75Z5PsTLOrUOSzSYP2kbGMvwveZc4a7P9byIV5rbZXDwwfttbyD_wP=w640-h400-e365-rj-sc0x00ffffff)" }}
+                        style={{ backgroundImage: `url(${avatar})` }}
                         title="Profile">
                     </NavLink>
                 </>
@@ -209,7 +208,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
         <div className="nav-mobile-side">
             <NavLink to="/wheel" className="nav-mobile-side-item">
                 <div className="item-icon">
-                    <i class="fa fa-circle-o"></i>
+                    <i className="fa fa-circle-o"></i>
                 </div>
                 <div className="item-text">
                     Wheel
@@ -217,7 +216,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
             </NavLink>
             <NavLink to="/roulette" className="nav-mobile-side-item">
                 <div className="item-icon">
-                    <i class="fa fa-superpowers"></i>
+                    <i className="fa fa-superpowers"></i>
                 </div>
                 <div className="item-text">
                     Roulette
@@ -225,7 +224,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
             </NavLink>
             <NavLink to="/crash" className="nav-mobile-side-item">
                 <div className="item-icon">
-                    <i class="fa fa-area-chart"></i>
+                    <i className="fa fa-area-chart"></i>
                 </div>
                 <div className="item-text">
                     Crash
@@ -235,7 +234,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
                 <>
                     <NavLink to="/account/profile" className="nav-mobile-side-item">
                         <div className="item-icon">
-                            <i class="fa fa-user"></i>
+                            <i className="fa fa-user"></i>
                         </div>
                         <div className="item-text">
                             Profile
@@ -243,7 +242,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
                     </NavLink>
                     <NavLink to="/account/rewards" className="nav-mobile-side-item">
                         <div className="item-icon">
-                            <i class="fa fa-gift"></i>
+                            <i className="fa fa-gift"></i>
                         </div>
                         <div className="item-text">
                             Rewards
@@ -251,7 +250,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
                     </NavLink>
                     <NavLink to="/account/options" className="nav-mobile-side-item">
                         <div className="item-icon">
-                            <i class="fa fa-cog"></i>
+                            <i className="fa fa-cog"></i>
                         </div>
                         <div className="item-text">
                             Options
@@ -259,7 +258,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
                     </NavLink>
                     <div className="nav-mobile-side-item" onClick={logout}>
                         <div className="item-icon">
-                            <i class="fa fa-sign-out"></i>
+                            <i className="fa fa-sign-out"></i>
                         </div>
                         <div className="item-text">
                             Logout
@@ -270,7 +269,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
                 (<></>)}
             <NavLink to="/leaderboards" className="nav-mobile-side-item">
                 <div className="item-icon">
-                    <i class="fa fa-trophy"></i>
+                    <i className="fa fa-trophy"></i>
                 </div>
                 <div className="item-text">
                     Leaderboards
@@ -278,7 +277,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
             </NavLink>
             <div className={`nav-mobile-side-item${isChatActive ? ' active' : ''}`} onClick={hideChat}>
                 <div className="item-icon">
-                    <i class="fas fa-comment"></i>
+                    <i className="fas fa-comment"></i>
                 </div>
                 <div className="item-text">
                     Chat

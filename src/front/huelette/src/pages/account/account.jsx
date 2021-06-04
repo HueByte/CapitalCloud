@@ -36,14 +36,9 @@ const Account = () => {
                 .then(updatedUser => {
                     if (!updatedUser.isSuccess)
                         throw Error(updatedUser.errors.join(', '));
-                    let user = authContext.authState;
-                    ({
-                        userName: user.userName,
-                        exp: user.exp,
-                        coins: user.coins,
-                        avatar_url: user.avatar_url
-                    } = updatedUser);
 
+                    let user = authContext.authState;
+                    user = { ...user, avatar_url: urlContainer.current.value };
                     authContext.setAuthState(user);
                     setAvatar(urlContainer.current.value);
                     successModal('Changed avatar');
