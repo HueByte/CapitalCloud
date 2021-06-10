@@ -39,7 +39,7 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
     }
 
     useEffect(() => {
-        setLevel(calcLevel(authContext.authState.exp));
+        setLevel(calcLevel(authContext.authState?.exp));
     }, [authContext.authState?.exp])
 
     console.log(authContext);
