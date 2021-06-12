@@ -28,9 +28,8 @@ const ChatProvider = ({ children }) => {
                 .start()
                 .then(() => {
                     if (hubConnection.connectionId) {
-                        if (authContext.isAuthenticated()) {
+                        if (authContext.isAuthenticated())
                             hubConnection.invoke('OnConnected', authContext.authState?.token, hubConnection.connectionId);
-                        }
                         else
                             hubConnection.invoke('OnConnectedAnon', hubConnection.connectionId);
                     }
@@ -82,7 +81,13 @@ const ChatProvider = ({ children }) => {
     }
 
     const userDisconnected = () => {
-        setUsers(users => users - 1);
+        let userCount = users;
+        if (!(userCount <= 0))
+            setUsers(users => users - 1);
+    }
+
+    const disconnect = () => {
+        hub.stop();
     }
 
     //should've made it possible to override 
