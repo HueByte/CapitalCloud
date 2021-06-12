@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Authentication;
+using Core.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
@@ -36,10 +40,14 @@ namespace API.Hubs
         public static List<string> anonConnections = new List<string>();
         public static List<Message> messages = new List<Message>();
         private readonly ILogger<ChatHub> _logger;
+        private readonly IJwtAuthentication _jwtAuth;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ChatHub(ILogger<ChatHub> logger)
+        public ChatHub(ILogger<ChatHub> logger, IJwtAuthentication jwtAuth, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
+            _jwtAuth = jwtAuth;
+            _userManager = userManager;
         }
 
         [Authorize]
@@ -55,22 +63,22 @@ namespace API.Hubs
                     messages.Add(message);
                     await Clients.All.SendAsync("OnReceiveMessage", message);
                 }
-                catch (Exception e) { Console.WriteLine(e); }
+                catch (Exception e) { _logger.Log(LogLevel.Error, e.Message); }
             }
         }
 
-        // TODO - Consider making HTTP request every 10seconds instead of websocket
-        // that would improve effectiveness and resource performance 
-        public async Task OnConnected(string username, string id, uint xp = 0, string avatar_url = "")
+        [Authorize]
+        public async Task OnConnected(string token, string connectionId)
         {
-            lock (chatUsers)
+            //new 
+            if (!string.IsNullOrEmpty(token) && !string.IsNullOrWhiteSpace(token))
             {
-                // if (!chatUsers.Any(entry => entry.Username == username))
-                chatUsers.Add(new ChatUser(username, id, avatar_url, xp));
+                var email = _jwtAuth.GetEmailFromToken(token);
+                var user = await _userManager.FindByEmailAsync(email);
+                chatUsers.Add(new ChatUser(user.UserName, connectionId, user.Avatar_Url, Convert.ToUInt32(user.exp)));
             }
 
-            _logger.Log(LogLevel.Information, $"{username} connected to the chat");
-            await Clients.All.SendAsync("OnUserConnected", (chatUsers.GroupBy(u => u.Username).Select(e => e.First()).Count() + anonConnections.Count));
+            await Clients.All.SendAsync("OnUserConnected", (chatUsers.GroupBy(u => u.Username).Select(e => e.First()).Count() + anonConnections.Count()));
             await Clients.Caller.SendAsync("OnJoinSession", messages);
         }
 

@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
     const singout = () => {
         localStorage.clear();
         setAuthState({});
+        window.location.reload();
     }
 
     // TODO - uh yeah figure it out later

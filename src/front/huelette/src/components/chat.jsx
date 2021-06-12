@@ -18,6 +18,7 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
         inputContainer.current = document.getElementById('chat-input-box');
     }, [])
 
+    //limit messages to 100
     useEffect(() => {
         if (chatContext.messages.length > 100) {
             chatContext.messages.shift();

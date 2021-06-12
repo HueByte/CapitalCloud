@@ -65,6 +65,7 @@
         align-items: center;
         justify-content: center;
         transition: 200ms ease-in-out;
+        cursor: pointer;
     }
         .active {
             color: var(--Rose) !important;

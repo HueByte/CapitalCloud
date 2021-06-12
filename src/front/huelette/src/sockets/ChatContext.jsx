@@ -1,7 +1,9 @@
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { store } from 'react-notifications-component';
 import { BaseURL } from '../api-calls/ApiRoutes';
 import { AuthContext } from '../auth/AuthContext';
+import { errorModal } from '../components/Modals';
 
 const ChatContext = createContext();
 
@@ -26,8 +28,9 @@ const ChatProvider = ({ children }) => {
                 .start()
                 .then(() => {
                     if (hubConnection.connectionId) {
-                        if (authContext.authState)
-                            hubConnection.invoke('OnConnected', authContext.authState.userName, hubConnection.connectionId, authContext.authState.exp, authContext.authState.avatar_url);
+                        if (authContext.isAuthenticated()) {
+                            hubConnection.invoke('OnConnected', authContext.authState?.token, hubConnection.connectionId);
+                        }
                         else
                             hubConnection.invoke('OnConnectedAnon', hubConnection.connectionId);
                     }
@@ -45,6 +48,10 @@ const ChatProvider = ({ children }) => {
         }
 
         setHub(hubConnection);
+
+        // return () => {
+        //     console.log('test');
+        // }
     }, [])
 
     //limit messages to 100 and delete oldest one

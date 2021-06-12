@@ -12,8 +12,6 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
         lvl: 0,
         percent: 0
     })
-    const [coins, setCoins] = useState(0);
-    // const [authAvatar, setAuthAvatar] = useState(authContext.authState?.avatar_url);
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
 
     const logout = () => {
@@ -41,8 +39,6 @@ const Menu = ({ isChatActive, setIsChatActive }) => {
     useEffect(() => {
         setLevel(calcLevel(authContext.authState?.exp));
     }, [authContext.authState?.exp])
-
-    console.log(authContext);
 
     return (
         <>
@@ -87,7 +83,7 @@ const NavDesktop = ({ coins, isLogged, level, avatar, logout }) => {
                                             <span style={{ textTransform: "uppercase", marginLeft: 5 }}>coins</span>
                                         </div>
                                         <div className="nav-coins-balance">
-                                            {coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                                            {coins?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                                         </div>
                                     </div>
                                     <NavLink to="/account/profile"
@@ -178,7 +174,7 @@ const NavMobile = ({ coins, isLogged, avatar }) => {
                             <span style={{ textTransform: "uppercase", marginLeft: 5 }}>coins</span>
                         </div>
                         <div className="nav-coins-balance">
-                            {coins.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                            {coins?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                         </div>
                     </div>
                     <NavLink to="/account/profile"
@@ -262,7 +258,7 @@ const NavSide = ({ isLogged, logout, isChatActive, hideChat }) => {
                         </div>
                         <div className="item-text">
                             Logout
-                            </div>
+                        </div>
                     </div>
                 </>
             ) :
