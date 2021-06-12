@@ -5,64 +5,24 @@ import { BaseURL } from '../api-calls/ApiRoutes';
 import { AuthContext } from '../auth/AuthContext';
 import UserIcon from '../assets/userIcon.png';
 import './chat.css';
+import { ChatContext } from '../sockets/ChatContext';
 
 //Dynamic avatar/info change
 const Chat = ({ isChatActive, setIsChatActive }) => {
+    const chatContext = useContext(ChatContext);
     const authContext = useContext(AuthContext);
     const [isLogged, setIsLogged] = useState(authContext.isAuthenticated());
-    const [messages, setMessages] = useState([]);
-    const [users, setUsers] = useState(0);
-    const chatContainer = useRef();
     const inputContainer = useRef();
-    //SignalR
-    const [hub, setHub] = useState(null);
 
-    useEffect(async () => {
-        chatContainer.current = document.getElementById('chat-container');
+    useEffect(() => {
         inputContainer.current = document.getElementById('chat-input-box');
-
-        const createHubConnection = async () => {
-            console.log('Creating wss connection');
-            const hubConnection = new HubConnectionBuilder()
-                .withUrl(`${BaseURL}api/ChatHub`, { accessTokenFactory: () => authContext.authState?.token ?? '' })
-                .withAutomaticReconnect()
-                .build();
-
-            try {
-                await hubConnection
-                    .start()
-                    .then(() => {
-                        if (hubConnection.connectionId) {
-                            if (authContext.authState)
-                                hubConnection.invoke('OnConnected', authContext.authState.userName, hubConnection.connectionId, authContext.authState.exp, authContext.authState.avatar_url);
-                            else
-                                hubConnection.invoke('OnConnectedAnon', hubConnection.connectionId)
-                        }
-                    })
-                    .then(() => {
-                        //events
-                        hubConnection.on('OnReceiveMessage', (message) => receiveMessage(message));
-                        hubConnection.on('OnUserConnected', (userCount) => userConnected(userCount));
-                        hubConnection.on('OnJoinSession', (messages) => getMessages(messages));
-                        hubConnection.on('OnUserDisconnected', () => userDisconnected());
-                    })
-                    .catch(e => console.log(e));
-            }
-            catch (err) {
-                console.log(err)
-            }
-
-            setHub(hubConnection);
-        }
-
-        createHubConnection();
     }, [])
 
     useEffect(() => {
-        if (messages.length > 100) {
-            messages.shift();
+        if (chatContext.messages.length > 100) {
+            chatContext.messages.shift();
         }
-    }, [messages])
+    }, [chatContext.messages])
 
     const colorLevel = (level) => {
         return level >= 50 && level < 100 ? '#50C5B7'
@@ -78,29 +38,10 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     //events 
     const sendMessage = () => {
         if (inputContainer.current.value.length !== 0) {
-            hub.invoke('SendMessage', inputContainer.current.value)
+            // hub.invoke('SendMessage', inputContainer.current.value)
+            chatContext.sendMessage(inputContainer.current.value);
             inputContainer.current.value = '';
         }
-    }
-
-    // Consider adding message cleaner here to avoid rerendering 
-    const receiveMessage = (message) => {
-        setMessages(data => [...data, { user: { avatarUrl: message.user?.avatarUrl, level: message.user?.level, username: message.user?.username }, content: message.content }])
-        if (!(chatContainer.current.scrollHeight - chatContainer.current.scrollTop >= chatContainer.current.clientHeight + 300))
-            chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
-    }
-
-    const getMessages = (messages) => {
-        setMessages(messages);
-        chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
-    }
-
-    const userConnected = (newUsers) => {
-        setUsers(newUsers);
-    }
-
-    const userDisconnected = () => {
-        setUsers(users => users - 1);
     }
 
     const hideChat = () => {
@@ -110,9 +51,9 @@ const Chat = ({ isChatActive, setIsChatActive }) => {
     return (
         <>
             <div className={`chat__container${isChatActive ? "" : " hide"}`}>
-                <div className="chat-users-count"><i className="fa fa-user" aria-hidden="true" style={{ marginRight: '5px' }}></i> {users}</div>
+                <div className="chat-users-count"><i className="fa fa-user" aria-hidden="true" style={{ marginRight: '5px' }}></i> {chatContext.users}</div>
                 <div className="chat-text" id="chat-container">
-                    {messages.length ? messages.map((mess, index) => (
+                    {chatContext.messages.length ? chatContext.messages.map((mess, index) => (
                         <div key={index} className="chat-message">
                             <div className="chat-message-top">
                                 {/* <img src={mess.user.avatar != null ? mess.user.avatar : 'https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png'} className="chat-message-avatar" alt="avatar" /> */}

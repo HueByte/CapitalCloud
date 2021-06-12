@@ -48,7 +48,6 @@ const AuthProvider = ({ children }) => {
                         avatar_url: tempUser.avatar_url
                     } = updatedUser);
 
-                    console.log(tempUser);
                     setAuthInfo(tempUser);
                 })
         }

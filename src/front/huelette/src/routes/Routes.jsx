@@ -24,6 +24,7 @@ import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { store } from 'react-notifications-component';
 import 'animate.css';
+import { ChatProvider } from '../sockets/ChatContext';
 
 
 export const Routes = () => {

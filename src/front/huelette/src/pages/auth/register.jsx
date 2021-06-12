@@ -33,7 +33,6 @@ const Register = () => {
         await AuthRegister(email, username, password)
             .then(response => {
                 if (!response.isSuccess) {
-                    console.log(response.errors);
                     errorModal(response.errors);
                 }
                 else {
