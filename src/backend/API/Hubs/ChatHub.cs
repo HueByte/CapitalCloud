@@ -57,7 +57,7 @@ namespace API.Hubs
             _jwtAuth = jwtAuth;
             _userManager = userManager;
 
-            //first message 
+            //first god message 
             if (messages.Count == 0)
                 messages.Add(new Message() { User = new ChatUser("Creator", "0", "https://upload.wikimedia.org/wikipedia/commons/7/7c/Cima_da_Conegliano%2C_God_the_Father.jpg", 24990000), Content = "Hello World" });
         }

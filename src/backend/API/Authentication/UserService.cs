@@ -77,6 +77,8 @@ namespace API.Authentication
                     coins = user.coins,
                     Email = user.Email,
                     tokenType = "Bearer",
+                    roles = (List<string>)await _userManager.GetRolesAsync(user),
+                    // roles = user.Roles,
                     expiresDate = DateTime.Now.AddDays(30)
                 };
             }

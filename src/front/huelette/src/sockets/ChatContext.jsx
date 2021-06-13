@@ -10,10 +10,12 @@ const ChatContext = createContext();
 const ChatProvider = ({ children }) => {
     const authContext = useContext(AuthContext);
     const [hub, setHub] = useState(null);
+    const refHub = useRef();
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState(0);
     const container = useRef();
 
+    // create connection
     useEffect(async () => {
         // TODO - might change that
         container.current = document.getElementById('chat-container');
@@ -47,22 +49,31 @@ const ChatProvider = ({ children }) => {
         }
 
         setHub(hubConnection);
-
-        // return () => {
-        //     console.log('test');
-        // }
     }, [])
 
-    //limit messages to 100 and delete oldest one
+    // update ref for future disconnection
+    useEffect(() => {
+        refHub.current = hub;
+    }, [hub])
+
+    // close connection on unmountcomponent
+    useEffect(() => {
+        return () => {
+            console.log(refHub.current);
+            refHub.current.stop();
+        }
+    }, [])
+
+    // limit messages to 100 and delete oldest one
     useEffect(() => {
         if (messages.length > 100) {
             messages.shift();
         }
     }, [messages])
 
+    // events 
     const sendMessage = (message) => {
         hub.invoke('SendMessage', message);
-        // console.log(message);
     }
 
     const receiveMessage = (message) => {
@@ -86,12 +97,8 @@ const ChatProvider = ({ children }) => {
             setUsers(users => users - 1);
     }
 
-    const disconnect = () => {
-        hub.stop();
-    }
-
-    //should've made it possible to override 
-    //Gonna think about that
+    // should've made it possible to override 
+    // Gonna think about that
     const value = {
         hub,
         messages,
